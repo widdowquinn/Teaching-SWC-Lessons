@@ -11,6 +11,11 @@ All of this work derives from the original Software and Data Carpentry lessons, 
 * Data Carpentry: [http://www.datacarpentry.org/](http://www.datacarpentry.org/)
 * Library Carpentry: [https://librarycarpentry.github.io/](https://librarycarpentry.github.io/)
 
+## Slidesets
+
+* 2017-03-23 St Andrews:
+  * [Python lesson 01](./python/2017-03-23-standrews/python-01/slides.html)
+  * [Python lesson 02](./python/2017-03-23-standrews/python-02/slides.html)
 
 ## Courses
 
