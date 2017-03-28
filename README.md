@@ -21,8 +21,9 @@ All of this work derives from the original Software and Data Carpentry lessons, 
 
 The `Python` lessons I have delivered have been (mostly) through Jupyter notebooks.
 
-You can start an instance of this repository under MyBinder, by clicking on [this link], or the button below.
+You can start an instance of this repository under MyBinder, by clicking on [this link](http://mybinder.org:/repo/widdowquinn/teaching-swc-lessons), or the button below.
 
+[![Binder](http://mybinder.org/badge.svg)](http://mybinder.org:/repo/widdowquinn/teaching-swc-lessons)
 
 The Jupyter notebooks are linked directly below:
 
