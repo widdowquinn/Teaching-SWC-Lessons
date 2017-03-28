@@ -1,0 +1,1759 @@
+<h1 id="speaker_notes.md---r-for-reproducible-scientific-analysis">SPEAKER_NOTES.md - R for Reproducible Scientific Analysis</h1>
+<p>Speaker Notes for the 2017-01-11 Software Carpentry R for Reproducible Scientific Analysis lesson</p>
+<p><strong>TYPE ALL EXAMPLES AS YOU GO. THIS KEEPS THE SPEED SANE, AND ALLOWS YOU TO EXPLAIN EVERY STEP.</strong></p>
+<p><strong>START SLIDES WITH <code>reveal-md slides.md --theme=white</code></strong></p>
+<h2 id="r-for-reproducible-scientific-analysis"><code>R for reproducible scientific analysis</code></h2>
+<p><strong>SLIDE</strong> (Learning objectives)</p>
+<ul>
+<li>Welcome</li>
+<li>Teaching</li>
+<li><p>Talk around slide</p></li>
+<li><strong>Our goal is not just to &quot;do stuff&quot;</strong></li>
+<li><p>do it so that anyone can easily and exactly replicate our workflow and results</p></li>
+</ul>
+<p><strong>SLIDE</strong> (The Real Reason We're Here)</p>
+<ul>
+<li>Talk around slide</li>
+</ul>
+<h3 id="package-management">Package management</h3>
+<p><strong>SLIDE</strong> (Package Management)</p>
+<ul>
+<li>See what packages are installed with <code>installed.packages()</code></li>
+<li><strong>demo this one</strong></li>
+<li>Add a new package using <code>install.packages(&quot;packagename&quot;)</code></li>
+<li><strong>demo this one with</strong> <code>install.packages(&quot;ggplot2&quot;)</code></li>
+<li>Update packages with <code>update.packages()</code></li>
+<li><strong>don't demo this one</strong></li>
+<li>You can remove a package with <code>remove.packages(&quot;packagename&quot;)</code></li>
+<li>To make a package available for use, use <code>library(packagename)</code></li>
+<li><strong>demo</strong></li>
+<li>Note that there are no quotes, this time</li>
+</ul>
+<pre><code>&gt; ggplot()
+Error: could not find function &quot;ggplot&quot;
+&gt; library(ggplot2)
+Warning message:
+package ‘ggplot2’ was built under R version 3.2.3 
+&gt; ggplot()
+Warning message:
+In max(vapply(evaled, length, integer(1))) :
+  no non-missing arguments to max; returning -Inf</code></pre>
+<p><strong>SLIDE</strong> (Challenge)</p>
+<p>Solution:</p>
+<pre><code>install.packages(&quot;plyr&quot;)
+install.packages(&quot;gapminder&quot;)
+install.packages(&quot;dplyr&quot;)
+install.packages(&quot;tidyr&quot;)</code></pre>
+<h2 id="data-types-and-structures-in-r">Data Types and Structures in <code>R</code></h2>
+<p><strong>SLIDE</strong> (Data Structures in <code>R</code>)</p>
+<p><strong>SLIDE</strong> (Learning Objectives)</p>
+<ul>
+<li>Talk around the slide</li>
+<li><strong>R is largely used for data analysis</strong></li>
+<li>The management and manipulation of data depends on the type of data we have</li>
+<li>A large amount of day-to-day frustration of learners <em>and experienced users</em> comes down to problems with data types</li>
+<li>It's <em>very important</em> to understand how <code>R</code> sees your data</li>
+</ul>
+<p><strong>SLIDE</strong> (Five &quot;atomic&quot; data types)</p>
+<ul>
+<li>Talk around slide</li>
+</ul>
+<p><strong>SLIDE</strong> (Atomic data types)</p>
+<ul>
+<li><strong>Create some variables in script</strong></li>
+<li>create script <code>datatypes.R</code></li>
+</ul>
+<pre><code># Some variables
+truth &lt;- TRUE
+lie &lt;- FALSE
+i &lt;- 3L
+d &lt;- 3.0
+c &lt;- 3 + 0i
+txt &lt;- &quot;TRUE&quot;</code></pre>
+<ul>
+<li><strong>SOURCE SCRIPT</strong></li>
+<li><strong>INTERACTIVELY</strong> Show equivalence of integer, double and complex</li>
+</ul>
+<pre><code>&gt; typeof(i)
+[1] &quot;integer&quot;
+&gt; typeof(d)
+[1] &quot;double&quot;
+&gt; i == c
+[1] TRUE
+&gt; d == c
+[1] TRUE
+&gt; i == d
+[1] TRUE
+&gt; is.numeric(i)
+[1] TRUE
+&gt; is.numeric(d)
+[1] TRUE
+&gt; is.numeric(c)
+[1] FALSE</code></pre>
+<div class="figure">
+<img src="images/red_green_sticky.png" alt="Red/green sticky" />
+<p class="caption">Red/green sticky</p>
+</div>
+<ul>
+<li>Show other types</li>
+</ul>
+<pre><code>&gt; typeof(truth)
+[1] &quot;logical&quot;
+&gt; typeof(lie)
+[1] &quot;logical&quot;
+&gt; typeof(txt)
+[1] &quot;character&quot;</code></pre>
+<ul>
+<li><code>is.X()</code> tests for a data type</li>
+</ul>
+<pre><code>&gt; is.logical(lie)
+[1] TRUE
+&gt; is.logical(txt)
+[1] FALSE
+&gt; is.integer(i)
+[1] TRUE
+&gt; is.integer(d)
+[1] FALSE</code></pre>
+<div class="figure">
+<img src="images/red_green_sticky.png" alt="Red/green sticky" />
+<p class="caption">Red/green sticky</p>
+</div>
+<p><strong>SLIDE</strong> (Challenge 1)</p>
+<ul>
+<li>5min, then answers</li>
+</ul>
+<pre><code>answer &lt;- TRUE
+height &lt;- 183
+dog_name &lt;- &quot;Fido&quot;
+is.logical(answer)
+is.numeric(height)
+is.character(dog_name)</code></pre>
+<p><strong>SLIDE</strong> (Five data structures)</p>
+<ul>
+<li>Talk around slide</li>
+<li>more on <code>data.frame</code> in detail later</li>
+</ul>
+<h3 id="vectors">Vectors</h3>
+<p><strong>SLIDE</strong> (Vectors)</p>
+<ul>
+<li>Vectors are the most common data structure</li>
+<li>Vectors can contain only one data type</li>
+<li><p>vectors also known as &quot;atomic vectors&quot;</p></li>
+<li><strong>LIVE PRESENTATION</strong></li>
+<li><strong>The <code>c()</code> function</strong></li>
+<li><p><code>c()</code> is the &quot;concatenate&quot; function, used to build vectors:</p></li>
+</ul>
+<pre><code>&gt; x &lt;- c(10, 12, 45, 33)
+&gt; x
+[1] 10 12 45 33</code></pre>
+<ul>
+<li><strong>Number sequences</strong></li>
+<li>can use <code>:</code> or <code>seq()</code> functions</li>
+<li>both functions <em>return</em> vectors</li>
+</ul>
+<pre><code>&gt; series &lt;- 1:10
+&gt; series
+ [1]  1  2  3  4  5  6  7  8  9 10
+&gt; series &lt;- seq(15)
+&gt; series
+ [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
+&gt; seq(1, 10, by=0.5)
+ [1]  1.0  1.5  2.0  2.5  3.0  3.5  4.0  4.5  5.0  5.5  6.0  6.5  7.0  7.5  8.0  8.5  9.0
+[18]  9.5 10.0 </code></pre>
+<ul>
+<li><strong>What type is our vector?</strong></li>
+<li>Use the <code>str()</code> (structure) function</li>
+</ul>
+<pre><code>&gt; str(x)
+ num [1:4] 10 12 45 33
+&gt; str(series)
+ int [1:15] 1 2 3 4 5 6 7 8 9 10 ...
+&gt; is.numeric(x)
+[1] TRUE
+&gt; is.numeric(series)
+[1] TRUE
+&gt; is.integer(x)
+[1] FALSE
+&gt; is.integer(series)
+[1] TRUE</code></pre>
+<ul>
+<li><strong>Series is <code>integer</code> type, but <code>x</code> is not</strong></li>
+<li>The <code>c()</code> function automatically turns integers into 'real'/'double' numbers</li>
+<li>To specify integers, use <code>L</code>:</li>
+</ul>
+<pre><code>&gt; y &lt;- c(10L, 12L, 45L, 33L)
+&gt; y
+[1] 10 12 45 33
+&gt; x
+[1] 10 12 45 33
+&gt; is.integer(x)
+[1] FALSE
+&gt; is.integer(y)
+[1] TRUE</code></pre>
+<ul>
+<li><strong>Extending a vector</strong></li>
+<li>Append new elements to a vector with <code>c()</code></li>
+</ul>
+<pre><code>&gt; x
+[1] 10 12 45 33
+&gt; x &lt;- c(x, 57)
+&gt; x
+[1] 10 12 45 33 57</code></pre>
+<ul>
+<li><strong>Character vectors</strong></li>
+<li>You can use <code>c()</code> to create vectors from any datatype, including characters</li>
+</ul>
+<pre><code>&gt; t &lt;- c(&#39;a&#39;, &#39;b&#39;, &#39;c&#39;)
+&gt; t
+[1] &quot;a&quot; &quot;b&quot; &quot;c&quot;
+&gt; str(t)
+ chr [1:3] &quot;a&quot; &quot;b&quot; &quot;c&quot;</code></pre>
+<p><strong>SLIDE</strong> (Challenge 2)</p>
+<ul>
+<li>5min, then answers</li>
+<li>Point out that <code>R</code> will attempt to &quot;coerce&quot; the datatype to be one that can represent all items in the vector.</li>
+</ul>
+<p>Solution:</p>
+<pre><code>&gt; xx &lt;- c(1.7, &#39;a&#39;)
+&gt; str(xx)
+ chr [1:2] &quot;1.7&quot; &quot;a&quot;
+&gt; xx &lt;- c(TRUE, 2)
+&gt; str(xx)
+ num [1:2] 1 2
+&gt; xx &lt;- c(&#39;a&#39;, TRUE)
+&gt; str(xx)
+ chr [1:2] &quot;a&quot; &quot;TRUE&quot;</code></pre>
+<p><strong>SLIDE</strong> (Coercion)</p>
+<ul>
+<li><p>Talk around slide</p></li>
+<li><p><strong>DEMO</strong></p></li>
+</ul>
+<pre><code>&gt; x
+[1] 10 12 45 33 57
+&gt; str(x)
+ num [1:5] 10 12 45 33 57
+&gt; as.character(x)
+[1] &quot;10&quot; &quot;12&quot; &quot;45&quot; &quot;33&quot; &quot;57&quot;
+&gt; as.complex(x)
+[1] 10+0i 12+0i 45+0i 33+0i 57+0i
+&gt; as.logical(x)
+[1] TRUE TRUE TRUE TRUE TRUE</code></pre>
+<ul>
+<li>Sometimes coercion is not possible</li>
+</ul>
+<pre><code>&gt; x &lt;- c(&#39;a&#39;, &#39;b&#39;, &#39;c&#39;)
+&gt; str(x)
+ chr [1:3] &quot;a&quot; &quot;b&quot; &quot;c&quot;
+&gt; as.numeric(x)
+[1] NA NA NA
+Warning message:
+NAs introduced by coercion </code></pre>
+<p><strong>SLIDE</strong> (Useful vector functions)</p>
+<ul>
+<li>There are functions that will give information about the vector</li>
+</ul>
+<pre><code>&gt; x &lt;- 0:10
+&gt; tail(x)
+[1]  5  6  7  8  9 10
+&gt; tail(x, n=2)
+[1]  9 10
+&gt; head(x)
+[1] 0 1 2 3 4 5
+&gt; head(x, n=2)
+[1] 0 1
+&gt; length(x)
+[1] 11
+&gt; str(x)
+ int [1:11] 0 1 2 3 4 5 6 7 8 9 ...</code></pre>
+<ul>
+<li>Vector elements can also be named (this is <em>similar to</em>, but not the same as a Python dictionary - it's more like a <code>namedtuple</code>)</li>
+</ul>
+<pre><code>&gt; x &lt;- 1:4
+&gt; names(x)
+NULL
+&gt; str(x)
+ int [1:4] 1 2 3 4
+&gt; names(x) &lt;- c(&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;)
+&gt; x
+a b c d 
+1 2 3 4 
+&gt; str(x)
+ Named int [1:4] 1 2 3 4
+ - attr(*, &quot;names&quot;)= chr [1:4] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot;</code></pre>
+<div class="figure">
+<img src="images/red_green_sticky.png" alt="Red/green sticky" />
+<p class="caption">Red/green sticky</p>
+</div>
+<h3 id="factors">Factors</h3>
+<p><strong>SLIDE</strong> (Factors)</p>
+<ul>
+<li>Talk around slide</li>
+</ul>
+<p><strong>SLIDE</strong> (Factors demo)</p>
+<ul>
+<li><strong>LIVE PRESENTATION</strong></li>
+<li><strong>Create factor</strong></li>
+<li>Use the <code>factor()</code> function with a vector as the argument</li>
+<li>Predefined values are those present on creation</li>
+<li><strong>Typos can give unexpected levels!</strong></li>
+</ul>
+<pre><code>&gt; x &lt;- factor(c(&#39;yes&#39;, &#39;no&#39;, &#39;no&#39;, &#39;yes&#39;, &#39;yes&#39;))
+&gt; x
+[1] yes no  no  yes yes
+Levels: no yes
+&gt; levels(x)
+[1] &quot;no&quot;  &quot;yes&quot;
+&gt; str(x)
+ Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 2 1 1 2 2</code></pre>
+<ul>
+<li><strong>Ordering levels</strong></li>
+<li>Level order may be important</li>
+<li>Models expect the baseline/control to be the first level</li>
+<li>By default, <code>factor()</code> orders factors alphabetically</li>
+</ul>
+<pre><code>&gt; x &lt;- factor(c(&#39;case&#39;, &#39;control&#39;, &#39;control&#39;, &#39;case&#39;))
+&gt; x
+[1] case    control control case   
+Levels: case control
+&gt; levels(x)
+[1] &quot;case&quot;    &quot;control&quot;</code></pre>
+<ul>
+<li>Here, <code>case</code> will be considered the baseline/control factor.</li>
+<li>This is not what modelling functions expect - results will be difficult to interpret.</li>
+<li>Use the <code>levels=</code> argument to fix</li>
+</ul>
+<pre><code>&gt; x &lt;- factor(c(&#39;case&#39;, &#39;control&#39;, &#39;control&#39;, &#39;case&#39;), levels=c(&#39;control&#39;, &#39;case&#39;))
+&gt; x
+[1] case    control control case   
+Levels: control case
+&gt; levels(x)
+[1] &quot;control&quot; &quot;case&quot; </code></pre>
+<ul>
+<li><strong><code>table()</code> and <code>barplot()</code> functions</strong></li>
+<li>The <code>table()</code> function can be used to tabulate the number of members of each category</li>
+<li>Introduces the <code>Plots</code> tab for output</li>
+</ul>
+<pre><code>&gt; expt &lt;- factor(c(&#39;a&#39;, &#39;b&#39;, &#39;a&#39;, &#39;c&#39;, &#39;a&#39;, &#39;control&#39;, &#39;a&#39;, &#39;b&#39;, &#39;c&#39;))
+&gt; str(expt)
+ Factor w/ 4 levels &quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;control&quot;: 1 2 1 3 1 4 1 2 3
+&gt; table(expt)
+expt
+      a       b       c control 
+      4       2       2       1 
+&gt; barplot(table(expt))</code></pre>
+<div class="figure">
+<img src="images/red_green_sticky.png" alt="Red/green sticky" />
+<p class="caption">Red/green sticky</p>
+</div>
+<h3 id="matrices">Matrices</h3>
+<p><strong>SLIDE</strong> (Matrices)</p>
+<ul>
+<li><strong>LIVE PRESENTATION</strong></li>
+<li><strong>Creating a matrix</strong></li>
+<li>Matrices are essentially atomic vectors with extra dimensions</li>
+<li><code>set.seed()</code> makes our pseudorandom numbers reproducible</li>
+<li><code>rnorm()</code> selects values from a standard normal distribution</li>
+<li>Create matrix with <code>matrix()</code> function, passing a <em>vector</em> and specifying the number of rows and columns</li>
+</ul>
+<pre><code>&gt; set.seed(1)
+&gt; x &lt;- matrix(rnorm(18), ncol=6, nrow=3)
+&gt; x
+           [,1]       [,2]      [,3]       [,4]       [,5]        [,6]
+[1,] -0.6264538  1.5952808 0.4874291 -0.3053884 -0.6212406 -0.04493361
+[2,]  0.1836433  0.3295078 0.7383247  1.5117812 -2.2146999 -0.01619026
+[3,] -0.8356286 -0.8204684 0.5757814  0.3898432  1.1249309  0.94383621
+&gt; str(x)
+ num [1:3, 1:6] -0.626 0.184 -0.836 1.595 0.33 ...</code></pre>
+<ul>
+<li><strong>NOTE</strong></li>
+<li><code>RStudio</code> treats vectors as 'Values' and matrices as 'Data', in the environment</li>
+<li><code>RStudio</code> also lets you see the matrix in the editor window (<strong>demo this</strong>)</li>
+</ul>
+<pre><code>&gt; str(x)
+ num [1:3, 1:6] -0.626 0.184 -0.836 1.595 0.33 ...
+&gt; length(x)
+[1] 18
+&gt; nrow(x)
+[1] 3
+&gt; ncol(x)
+[1] 6</code></pre>
+<div class="figure">
+<img src="images/red_green_sticky.png" alt="Red/green sticky" />
+<p class="caption">Red/green sticky</p>
+</div>
+<p><strong>SLIDE</strong> (Challenge 3)</p>
+<p>Solution:</p>
+<pre><code>&gt; m &lt;- matrix(1:50, ncol=5, nrow=10)
+&gt; m
+      [,1] [,2] [,3] [,4] [,5]
+ [1,]    1   11   21   31   41
+ [2,]    2   12   22   32   42
+ [3,]    3   13   23   33   43
+ [4,]    4   14   24   34   44
+ [5,]    5   15   25   35   45
+ [6,]    6   16   26   36   46
+ [7,]    7   17   27   37   47
+ [8,]    8   18   28   38   48
+ [9,]    9   19   29   39   49
+[10,]   10   20   30   40   50
+&gt; ?matrix
+&gt; m &lt;- matrix(1:50, ncol=5, nrow=10, byrow=TRUE)
+&gt; m
+      [,1] [,2] [,3] [,4] [,5]
+ [1,]    1    2    3    4    5
+ [2,]    6    7    8    9   10
+ [3,]   11   12   13   14   15
+ [4,]   16   17   18   19   20
+ [5,]   21   22   23   24   25
+ [6,]   26   27   28   29   30
+ [7,]   31   32   33   34   35
+ [8,]   36   37   38   39   40
+ [9,]   41   42   43   44   45
+[10,]   46   47   48   49   50</code></pre>
+<h3 id="lists">Lists</h3>
+<ul>
+<li><strong>Creating a list</strong></li>
+<li>You might think that atomic vectors are quite limited: lists give you freedom of data types</li>
+<li>Directly with <code>list()</code></li>
+<li>By coercion with <code>as.list()</code></li>
+<li>Elements indicated/recovered by double-brackets: <code>[[]]</code></li>
+<li><strong>Numbering is 1-based - not like Python/other languages</strong></li>
+</ul>
+<pre><code>&gt; x &lt;- list(1, &#39;a&#39;, TRUE, 1+4i)
+&gt; x
+[[1]]
+[1] 1
+[[2]]
+[1] &quot;a&quot;
+[[3]]
+[1] TRUE
+[[4]]
+[1] 1+4i
+&gt; x[[3]]
+[1] TRUE</code></pre>
+<ul>
+<li>elements can be named</li>
+<li>named elements can be recovered with <code>$</code> notation</li>
+</ul>
+<pre><code>&gt; xlist &lt;- list(a=&quot;SWC Workshop&quot;, b=1:10, data=head(iris))
+&gt; xlist
+$a
+[1] &quot;SWC Workshop&quot;
+$b
+ [1]  1  2  3  4  5  6  7  8  9 10
+$data
+  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          4.9         3.0          1.4         0.2  setosa
+3          4.7         3.2          1.3         0.2  setosa
+4          4.6         3.1          1.5         0.2  setosa
+5          5.0         3.6          1.4         0.2  setosa
+6          5.4         3.9          1.7         0.4  setosa
+&gt; xlist$a
+[1] &quot;SWC Workshop&quot;</code></pre>
+<p><strong>SLIDE</strong> (Challenge 4)</p>
+<p>Solution:</p>
+<pre><code>&gt; my_list &lt;- list(
++   data_types=c(&quot;logical&quot;, &quot;integer&quot;, &quot;double&quot;, &quot;complex&quot;, &quot;character&quot;),
++   data_structures=c(&quot;vector&quot;, &quot;matrix&quot;, &quot;factor&quot;, &quot;list&quot;)
++ )
+&gt; str(my_list)
+List of 2
+ $ data_types     : chr [1:5] &quot;logical&quot; &quot;integer&quot; &quot;double&quot; &quot;complex&quot; ...
+ $ data_structures: chr [1:4] &quot;vector&quot; &quot;matrix&quot; &quot;factor&quot; &quot;list&quot;</code></pre>
+<div class="figure">
+<img src="images/red_green_sticky.png" alt="Red/green sticky" />
+<p class="caption">Red/green sticky</p>
+</div>
+<h2 id="data-frames">Data Frames</h2>
+<p><strong>SLIDE</strong> (Data Frames)</p>
+<p><strong>SLIDE</strong> (Learning Objectives)</p>
+<ul>
+<li>Talk around slide</li>
+</ul>
+<p><strong>SLIDE</strong> (<code>data.frame</code>s)</p>
+<ul>
+<li>Talk around slide</li>
+</ul>
+<p><strong>SLIDE</strong> (My first <code>data.frame</code>)</p>
+<ul>
+<li><strong>Create a <code>data.frame</code></strong></li>
+<li>Name columns explicitly</li>
+</ul>
+<pre><code>&gt; df &lt;- data.frame(id=c(&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;, &#39;f&#39;), x=1:6, y=c(214:219))
+&gt; df
+  id x   y
+1  a 1 214
+2  b 2 215
+3  c 3 216
+4  d 4 217
+5  e 5 218
+6  f 6 219
+&gt; length(df)
+[1] 3
+&gt; dim(df)
+[1] 6 3
+&gt; ncol(df)
+[1] 3
+&gt; nrow(df)
+[1] 6
+&gt; summary(df)
+ id          x              y        
+ a:1   Min.   :1.00   Min.   :214.0  
+ b:1   1st Qu.:2.25   1st Qu.:215.2  
+ c:1   Median :3.50   Median :216.5  
+ d:1   Mean   :3.50   Mean   :216.5  
+ e:1   3rd Qu.:4.75   3rd Qu.:217.8  
+ f:1   Max.   :6.00   Max.   :219.0  </code></pre>
+<ul>
+<li>Rows are indexed/named automatically, by default.</li>
+<li>The length of a <code>data.frame</code> is the number of columns it has</li>
+<li><p>Use <code>dim()</code>, <code>nrow()</code>, <code>ncol()</code> to get the numbers of rows and columns</p></li>
+<li><strong><code>data.frame</code>s coerce strings/characters to become factors!</strong></li>
+<li>We don't always want this</li>
+<li><p>Can use the <code>stringsAsFactors</code> argument to change this behaviour</p></li>
+</ul>
+<pre><code>&gt; str(df)
+&#39;data.frame&#39;:   6 obs. of  3 variables:
+ $ id: Factor w/ 6 levels &quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;,..: 1 2 3 4 5 6
+ $ x : int  1 2 3 4 5 6
+ $ y : int  214 215 216 217 218 219
+&gt; df &lt;- data.frame(id=c(&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;, &#39;f&#39;), x=1:6, y=c(214:219), 
+                   stringsAsFactors=FALSE)
+&gt; df
+  id x   y
+1  a 1 214
+2  b 2 215
+3  c 3 216
+4  d 4 217
+5  e 5 218
+6  f 6 219
+&gt; str(df)
+&#39;data.frame&#39;:   6 obs. of  3 variables:
+ $ id: chr  &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; ...
+ $ x : int  1 2 3 4 5 6
+ $ y : int  214 215 216 217 218 219</code></pre>
+<ul>
+<li><strong>Show <code>data.frame</code> in Editor tab</strong></li>
+</ul>
+<p><strong>SLIDE</strong> (Challenge 1)</p>
+<p>(5min)</p>
+<ul>
+<li>Solution:</li>
+<li>missing quotes in <code>author_last</code></li>
+<li>missing date in <code>year</code></li>
+</ul>
+<pre><code>author_book &lt;- data.frame(author_first=c(&quot;Charles&quot;, &quot;Ernst&quot;,
+                                         &quot;Theodosius&quot;),
+                          author_last=c(&quot;Darwin&quot;, &quot;Mayr&quot;, &quot;Dobzhansky&quot;),
+                          year=c(1859, 1942, 1970))</code></pre>
+<p><strong>SLIDE</strong> (Challenge 2)</p>
+<p>(5min)</p>
+<p>Solution:</p>
+<pre><code>&gt; str(country_climate)
+&#39;data.frame&#39;:   4 obs. of  5 variables:
+ $ country            : Factor w/ 4 levels &quot;Australia&quot;,&quot;Canada&quot;,..: 2 3 4 1
+ $ climate            : Factor w/ 4 levels &quot;cold&quot;,&quot;hot&quot;,&quot;hot/temperate&quot;,..: 1 2 4 3
+ $ temperature        : Factor w/ 4 levels &quot;10&quot;,&quot;15&quot;,&quot;18&quot;,..: 1 4 3 2
+ $ northern_hemisphere: Factor w/ 2 levels &quot;FALSE&quot;,&quot;TRUE&quot;: 2 2 1 1
+ $ has_kangaroo       : num  0 0 0 1</code></pre>
+<h3 id="adding-rows-and-columns">Adding rows and columns</h3>
+<ul>
+<li><strong>Adding a column with <code>cbind()</code></strong></li>
+<li>By default the column doesn't get a name</li>
+<li>to provide a name, use the name as an argument</li>
+</ul>
+<pre><code>&gt; df
+  id x   y
+1  a 1 214
+2  b 2 215
+3  c 3 216
+4  d 4 217
+5  e 5 218
+6  f 6 219
+&gt; df &lt;- cbind(df, 6:1)
+&gt; df
+  id x   y 6:1
+1  a 1 214   6
+2  b 2 215   5
+3  c 3 216   4
+4  d 4 217   3
+5  e 5 218   2
+6  f 6 219   1
+&gt; df &lt;- cbind(df, caps=LETTERS[1:6])
+&gt; df
+  id x   y 6:1 caps
+1  a 1 214   6    A
+2  b 2 215   5    B
+3  c 3 216   4    C
+4  d 4 217   3    D
+5  e 5 218   2    E
+6  f 6 219   1    F</code></pre>
+<ul>
+<li>Note that <code>caps</code> is a factor:</li>
+</ul>
+<pre><code>&gt; LETTERS
+ [1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;F&quot; &quot;G&quot; &quot;H&quot; &quot;I&quot; &quot;J&quot; &quot;K&quot; &quot;L&quot; &quot;M&quot; &quot;N&quot; &quot;O&quot; &quot;P&quot; &quot;Q&quot; &quot;R&quot; &quot;S&quot; &quot;T&quot; &quot;U&quot; &quot;V&quot;
+[23] &quot;W&quot; &quot;X&quot; &quot;Y&quot; &quot;Z&quot;
+&gt; typeof(LETTERS)
+[1] &quot;character&quot;
+&gt; str(df)
+&#39;data.frame&#39;:   6 obs. of  5 variables:
+ $ id  : chr  &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; ...
+ $ x   : int  1 2 3 4 5 6
+ $ y   : int  214 215 216 217 218 219
+ $ 6:1 : int  6 5 4 3 2 1
+ $ caps: Factor w/ 6 levels &quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,..: 1 2 3 4 5 6</code></pre>
+<ul>
+<li><strong>Renaming a column</strong></li>
+<li>Use <code>names()</code> or <code>colnames()</code> to change the name of a column</li>
+</ul>
+<pre><code>&gt; colnames(df)
+[1] &quot;id&quot;   &quot;x&quot;    &quot;y&quot;    &quot;6:1&quot;  &quot;caps&quot;
+&gt; colnames(df)[4]
+[1] &quot;6:1&quot;
+&gt; colnames(df)[4] &lt;- &#39;SixToOne&#39;
+&gt; colnames(df)
+[1] &quot;id&quot;       &quot;x&quot;        &quot;y&quot;        &quot;SixToOne&quot; &quot;caps&quot; </code></pre>
+<ul>
+<li><strong>Adding a row with <code>rbind</code></strong></li>
+<li>Add a list (multiple types across columns)</li>
+<li>Need to take care that datatypes match the columns of the <code>data.frame</code></li>
+<li><em>Particularly a problem with characters and factors!</em></li>
+</ul>
+<pre><code>&gt; df &lt;- rbind(df, list(&#39;g&#39;, 11, 42, 0, &#39;G&#39;))
+Warning message:
+In `[&lt;-.factor`(`*tmp*`, ri, value = &quot;G&quot;) :
+  invalid factor level, NA generated
+&gt; df
+  id  x   y SixToOne caps
+1  a  1 214        6    A
+2  b  2 215        5    B
+3  c  3 216        4    C
+4  d  4 217        3    D
+5  e  5 218        2    E
+6  f  6 219        1    F
+7  g 11  42        0 &lt;NA&gt;</code></pre>
+<ul>
+<li><em><code>R</code> tried to be helpful, and put a <code>NA</code> special value to indicate missing data</em></li>
+<li>Two options to add the data:</li>
+<li>Coerce the column to be a <code>character</code> type</li>
+<li>Add a level to the factor in that column (mostly what we want to do)</li>
+</ul>
+<pre><code>&gt; str(df$caps)
+ Factor w/ 6 levels &quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,..: 1 2 3 4 5 6 NA
+&gt; levels(df$caps)
+[1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;F&quot;
+&gt; c(levels(df$caps), &#39;G&#39;)
+[1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;F&quot; &quot;G&quot;
+&gt; levels(df$caps) &lt;- c(levels(df$caps), &#39;G&#39;)
+&gt; str(df$caps)
+ Factor w/ 7 levels &quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,..: 1 2 3 4 5 6 NA</code></pre>
+<ul>
+<li>Now we can add the row</li>
+</ul>
+<pre><code>&gt; df &lt;- rbind(df, list(&#39;g&#39;, 11, 42, 0, &#39;G&#39;))
+&gt; df
+  id  x   y SixToOne caps
+1  a  1 214        6    A
+2  b  2 215        5    B
+3  c  3 216        4    C
+4  d  4 217        3    D
+5  e  5 218        2    E
+6  f  6 219        1    F
+7  g 11  42        0 &lt;NA&gt;
+8  g 11  42        0    G</code></pre>
+<ul>
+<li>But we have a problem:</li>
+<li>There's an <code>&lt;NA&gt;</code> in the data that we don't want</li>
+<li>This can happen in many different ways for real data</li>
+<li>We'll deal with this in the next section</li>
+</ul>
+<h3 id="reading-in-data">Reading in data</h3>
+<p><strong>SLIDE</strong> (Reading in data)</p>
+<ul>
+<li><strong>Most of the time you work with pre-prepared data</strong></li>
+<li>We don't often have to build <code>data.frame</code>s by hand</li>
+<li>Most data likely to come from software in a standard form</li>
+<li><p>Sometimes it's not in the best condition, though…</p></li>
+<li><strong>Inspecting data in file</strong></li>
+<li><code>Files</code> tab: navigate to data file</li>
+<li><p>click on file</p></li>
+<li><strong>Discuss data</strong></li>
+<li>Point out comma-separations (not always best choice - Euro data)</li>
+<li>Point out header line</li>
+<li><p>Inspecting the structure of the data means we can specify proper arguments in <code>read.table</code></p></li>
+<li><strong>Read data</strong></li>
+<li>Using <code>read.table</code></li>
+<li><p>Put in script</p></li>
+</ul>
+<pre><code># Load gapminder data
+gapminder &lt;- read.table(
+  file=&quot;data/gapminder-FiveYearData.csv&quot;,
+  header=TRUE, sep=&quot;,&quot;
+)</code></pre>
+<ul>
+<li>Source the script. Then:</li>
+</ul>
+<pre><code>head(gapminder)
+      country year      pop continent lifeExp gdpPercap
+1 Afghanistan 1952  8425333      Asia  28.801  779.4453
+2 Afghanistan 1957  9240934      Asia  30.332  820.8530
+3 Afghanistan 1962 10267083      Asia  31.997  853.1007
+4 Afghanistan 1967 11537966      Asia  34.020  836.1971
+5 Afghanistan 1972 13079460      Asia  36.088  739.9811
+6 Afghanistan 1977 14880372      Asia  38.438  786.1134
+&gt; str(gapminder)
+&#39;data.frame&#39;:   1704 obs. of  6 variables:
+ $ country  : Factor w/ 142 levels &quot;Afghanistan&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+ $ pop      : num  8425333 9240934 10267083 11537966 13079460 ...
+ $ continent: Factor w/ 5 levels &quot;Africa&quot;,&quot;Americas&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
+ $ lifeExp  : num  28.8 30.3 32 34 36.1 ...
+ $ gdpPercap: num  779 821 853 836 740 ...</code></pre>
+<ul>
+<li><strong>Load a dataset from the internet</strong></li>
+<li>Using <code>read.csv</code> - a special case of <code>read.table</code></li>
+<li>Automatically uses <code>sep=&quot;,&quot;</code> and <code>header=TRUE</code> (not all data well-behaved!)</li>
+<li>Files need not be local - can use a URL for online data</li>
+<li>Put in script</li>
+</ul>
+<pre><code>&gt; # Load survey data
+&gt; surveys &lt;- read.csv(&#39;http://files.figshare.com/2236372/combined.csv&#39;)</code></pre>
+<ul>
+<li>Source the script, then:</li>
+</ul>
+<pre><code>&gt; head(surveys)
+  record_id month day year plot_id species_id sex hindfoot_length weight   genus  species
+1         1     7  16 1977       2         NL   M              32     NA Neotoma albigula
+2        72     8  19 1977       2         NL   M              31     NA Neotoma albigula
+3       224     9  13 1977       2         NL                  NA     NA Neotoma albigula
+4       266    10  16 1977       2         NL                  NA     NA Neotoma albigula
+5       349    11  12 1977       2         NL                  NA     NA Neotoma albigula
+6       363    11  12 1977       2         NL                  NA     NA Neotoma albigula
+    taxa plot_type
+1 Rodent   Control
+2 Rodent   Control
+3 Rodent   Control
+4 Rodent   Control
+5 Rodent   Control
+6 Rodent   Control
+&gt; str(surveys)
+&#39;data.frame&#39;:   34786 obs. of  13 variables:
+ $ record_id      : int  1 72 224 266 349 363 435 506 588 661 ...
+ $ month          : int  7 8 9 10 11 11 12 1 2 3 ...
+ $ day            : int  16 19 13 16 12 12 10 8 18 11 ...
+ $ year           : int  1977 1977 1977 1977 1977 1977 1977 1978 1978 1978 ...
+ $ plot_id        : int  2 2 2 2 2 2 2 2 2 2 ...
+ $ species_id     : Factor w/ 48 levels &quot;AB&quot;,&quot;AH&quot;,&quot;AS&quot;,..: 16 16 16 16 16 16 16 16 16 16 ...
+ $ sex            : Factor w/ 6 levels &quot;&quot;,&quot;F&quot;,&quot;M&quot;,&quot;P&quot;,..: 3 3 1 1 1 1 1 1 3 1 ...
+ $ hindfoot_length: int  32 31 NA NA NA NA NA NA NA NA ...
+ $ weight         : int  NA NA NA NA NA NA NA NA 218 NA ...
+ $ genus          : Factor w/ 26 levels &quot;Ammodramus&quot;,&quot;Ammospermophilus&quot;,..: 13 13 13 13 13 13 13 13 13 13 ...
+ $ species        : Factor w/ 40 levels &quot;albigula&quot;,&quot;audubonii&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ taxa           : Factor w/ 4 levels &quot;Bird&quot;,&quot;Rabbit&quot;,..: 4 4 4 4 4 4 4 4 4 4 ...
+ $ plot_type      : Factor w/ 5 levels &quot;Control&quot;,&quot;Long-term Krat Exclosure&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<ul>
+<li><strong>Good point to revisit staging/committing to local repo</strong></li>
+<li>Go to Git tab</li>
+<li>Stage current script</li>
+<li>Inspect with Diff - see what's changed</li>
+<li>Add commit message</li>
+<li>Commit</li>
+</ul>
+<div class="figure">
+<img src="images/red_green_sticky.png" alt="Red/green sticky" />
+<p class="caption">Red/green sticky</p>
+</div>
+<h2 id="indexing-and-subsetting-data">Indexing and Subsetting data</h2>
+<p><strong>SLIDE</strong> (Indexing and Subsetting data)</p>
+<p><strong>SLIDE</strong> (Learning outcomes)</p>
+<ul>
+<li><strong>We don't always need to use all of the data</strong></li>
+<li>There might be incomplete or inappropriate data we need to skip</li>
+<li>We may only care about a subset of samples/observations</li>
+<li><p>We may want to run cross-validation of statistical models</p></li>
+<li><p>Talk around slide</p></li>
+</ul>
+<h3 id="subset-by-index">Subset by index</h3>
+<p><strong>SLIDE</strong> (Subset by index)</p>
+<ul>
+<li><strong>Every element in a collection is indexed</strong></li>
+<li>Each item in a collection can be referred to by the index</li>
+<li>Demonstrate with a vector:</li>
+</ul>
+<pre><code>&gt; x &lt;- c(5.4, 6.2, 7.1, 4.8, 7.5)
+&gt; names(x) &lt;- letters[1:5]
+&gt; x
+  a   b   c   d   e 
+5.4 6.2 7.1 4.8 7.5 </code></pre>
+<ul>
+<li>We can extract elements</li>
+<li>individually</li>
+<li>in groups</li>
+<li>as a 'slice'</li>
+<li><strong>NOTE: Elements are numbered from 1, not 0 (unlike Python)</strong></li>
+</ul>
+<pre><code>&gt; x
+  a   b   c   d   e 
+5.4 6.2 7.1 4.8 7.5 
+&gt; x[1]
+  a 
+5.4 
+&gt; x[4]
+  d 
+4.8 
+&gt; x[c(2,4)]
+  b   d 
+6.2 4.8 
+&gt; x[1:3]
+  a   b   c 
+5.4 6.2 7.1 
+&gt; x[c(1,1,3)]
+  a   a   c 
+5.4 5.4 7.1 </code></pre>
+<ul>
+<li><strong>Asking for an element that isn't there</strong></li>
+<li><code>x[0]</code> gives an empty vector</li>
+<li><code>x[6]</code> gives a missing value <code>NA</code></li>
+</ul>
+<pre><code>&gt; x[0]
+named numeric(0)
+&gt; x[6]
+&lt;NA&gt; 
+  NA </code></pre>
+<h3 id="skipremove-by-index">Skip/remove by index</h3>
+<ul>
+<li><strong>Use a negative number to return all elements <em>other than those listed</em>.</strong></li>
+</ul>
+<pre><code>&gt; x
+  a   b   c   d   e 
+5.4 6.2 7.1 4.8 7.5 
+&gt; x[-2]
+  a   c   d   e 
+5.4 7.1 4.8 7.5 
+&gt; x[c(-1,-5)]
+  b   c   d 
+6.2 7.1 4.8 </code></pre>
+<ul>
+<li><strong>Assign the result back to the original collection to <em>remove</em> elements</strong></li>
+</ul>
+<pre><code>&gt; x
+  a   b   c   d   e 
+5.4 6.2 7.1 4.8 7.5 
+&gt; x &lt;- x[-4]
+&gt; x
+  a   b   c   e 
+5.4 6.2 7.1 7.5 </code></pre>
+<p><strong>SLIDE</strong> (Challenge 1)</p>
+<p>Solution:</p>
+<pre><code>&gt; x[-1:3]
+Error in x[-1:3] : only 0&#39;s may be mixed with negative subscripts
+&gt; -1:3
+[1] -1  0  1  2  3
+&gt; 1:3
+[1] 1 2 3
+&gt; -(1:3)
+[1] -1 -2 -3
+&gt; x[-(1:3)]
+  d   e 
+4.8 7.5 </code></pre>
+<h3 id="logical-masks"> Logical masks</h3>
+<p><strong>SLIDE</strong> (Logical masks)</p>
+<ul>
+<li><p>Talk around slide</p></li>
+<li><strong>Logical mask vectors</strong></li>
+<li><p>Any vector of <code>TRUE</code>/<code>FALSE</code> values the same size as the vector we subset works</p></li>
+</ul>
+<pre><code>&gt; x &lt;- c(5.4, 6.2, 7.1, 4.8, 7.5)
+&gt; names(x) &lt;- letters[1:5]
+&gt; x
+  a   b   c   d   e 
+5.4 6.2 7.1 4.8 7.5 
+&gt; mask &lt;- c(TRUE, FALSE, TRUE, FALSE, TRUE)
+&gt; mask
+[1]  TRUE FALSE  TRUE FALSE  TRUE
+&gt; x[mask]
+  a   c   e 
+5.4 7.1 7.5 </code></pre>
+<ul>
+<li>Shorter vectors cycle round</li>
+</ul>
+<pre><code>&gt; mask_short = c(FALSE, TRUE)
+&gt; x[mask_short]
+  b   d 
+6.2 4.8 </code></pre>
+<ul>
+<li>Any function that generates a logical output can produce a <em>mask</em></li>
+<li>Can combine comparators with <code>&amp;</code>, <code>|</code>, <code>!</code></li>
+</ul>
+<pre><code>&gt; x &gt; 7
+    a     b     c     d     e 
+FALSE FALSE  TRUE FALSE  TRUE 
+&gt; x[x &gt; 7]
+  c   e 
+7.1 7.5 
+&gt; (x &gt; 5) &amp; (x &lt; 7)
+    a     b     c      d     e 
+ TRUE  TRUE FALSE  FALSE FALSE 
+&gt; x[(x &gt; 5) &amp; (x &lt; 7)]
+  a   b 
+5.4 6.2 </code></pre>
+<p><strong>SLIDE</strong> (Challenge 2)</p>
+<p>Solution:</p>
+<pre><code>(x &lt; 5) | (x &gt; 7)
+    a     b     c     d     e 
+FALSE FALSE  TRUE  TRUE  TRUE 
+&gt; x[(x &lt; 5) | (x &gt; 7)]
+  c   d   e 
+7.1 4.8 7.5 </code></pre>
+<h3 id="subset-by-name">Subset by name</h3>
+<p><strong>SLIDE</strong> (Subset by name)</p>
+<ul>
+<li><strong>Extracting subsets from vectors by name</strong></li>
+<li>Can use names directly</li>
+<li>Can use vectors of names</li>
+<li>Can't easily skip/remove, this way</li>
+</ul>
+<pre><code>&gt; x[&#39;a&#39;]
+  a 
+5.4 
+&gt; x[c(&#39;b&#39;, &#39;e&#39;)]
+  b   e 
+6.2 7.5 
+&gt; x[-c(&#39;b&#39;, &#39;e&#39;)]
+Error in -c(&quot;b&quot;, &quot;e&quot;) : invalid argument to unary operator</code></pre>
+<ul>
+<li><strong>Can use logical comparisons</strong></li>
+<li><code>names() ==</code> gives a logical vector</li>
+<li><code>names() %in%</code> for multiple selections</li>
+</ul>
+<pre><code>&gt; names(x)
+[1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot;
+&gt; names(x) == &#39;c&#39;
+[1] FALSE FALSE  TRUE FALSE FALSE
+&gt; x[names(x) == &#39;c&#39;]
+  c 
+7.1 
+&gt; x[names(x) == c(&#39;a&#39;, &#39;e&#39;)]
+  a 
+5.4 
+Warning message:
+In names(x) == c(&quot;a&quot;, &quot;e&quot;) :
+  longer object length is not a multiple of shorter object length
+&gt; names(x) %in% c(&#39;a&#39;, &#39;e&#39;)
+[1]  TRUE FALSE FALSE FALSE  TRUE
+&gt; x[names(x) %in% c(&#39;a&#39;, &#39;e&#39;)]
+  a   e 
+5.4 7.5
+&gt; x[!(names(x) %in% c(&#39;a&#39;, &#39;c&#39;))]
+  b   d   e 
+6.2 4.8 7.5 </code></pre>
+<ul>
+<li><strong>Can use indexing</strong></li>
+<li><code>which(names())</code> returns a vector of indexes</li>
+<li><code>==</code> and <code>%in%</code> as before</li>
+</ul>
+<pre><code>&gt; names(x)
+[1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot;
+&gt; names(x) == &#39;c&#39;
+[1] FALSE FALSE  TRUE FALSE FALSE
+&gt; which(names(x) == &#39;c&#39;)
+[1] 3
+&gt; x[which(names(x) == &#39;c&#39;)]
+  c 
+7.1 
+&gt; x[which(names(x) %in% c(&#39;a&#39;, &#39;c&#39;))]
+  a   c 
+5.4 7.1 
+&gt; x[-which(names(x) %in% c(&#39;a&#39;, &#39;c&#39;))]
+  b   d   e 
+6.2 4.8 7.5 </code></pre>
+<p><strong>SLIDE</strong> (Challenge 3)</p>
+<p>(5min)</p>
+<ul>
+<li>Can't use <code>x['a']</code> as it only returns a single value</li>
+</ul>
+<p>Solution:</p>
+<pre><code>x[names(x) == &#39;a&#39;]</code></pre>
+<h3 id="subsets-of-matrices">Subsets of matrices</h3>
+<p><strong>SLIDE</strong> (Subsets of matrices)</p>
+<ul>
+<li>Talk around slide</li>
+<li><strong>LIVE PRESENTATION</strong></li>
+<li><strong>Create matrix</strong></li>
+</ul>
+<pre><code>&gt; set.seed(1)
+&gt; m &lt;- matrix(rnorm(6*4), ncol=4, nrow=6)
+&gt; m
+           [,1]       [,2]        [,3]        [,4]
+[1,] -0.6264538  0.4874291 -0.62124058  0.82122120
+[2,]  0.1836433  0.7383247 -2.21469989  0.59390132
+[3,] -0.8356286  0.5757814  1.12493092  0.91897737
+[4,]  1.5952808 -0.3053884 -0.04493361  0.78213630
+[5,]  0.3295078  1.5117812 -0.01619026  0.07456498
+[6,] -0.8204684  0.3898432  0.94383621 -1.98935170</code></pre>
+<ul>
+<li><strong>Specify row and column to extract submatrices</strong></li>
+<li>can use ranges or subset data</li>
+<li><strong>Does not return data with same indexes!</strong></li>
+</ul>
+<pre><code>&gt; m[3:4, c(3,1)]
+            [,1]       [,2]
+[1,]  1.12493092 -0.8356286
+[2,] -0.04493361  1.5952808</code></pre>
+<ul>
+<li>Leave a row or column argument blank to retrieve all rows or columns</li>
+</ul>
+<pre><code>&gt; m[, c(3,1)]
+            [,1]       [,2]
+[1,] -0.62124058 -0.6264538
+[2,] -2.21469989  0.1836433
+[3,]  1.12493092 -0.8356286
+[4,] -0.04493361  1.5952808
+[5,] -0.01619026  0.3295078
+[6,]  0.94383621 -0.8204684
+&gt; m[3:4,]
+           [,1]       [,2]        [,3]      [,4]
+[1,] -0.8356286  0.5757814  1.12493092 0.9189774
+[2,]  1.5952808 -0.3053884 -0.04493361 0.7821363
+&gt; m[,]
+           [,1]       [,2]        [,3]        [,4]
+[1,] -0.6264538  0.4874291 -0.62124058  0.82122120
+[2,]  0.1836433  0.7383247 -2.21469989  0.59390132
+[3,] -0.8356286  0.5757814  1.12493092  0.91897737
+[4,]  1.5952808 -0.3053884 -0.04493361  0.78213630
+[5,]  0.3295078  1.5117812 -0.01619026  0.07456498
+[6,] -0.8204684  0.3898432  0.94383621 -1.98935170</code></pre>
+<ul>
+<li>Extracting a single row or column returns a vector</li>
+</ul>
+<pre><code>&gt; str(m[3:4,])
+ num [1:2, 1:4] -0.836 1.595 0.576 -0.305 1.125 ...
+&gt; str(m[3,])
+ num [1:4] -0.836 0.576 1.125 0.919</code></pre>
+<ul>
+<li><code>R</code> throws an error if indexes are out of bounds</li>
+</ul>
+<pre><code>&gt; m[, c(3,6)]
+Error in m[, c(3, 6)] : subscript out of bounds</code></pre>
+<div class="figure">
+<img src="images/red_green_sticky.png" alt="Red/green sticky" />
+<p class="caption">Red/green sticky</p>
+</div>
+<h3 id="subsets-of-lists">Subsets of lists</h3>
+<p><strong>Slide</strong> (Subsets of lists)</p>
+<ul>
+<li><p>Talk around slide</p></li>
+<li><strong>Create list</strong></li>
+<li><p>Inspect content</p></li>
+</ul>
+<pre><code>&gt; xlist &lt;- list(a=&quot;SWC&quot;, b=1:10, data=head(iris))
+&gt; str(xlist)
+List of 3
+ $ a   : chr &quot;SWC&quot;
+ $ b   : int [1:10] 1 2 3 4 5 6 7 8 9 10
+ $ data:&#39;data.frame&#39;:   6 obs. of  5 variables:
+  ..$ Sepal.Length: num [1:6] 5.1 4.9 4.7 4.6 5 5.4
+  ..$ Sepal.Width : num [1:6] 3.5 3 3.2 3.1 3.6 3.9
+  ..$ Petal.Length: num [1:6] 1.4 1.4 1.3 1.5 1.4 1.7
+  ..$ Petal.Width : num [1:6] 0.2 0.2 0.2 0.2 0.2 0.4
+  ..$ Species     : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1</code></pre>
+<ul>
+<li><strong>Extract list</strong></li>
+<li>Uses <code>[]</code> operator</li>
+<li>essentially slicing</li>
+<li>returns a list</li>
+</ul>
+<pre><code>&gt; xlist[1]
+$a
+[1] &quot;SWC&quot;
+&gt; xlist[1:2]
+$a
+[1] &quot;SWC&quot;
+$b
+ [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<ul>
+<li><strong>Extract element</strong></li>
+<li>Uses <code>[[]]</code> operator</li>
+<li>returns the atomic data type</li>
+<li><em>you can only extract one element at a time</em></li>
+<li>can use the element name</li>
+</ul>
+<pre><code>&gt; xlist[[1]]
+[1] &quot;SWC&quot;
+&gt; xlist[[2]]
+ [1]  1  2  3  4  5  6  7  8  9 10
+&gt; xlist[[1:2]]
+Error in xlist[[1:2]] : subscript out of bounds
+&gt; xlist[[&#39;data&#39;]]
+  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          4.9         3.0          1.4         0.2  setosa
+3          4.7         3.2          1.3         0.2  setosa
+4          4.6         3.1          1.5         0.2  setosa
+5          5.0         3.6          1.4         0.2  setosa
+6          5.4         3.9          1.7         0.4  setosa</code></pre>
+<ul>
+<li><strong>Extract by name</strong></li>
+<li>Uses the <code>$</code> operator (or <code>[[]]</code> as above)</li>
+</ul>
+<pre><code>&gt; xlist$a
+[1] &quot;SWC&quot;</code></pre>
+<ul>
+<li><strong>Extract element contents</strong></li>
+<li>Can subset from an element in the list, directly</li>
+</ul>
+<pre><code>&gt; xlist$data[4,]
+  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+4          4.6         3.1          1.5         0.2  setosa</code></pre>
+<div class="figure">
+<img src="images/red_green_sticky.png" alt="Red/green sticky" />
+<p class="caption">Red/green sticky</p>
+</div>
+<h3 id="subsets-of-data.frames">Subsets of <code>data.frame</code>s</h3>
+<p><strong>SLIDE</strong> (Subsets of <code>data.frame</code>s)</p>
+<ul>
+<li><p>Talk around slide</p></li>
+<li><strong>LIVE PRESENTATION</strong></li>
+<li><strong>Extract column as dataframe</strong></li>
+<li><p>Use the <code>[]</code> operator - returns a dataframe</p></li>
+</ul>
+<pre><code>&gt; str(gapminder)
+&#39;data.frame&#39;:   1704 obs. of  6 variables:
+ $ country  : Factor w/ 142 levels &quot;Afghanistan&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+ $ pop      : num  8425333 9240934 10267083 11537966 13079460 ...
+ $ continent: Factor w/ 5 levels &quot;Africa&quot;,&quot;Americas&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
+ $ lifeExp  : num  28.8 30.3 32 34 36.1 ...
+ $ gdpPercap: num  779 821 853 836 740 ...
+&gt; head(gapminder[3])
+       pop
+1  8425333
+2  9240934
+3 10267083
+4 11537966
+5 13079460
+6 14880372 
+&gt; head(gapminder[&quot;pop&quot;])
+       pop
+1  8425333
+2  9240934
+3 10267083
+4 11537966
+5 13079460
+6 14880372</code></pre>
+<ul>
+<li><strong>Extract column as atomic vector</strong></li>
+<li>Use the <code>[[]]</code> or <code>$</code> operators</li>
+</ul>
+<pre><code>&gt; head(gapminder[[5]])
+[1] 28.801 30.332 31.997 34.020 36.088 38.438
+&gt; head(gapminder[[&quot;lifeExp&quot;]])
+[1] 28.801 30.332 31.997 34.020 36.088 38.438
+&gt; head(gapminder$lifeExp)
+[1] 28.801 30.332 31.997 34.020 36.088 38.438</code></pre>
+<ul>
+<li><strong>Extract row/column as dataframe</strong></li>
+<li>Use two arguments, as for matrices</li>
+<li>Returns a dataframe for each row, if elements are mixed types</li>
+</ul>
+<pre><code>&gt; gapminder[1:3,]
+      country year      pop continent lifeExp gdpPercap
+1 Afghanistan 1952  8425333      Asia  28.801  779.4453
+2 Afghanistan 1957  9240934      Asia  30.332  820.8530
+3 Afghanistan 1962 10267083      Asia  31.997  853.1007
+&gt; gapminder[3,]
+      country year      pop continent lifeExp gdpPercap
+3 Afghanistan 1962 10267083      Asia  31.997  853.1007</code></pre>
+<ul>
+<li>To get a column dataframe, use the <code>drop=FALSE</code> argument</li>
+</ul>
+<pre><code>&gt; head(gapminder[, 3, drop=FALSE])
+       pop
+1  8425333
+2  9240934
+3 10267083
+4 11537966
+5 13079460
+6 14880372</code></pre>
+<p><strong>SLIDE</strong> (Challenge 4)</p>
+<p>(10min)</p>
+<p>Solution:</p>
+<pre><code>&gt; head(gapminder[gapminder$year == 1957,])
+       country year      pop continent lifeExp gdpPercap
+2  Afghanistan 1957  9240934      Asia  30.332   820.853
+14     Albania 1957  1476505    Europe  59.280  1942.284
+26     Algeria 1957 10270856    Africa  45.685  3013.976
+38      Angola 1957  4561361    Africa  31.999  3827.940
+50   Argentina 1957 19610538  Americas  64.399  6856.856
+62   Australia 1957  9712569   Oceania  70.330 10949.650
+&gt; head(gapminder[, -c(1:4)])
+  lifeExp gdpPercap
+1  28.801  779.4453
+2  30.332  820.8530
+3  31.997  853.1007
+4  34.020  836.1971
+5  36.088  739.9811
+6  38.438  786.1134
+&gt; head(gapminder[gapminder$year %in% c(2002, 2007),])
+       country year      pop continent lifeExp gdpPercap
+11 Afghanistan 2002 25268405      Asia  42.129  726.7341
+12 Afghanistan 2007 31889923      Asia  43.828  974.5803
+23     Albania 2002  3508512    Europe  75.651 4604.2117
+24     Albania 2007  3600523    Europe  76.423 5937.0295
+35     Algeria 2002 31287142    Africa  70.994 5288.0404
+36     Algeria 2007 33333216    Africa  72.301 6223.3675</code></pre>
+<h2 id="data.frame-manipulation-with-dplyr"><code>data.frame</code> manipulation with <code>dplyr</code></h2>
+<p><strong>SLIDE</strong> (<code>data.frame</code> manipulation with <code>dplyr</code>)</p>
+<p><strong>SLIDE</strong> (Learning objectives)</p>
+<ul>
+<li>Talk around slide</li>
+</ul>
+<p><strong>SLIDE</strong> (What and why is <code>dplyr</code>?)</p>
+<ul>
+<li>Talk around slide</li>
+</ul>
+<p><strong>SLIDE</strong> (Split-Apply-Combine)</p>
+<ul>
+<li><p>Talk around slide</p></li>
+<li><strong>A general technique for reducing the amount of repetition in code</strong></li>
+<li><p>good when datasets can be grouped</p></li>
+</ul>
+<p><strong>SLIDE</strong> (What and why is <code>dplyr</code>?)</p>
+<ul>
+<li><p>Talk around slide</p></li>
+<li><p><strong>Load <code>dplyr</code></strong></p></li>
+</ul>
+<pre><code>&gt; library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union</code></pre>
+<h3 id="select-and-filter"><code>select()</code> and <code>filter()</code></h3>
+<p><strong>SLIDE</strong> (<code>select()</code>)</p>
+<ul>
+<li>Talk around figure</li>
+</ul>
+<p><strong>SLIDE</strong> (<code>select()</code> and <code>filter()</code>)</p>
+<ul>
+<li><strong>LIVE PRESENTATION</strong></li>
+<li><strong><code>select()</code> keeps only the selected variables/columns</strong></li>
+<li>Note that we don't quote strings for the column names</li>
+</ul>
+<pre><code>&gt; head(gapminder)
+      country year      pop continent lifeExp gdpPercap
+1 Afghanistan 1952  8425333      Asia  28.801  779.4453
+2 Afghanistan 1957  9240934      Asia  30.332  820.8530
+3 Afghanistan 1962 10267083      Asia  31.997  853.1007
+4 Afghanistan 1967 11537966      Asia  34.020  836.1971
+5 Afghanistan 1972 13079460      Asia  36.088  739.9811
+6 Afghanistan 1977 14880372      Asia  38.438  786.1134
+&gt; head(select(gapminder, year, country, gdpPercap))
+  year     country gdpPercap
+1 1952 Afghanistan  779.4453
+2 1957 Afghanistan  820.8530
+3 1962 Afghanistan  853.1007
+4 1967 Afghanistan  836.1971
+5 1972 Afghanistan  739.9811
+6 1977 Afghanistan  786.1134</code></pre>
+<ul>
+<li><strong>Using the %&gt;% pipe</strong></li>
+<li>Analogous to the <code>|</code> pipe in the shell</li>
+<li>Can perform selections without specifying the <code>data.frame</code> in the function itself</li>
+<li>(this <em>is</em> useful…)</li>
+<li><strong>NOTE: Pipes let us split commands over several lines</strong></li>
+</ul>
+<pre><code>&gt; year_country_gdp &lt;- gapminder %&gt;% select(year, country, gdpPercap)
+&gt; head(year_country_gdp)
+  year     country gdpPercap
+1 1952 Afghanistan  779.4453
+2 1957 Afghanistan  820.8530
+3 1962 Afghanistan  853.1007
+4 1967 Afghanistan  836.1971
+5 1972 Afghanistan  739.9811
+6 1977 Afghanistan  786.1134</code></pre>
+<ul>
+<li><strong>Using <code>filter()</code> to keep only some data values</strong></li>
+<li>Filter lets us restrict rows on the basis of data content</li>
+</ul>
+<pre><code>&gt; head(filter(gapminder, continent==&quot;Europe&quot;))
+  country year     pop continent lifeExp gdpPercap
+1 Albania 1952 1282697    Europe   55.23  1601.056
+2 Albania 1957 1476505    Europe   59.28  1942.284
+3 Albania 1962 1728137    Europe   64.82  2312.889
+4 Albania 1967 1984060    Europe   66.22  2760.197
+5 Albania 1972 2263554    Europe   67.69  3313.422
+6 Albania 1977 2509048    Europe   68.93  3533.004</code></pre>
+<ul>
+<li><strong>Combining <code>filter()</code> and <code>select()</code> with pipes</strong></li>
+<li><code>dplyr</code> makes combining selection/filtering easy, using pipes</li>
+<li>Note: we don't need to define an intermediate <code>data.frame</code></li>
+<li>Note: we don't need to use clunky indexing/names</li>
+</ul>
+<pre><code>&gt; year_country_gdp_euro &lt;- gapminder %&gt;% filter(continent==&quot;Europe&quot;) 
+&gt;       %&gt;% select(year, country, gdpPercap)
+&gt; head(year_country_gdp_euro)
+  year country gdpPercap
+1 1952 Albania  1601.056
+2 1957 Albania  1942.284
+3 1962 Albania  2312.889
+4 1967 Albania  2760.197
+5 1972 Albania  3313.422
+6 1977 Albania  3533.004</code></pre>
+<p><strong>SLIDE</strong> (Challenge 1)</p>
+<p>Solution:</p>
+<pre><code>&gt; head(gapminder %&gt;% filter(continent==&quot;Africa&quot;) %&gt;% select(lifeExp, country, year))
+  lifeExp country year
+1  43.077 Algeria 1952
+2  45.685 Algeria 1957
+3  48.303 Algeria 1962
+4  51.407 Algeria 1967
+5  54.518 Algeria 1972
+6  58.014 Algeria 1977</code></pre>
+<h3 id="group_by-and-summarize"><code>group_by()</code> and <code>summarize</code></h3>
+<p><strong>SLIDE</strong> (Reducing repetition)</p>
+<ul>
+<li>Talk around slide</li>
+</ul>
+<p><strong>SLIDE</strong> (<code>group_by()</code>)</p>
+<ul>
+<li>Talk round figure</li>
+<li>separates out <code>data.frame</code> on the basis of values in <code>a</code></li>
+</ul>
+<p><strong>SLIDE</strong> (<code>summarize()</code>)</p>
+<ul>
+<li>Talk round figure</li>
+<li>Creates new variables that repeat over a series of <code>data.frame</code>s</li>
+</ul>
+<p><strong>SLIDE</strong> (<code>group_by()</code> and <code>summarize()</code>)</p>
+<ul>
+<li><p>Talk around slide</p></li>
+<li><strong><code>group_by()</code> produces a &quot;grouped <code>data.frame</code>&quot;</strong></li>
+<li><p>Not the same as a <code>data.frame</code>!</p></li>
+</ul>
+<pre><code>&gt; gapminder %&gt;% group_by(continent)
+Source: local data frame [1,704 x 6]
+Groups: continent [5]
+       country  year      pop continent lifeExp gdpPercap
+        (fctr) (int)    (dbl)    (fctr)   (dbl)     (dbl)
+1  Afghanistan  1952  8425333      Asia  28.801  779.4453
+2  Afghanistan  1957  9240934      Asia  30.332  820.8530
+3  Afghanistan  1962 10267083      Asia  31.997  853.1007
+4  Afghanistan  1967 11537966      Asia  34.020  836.1971
+5  Afghanistan  1972 13079460      Asia  36.088  739.9811
+6  Afghanistan  1977 14880372      Asia  38.438  786.1134
+7  Afghanistan  1982 12881816      Asia  39.854  978.0114
+8  Afghanistan  1987 13867957      Asia  40.822  852.3959
+9  Afghanistan  1992 16317921      Asia  41.674  649.3414
+10 Afghanistan  1997 22227415      Asia  41.763  635.3414
+..         ...   ...      ...       ...     ...       ...
+&gt; str(gapminder)
+&#39;data.frame&#39;:   1704 obs. of  6 variables:
+ $ country  : Factor w/ 142 levels &quot;Afghanistan&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+ $ pop      : num  8425333 9240934 10267083 11537966 13079460 ...
+ $ continent: Factor w/ 5 levels &quot;Africa&quot;,&quot;Americas&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
+ $ lifeExp  : num  28.8 30.3 32 34 36.1 ...
+ $ gdpPercap: num  779 821 853 836 740 ...
+&gt; str(gapminder %&gt;% group_by(continent))
+Classes ‘grouped_df’, ‘tbl_df’, ‘tbl’ and &#39;data.frame&#39;: 1704 obs. of  6 variables:
+ $ country  : Factor w/ 142 levels &quot;Afghanistan&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+ $ pop      : num  8425333 9240934 10267083 11537966 13079460 ...
+ $ continent: Factor w/ 5 levels &quot;Africa&quot;,&quot;Americas&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
+ $ lifeExp  : num  28.8 30.3 32 34 36.1 ...
+ $ gdpPercap: num  779 821 853 836 740 ...
+ - attr(*, &quot;vars&quot;)=List of 1
+  ..$ : symbol continent
+ - attr(*, &quot;drop&quot;)= logi TRUE
+ - attr(*, &quot;indices&quot;)=List of 5
+  ..$ : int  24 25 26 27 28 29 30 31 32 33 ...
+  ..$ : int  48 49 50 51 52 53 54 55 56 57 ...
+  ..$ : int  0 1 2 3 4 5 6 7 8 9 ...
+  ..$ : int  12 13 14 15 16 17 18 19 20 21 ...
+  ..$ : int  60 61 62 63 64 65 66 67 68 69 ...
+ - attr(*, &quot;group_sizes&quot;)= int  624 300 396 360 24
+ - attr(*, &quot;biggest_group_size&quot;)= int 624
+ - attr(*, &quot;labels&quot;)=&#39;data.frame&#39;:  5 obs. of  1 variable:
+  ..$ continent: Factor w/ 5 levels &quot;Africa&quot;,&quot;Americas&quot;,..: 1 2 3 4 5
+  ..- attr(*, &quot;vars&quot;)=List of 1
+  .. ..$ : symbol continent
+  ..- attr(*, &quot;drop&quot;)= logi TRUE</code></pre>
+<ul>
+<li>Like a <code>list</code> where each item is a <code>data.frame</code> whose rows correspond only to a particular value of <code>continent</code></li>
+<li><code>tally()</code> counts up the rows in each group</li>
+</ul>
+<pre><code>&gt; gapminder %&gt;%
++ group_by(continent) %&gt;%
++ tally()
+Source: local data frame [5 x 2]
+  continent     n
+     (fctr) (int)
+1    Africa   624
+2  Americas   300
+3      Asia   396
+4    Europe   360
+5   Oceania    24  </code></pre>
+<ul>
+<li><strong><code>summarize()</code> creates summary information for each group</strong></li>
+<li>We need to tell <code>summarize()</code> a function to apply to each of our grouped <code>data.frame</code>s</li>
+<li>We also tell it a variable name to place that calculated value into</li>
+<li><code>summarize</code> returns a <code>data.frame</code></li>
+</ul>
+<pre><code>&gt; gapminder %&gt;% group_by(continent)
+            %&gt;% summarize(meangdpPercap=mean(gdpPercap))
+Source: local data frame [5 x 2]
+
+  continent meangdpPercap
+     (fctr)         (dbl)
+1    Africa      2193.755
+2  Americas      7136.110
+3      Asia      7902.150
+4    Europe     14469.476
+5   Oceania     18621.609
+&gt; gapminder %&gt;% group_by(continent) 
+            %&gt;% summarize(sdgdpPercap=sd(gdpPercap))
+Source: local data frame [5 x 2]
+
+  continent sdgdpPercap
+     (fctr)       (dbl)
+1    Africa    2827.930
+2  Americas    6396.764
+3      Asia   14045.373
+4    Europe    9355.213
+5   Oceania    6358.983
+&gt; str(gapminder %&gt;% group_by(continent) %&gt;% summarize(sdgdpPercap=sd(gdpPercap)))
+Classes ‘tbl_df’, ‘tbl’ and &#39;data.frame&#39;:   5 obs. of  2 variables:
+ $ continent  : Factor w/ 5 levels &quot;Africa&quot;,&quot;Americas&quot;,..: 1 2 3 4 5
+ $ sdgdpPercap: num  2828 6397 14045 9355 6359</code></pre>
+<p><strong>SLIDE</strong> (Challenge 2)</p>
+<ul>
+<li>Use <code>filter()</code> to get the rows you need</li>
+</ul>
+<p>Solution:</p>
+<pre><code>&gt; lifeExp_bycountry &lt;- gapminder %&gt;% group_by(country) 
+                       %&gt;% summarize(meanlifeExp=mean(lifeExp))
+&gt; head(lifeExp_bycountry)
+Source: local data frame [6 x 2]
+      country meanlifeExp
+       (fctr)       (dbl)
+1 Afghanistan    37.47883
+2     Albania    68.43292
+3     Algeria    59.03017
+4      Angola    37.88350
+5   Argentina    69.06042
+6   Australia    74.66292                       
+&gt; lifeExp_bycountry %&gt;% filter(meanlifeExp == max(meanlifeExp))
+Source: local data frame [1 x 2]
+  country meanlifeExp
+   (fctr)       (dbl)
+1 Iceland    76.51142
+&gt; lifeExp_bycountry %&gt;% filter(meanlifeExp == min(meanlifeExp))
+Source: local data frame [1 x 2]
+       country meanlifeExp
+        (fctr)       (dbl)
+1 Sierra Leone    36.76917</code></pre>
+<p><strong>SLIDE</strong> (Group by multiple variables)</p>
+<ul>
+<li><p>Talk around slide</p></li>
+<li><strong>Use multiple variables with <code>group_by()</code>, <code>summarize()</code></strong></li>
+<li><p>Can write this in the script for sanity</p></li>
+</ul>
+<pre><code>&gt; gdp_bycontinent_byyear &lt;- gapminder %&gt;%
++ group_by(continent, year) %&gt;%
++ summarize(mean_gdpPercap=mean(gdpPercap))
+&gt; head(gdp_bycontinent_byyear)
+Source: local data frame [6 x 3]
+Groups: continent [1]
+  continent  year mean_gdpPercap
+     (fctr) (int)          (dbl)
+1    Africa  1952       1252.572
+2    Africa  1957       1385.236
+3    Africa  1962       1598.079
+4    Africa  1967       2050.364
+5    Africa  1972       2339.616
+6    Africa  1977       2585.939
+&gt; gdp_pop_bycontinents_byyear &lt;- gapminder %&gt;%
+  group_by(continent,year) %&gt;%
+  summarize(mean_gdpPercap=mean(gdpPercap),
+            sd_gdpPercap=sd(gdpPercap),
+            mean_pop=mean(pop),
+            sd_pop=sd(pop))
+&gt; head(gdp_pop_bycontinents_byyear)
+Source: local data frame [6 x 6]
+Groups: continent [1]
+  continent  year mean_gdpPercap sd_gdpPercap mean_pop   sd_pop
+     (fctr) (int)          (dbl)        (dbl)    (dbl)    (dbl)
+1    Africa  1952       1252.572     982.9521  4570010  6317450
+2    Africa  1957       1385.236    1134.5089  5093033  7076042
+3    Africa  1962       1598.079    1461.8392  5702247  7957545
+4    Africa  1967       2050.364    2847.7176  6447875  8985505
+5    Africa  1972       2339.616    3286.8539  7305376 10130833
+6    Africa  1977       2585.939    4142.3987  8328097 11585184</code></pre>
+<p><strong>SLIDE</strong> (<code>mutate()</code>)</p>
+<ul>
+<li><p>Talk around slide</p></li>
+<li><strong><code>mutate()</code> lets us create new variables on the fly</strong></li>
+<li><p>We can calculate total GDP from GDP per person, and population</p></li>
+</ul>
+<pre><code>&gt; head(gapminder %&gt;% mutate(gdp_billion=gdpPercap*pop/10^9))
+      country year      pop continent lifeExp gdpPercap gdp_billion
+1 Afghanistan 1952  8425333      Asia  28.801  779.4453    6.567086
+2 Afghanistan 1957  9240934      Asia  30.332  820.8530    7.585449
+3 Afghanistan 1962 10267083      Asia  31.997  853.1007    8.758856
+4 Afghanistan 1967 11537966      Asia  34.020  836.1971    9.648014
+5 Afghanistan 1972 13079460      Asia  36.088  739.9811    9.678553
+6 Afghanistan 1977 14880372      Asia  38.438  786.1134   11.697659
+&gt; gdp_pop_bycontinents_byyear &lt;- gapminder %&gt;%
++   mutate(gdp_billion=gdpPercap*pop/10^9) %&gt;%
++   group_by(continent,year) %&gt;%
++   summarize(mean_gdpPercap=mean(gdpPercap),
++             sd_gdpPercap=sd(gdpPercap),
++             mean_pop=mean(pop),
++             sd_pop=sd(pop),
++             mean_gdp_billion=mean(gdp_billion),
++             sd_gdp_billion=sd(gdp_billion))
+&gt; head(gdp_pop_bycontinents_byyear)
+Source: local data frame [6 x 8]
+Groups: continent [1]
+  continent  year mean_gdpPercap sd_gdpPercap mean_pop   sd_pop mean_gdp_billion
+     (fctr) (int)          (dbl)        (dbl)    (dbl)    (dbl)            (dbl)
+1    Africa  1952       1252.572     982.9521  4570010  6317450         5.992295
+2    Africa  1957       1385.236    1134.5089  5093033  7076042         7.359189
+3    Africa  1962       1598.079    1461.8392  5702247  7957545         8.784877
+4    Africa  1967       2050.364    2847.7176  6447875  8985505        11.443994
+5    Africa  1972       2339.616    3286.8539  7305376 10130833        15.072242
+6    Africa  1977       2585.939    4142.3987  8328097 11585184        18.694899
+Variables not shown: sd_gdp_billion (dbl)
+&gt; gdp_pop_bycontinents_byyear &lt;- gapminder %&gt;%
++   group_by(continent,year) %&gt;%
++   summarize(mean_gdpPercap=mean(gdpPercap),
++             sd_gdpPercap=sd(gdpPercap),
++             mean_pop=mean(pop),
++             sd_pop=sd(pop)) %&gt;%
++   mutate(mean_gdp_billion=mean_gdpPercap*mean_pop/10^9)
+&gt; head(gdp_pop_bycontinents_byyear)
+Source: local data frame [6 x 7]
+Groups: continent [1]
+  continent  year mean_gdpPercap sd_gdpPercap mean_pop   sd_pop mean_gdp_billion
+     (fctr) (int)          (dbl)        (dbl)    (dbl)    (dbl)            (dbl)
+1    Africa  1952       1252.572     982.9521  4570010  6317450         5.724268
+2    Africa  1957       1385.236    1134.5089  5093033  7076042         7.055054
+3    Africa  1962       1598.079    1461.8392  5702247  7957545         9.112641
+4    Africa  1967       2050.364    2847.7176  6447875  8985505        13.220489
+5    Africa  1972       2339.616    3286.8539  7305376 10130833        17.091772
+6    Africa  1977       2585.939    4142.3987  8328097 11585184        21.535946</code></pre>
+<div class="figure">
+<img src="images/red_green_sticky.png" alt="Red/green sticky" />
+<p class="caption">Red/green sticky</p>
+</div>
+<h2 id="creating-publication-quality-graphics">Creating publication-quality graphics</h2>
+<p><strong>SLIDE</strong> (Creating publication-quality graphics)</p>
+<p><strong>SLIDE</strong> (Visualisation is key!)</p>
+<ul>
+<li>But it's not everything.</li>
+<li>Visualisation can be misleading, too.</li>
+</ul>
+<p><strong>SLIDE</strong> (Learning objectives)</p>
+<ul>
+<li>Talk around slide</li>
+</ul>
+<h3 id="the-grammar-of-graphics">The grammar of graphics</h3>
+<p><strong>SLIDE</strong> (The grammar of graphics)</p>
+<ul>
+<li><p>Talk around slide</p></li>
+<li><strong>Grammar of graphics is non-intuitive, but gives advantages</strong></li>
+<li>Data and its representation handled separately</li>
+<li>Means that components can be customised to a particular representation easily</li>
+<li><p>Can get you a long way quickly, and can enable specific, custom data representation</p></li>
+</ul>
+<p><strong>SLIDE</strong> (A basic scatterplot)</p>
+<ul>
+<li>Talk around slide</li>
+<li>Just like working in Excel, <code>matplotlib</code> or any other package</li>
+</ul>
+<pre><code>&gt; library(ggplot2)
+&gt; qplot(lifeExp, gdpPercap, data=gapminder, colour=continent)</code></pre>
+<ul>
+<li><strong>Show the plot</strong></li>
+<li>Describe features</li>
+<li>x-, y-axes; colours by continent; legend</li>
+<li><p>main features - Europe high life expectancy, Africa low GDP per capita</p></li>
+<li><strong>What is happening under the surface? How can you reproduce this?</strong></li>
+<li>Convenience functions can be quick and easy, but aren't readily modifiable</li>
+<li><p>We'd like to build plots <em>like</em> this in other situations - how can we do that?</p></li>
+</ul>
+<p><strong>SLIDE</strong> (What is a scatterplot? Aesthetics…)</p>
+<ul>
+<li>Talk around slide</li>
+</ul>
+<p><strong>SLIDE</strong> (What is a scatterplot? Aesthetics…)</p>
+<ul>
+<li><p>Talk around slide</p></li>
+<li><strong>Aesthetics decide where and how data are plotted</strong></li>
+<li><p>They essentially create a new dataset that contains aesthetic information</p></li>
+</ul>
+<p><strong>SLIDE</strong> (What is a scatterplot? <code>geom</code>s)</p>
+<ul>
+<li><p>Talk around slide</p></li>
+<li><strong><code>geom</code>s determine the &quot;type&quot; of plot</strong></li>
+<li>Not all <code>geom</code>s make sense for a given dataset (though they may be 'grammatical')</li>
+<li><p>Can combine multiple <code>geom</code>s to produce new graphs</p></li>
+</ul>
+<p><strong>SLIDE</strong> (<code>ggplot2</code> layers)</p>
+<ul>
+<li>Talk around slide</li>
+</ul>
+<p><strong>SLIDE</strong> (Building a scatterplot)</p>
+<ul>
+<li><strong>Creating a <code>ggplot</code> object</strong></li>
+<li>We don't plot these directly</li>
+<li>Can store them in variables for convenience/reproducibility</li>
+</ul>
+<pre><code>&gt; ggplot(data=gapminder, aes(x=lifeExp, y=gdpPercap))
+&gt; p &lt;- ggplot(data=gapminder, aes(x=lifeExp, y=gdpPercap))
+&gt; str(p)
+List of 9
+ $ data       :&#39;data.frame&#39;:    1704 obs. of  6 variables:
+  ..$ country  : Factor w/ 142 levels &quot;Afghanistan&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+  ..$ year     : int [1:1704] 1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+  ..$ pop      : num [1:1704] 8425333 9240934 10267083 11537966 13079460 ...
+  ..$ continent: Factor w/ 5 levels &quot;Africa&quot;,&quot;Americas&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
+  ..$ lifeExp  : num [1:1704] 28.8 30.3 32 34 36.1 ...
+  ..$ gdpPercap: num [1:1704] 779 821 853 836 740 ...
+  […]</code></pre>
+<ul>
+<li><strong>We need to add a layer</strong></li>
+<li>At minimum, use a <code>geom</code>, with <code>+</code> to add it to the data/aesthetic layer</li>
+<li>This uses the default dataset we specified in <code>p</code>, unless told otherwise</li>
+<li><code>geom_point</code> tells <code>ggplot2</code> we want to represent data as points (scatterplot)</li>
+<li>We get only a scatterplot of points, but no colours</li>
+</ul>
+<pre><code>&gt; p + geom_point()</code></pre>
+<ul>
+<li><strong>We can modify aesthetics</strong></li>
+<li>In the default dataset, or in the <code>geom</code> layer</li>
+<li>Aesthetics/data in the <code>geom</code> layer override those in the default</li>
+</ul>
+<pre><code>&gt; p + geom_point(aes(colour=continent))
+&gt; p &lt;- ggplot(data=gapminder, aes(x=lifeExp, y=gdpPercap, colour=continent))
+&gt; p + geom_point()</code></pre>
+<p><strong>SLIDE</strong> (Challenge 1)</p>
+<p>Solution:</p>
+<pre><code>&gt; p &lt;- ggplot(data=gapminder, aes(x=year, y=lifeExp, colour=continent))
+&gt; p + geom_point()</code></pre>
+<p><strong>This is not a good way to view the data - we need a new geometry!</strong></p>
+<h3 id="layers">Layers</h3>
+<p><strong>SLIDE</strong> (Layers)</p>
+<ul>
+<li><p>Talk around slide</p></li>
+<li><strong>The last challenge representation didn't look good</strong></li>
+<li><p>Change <code>geom</code> to line chart</p></li>
+</ul>
+<pre><code>&gt; p + geom_line()</code></pre>
+<ul>
+<li>This looks wrong</li>
+<li><p>By default with our data, lines connect continents, not countries (which is what we actually want)</p></li>
+<li><strong>Group data on a variable</strong></li>
+<li><p>Use <code>by</code> to group data by country</p></li>
+</ul>
+<pre><code>&gt; p + geom_line(aes(by=country))</code></pre>
+<ul>
+<li><p>That looks better</p></li>
+<li><strong>Overlay a second <code>geom</code> to see datapoints</strong></li>
+<li>Use the <code>+</code> operator to keep adding <code>geom</code>s</li>
+<li><p>Layers are drawn in the specified order</p></li>
+</ul>
+<pre><code>&gt; p + geom_line(aes(by=country)) + geom_point()
+&gt; p + geom_line(aes(by=country)) + geom_point(aes(colour=NULL))
+&gt; p + geom_point(aes(colour=NULL)) + geom_line(aes(by=country))</code></pre>
+<h3 id="transformations-and-statistics">Transformations and statistics</h3>
+<p><strong>SLIDE</strong> (Transformations)</p>
+<ul>
+<li><p>Talk around slide</p></li>
+<li><strong>Scaling axes</strong></li>
+<li>Difficult to distinguish GDP on the y-axis</li>
+<li><p>Rescale with a transformation</p></li>
+</ul>
+<pre><code>&gt; p &lt;- ggplot(data=gapminder, aes(x=lifeExp, y=gdpPercap, colour=continent))
+&gt; p + geom_point()
+&gt; p + geom_point() + scale_y_log10()</code></pre>
+<ul>
+<li><strong>Transformations can be layered</strong></li>
+</ul>
+<pre><code>&gt; p + geom_point(aes(size=pop)) + scale_size(&quot;population&quot;)
+&gt; p + geom_point(aes(size=pop)) + scale_size(&quot;population&quot;) + scale_y_log10()</code></pre>
+<ul>
+<li><strong>Scaling colours</strong></li>
+<li>Transformations are also how colours are 'scaled'</li>
+</ul>
+<pre><code>&gt; p + geom_point() + scale_y_log10() + scale_colour_brewer()
+&gt; p + geom_point() + scale_y_log10() + scale_colour_grey()</code></pre>
+<p><strong>SLIDE</strong> (Statistics)</p>
+<ul>
+<li><p>Talk around slide</p></li>
+<li><strong>Adding a smoother to the data</strong></li>
+<li><p>Adds as another layer on the plot</p></li>
+</ul>
+<pre><code>&gt; p &lt;- ggplot(data=gapminder, aes(x=lifeExp, y=gdpPercap))
+&gt; p + geom_point()
+&gt; p + geom_point() + scale_y_log10()
+&gt; p + geom_point() + scale_y_log10() + geom_smooth()</code></pre>
+<ul>
+<li><strong>Adding a KDE</strong></li>
+<li>Adds as another layer on the plot</li>
+</ul>
+<pre><code>&gt; p + geom_point() + scale_y_log10() + geom_density_2d()</code></pre>
+<h3 id="multi-panel-figures">Multi-panel figures</h3>
+<p><strong>SLIDE</strong> (Multi-panel figures)</p>
+<ul>
+<li><p>Talk around slide</p></li>
+<li><strong>Faceting</strong></li>
+<li>Grouping data by country, colouring by continent</li>
+<li>One big plot is messy, hard to read.</li>
+<li><p>Using <code>facet_wrap</code> splits out plots on groups</p></li>
+</ul>
+<pre><code>&gt; p &lt;- ggplot(data=gapminder, aes(x=year, y=lifeExp, colour=continent, by=country))
+&gt; p + geom_line()
+&gt; p + geom_line() + scale_y_log10()
+&gt; p + geom_line() + scale_y_log10() + facet_wrap(~continent)</code></pre>
+<ul>
+<li><strong>Grouping on country</strong></li>
+<li>Even the continent plots are a bit jumbled</li>
+<li>Group by country just by changing the argument</li>
+</ul>
+<pre><code>&gt; p + geom_line() + scale_y_log10() + facet_wrap(~country)</code></pre>
+<ul>
+<li>Very hard to read in <code>RStudio</code></li>
+<li>Export graph as pdf and visualise</li>
+<li>Click <code>Export -&gt; Save as PDF</code></li>
+<li>PDF Size: A4</li>
+<li>Orientation: Landscape</li>
+<li>File name (something sensible)</li>
+<li>View plot after saving</li>
+<li><code>Save</code></li>
+</ul>
+<p><strong>SLIDE</strong> (Challenge 2)</p>
+<p>Solution:</p>
+<pre><code>&gt; p &lt;- ggplot(data = gapminder, aes(x = gdpPercap, fill=continent))
+&gt; p + geom_density()
+&gt; p + geom_density(alpha=0.6)
+&gt; p + geom_density(alpha=0.6) + scale_x_log10()
+&gt; p + geom_density(alpha=0.6) + scale_x_log10() + facet_wrap(~year)</code></pre>
+<h2 id="wrapping-up">Wrapping up</h2>
+<p><strong>SLIDE</strong> (Wrapping Up)</p>
+<p><strong>SLIDE</strong> (Learning objectives)</p>
+<ul>
+<li>Talk around slide</li>
+</ul>
+<p><strong>SLIDE</strong> (Best practices)</p>
+<ul>
+<li>Talk around slide</li>
+</ul>
