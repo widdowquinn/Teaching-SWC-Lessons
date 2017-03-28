@@ -17,6 +17,26 @@ All of this work derives from the original Software and Data Carpentry lessons, 
   * [Python lesson 01](./python/2017-03-23-standrews/python-01/slides.html)
   * [Python lesson 02](./python/2017-03-23-standrews/python-02/slides.html)
 
+## Jupyter Notebooks
+
+The `Python` lessons I have delivered have been (mostly) through Jupyter notebooks.
+
+You can start an instance of this repository under MyBinder, by clicking on [this link], or the button below.
+
+
+The Jupyter notebooks are linked directly below:
+
+* 2017-03-23 St Andrews:
+  * [Variables](./python/2017-03-23-standrews/python-01/variables.ipynb)
+  * [Data analysis and visualisation](./python/2017-03-23-standrews/python-01/analysis.ipynb)
+  * [Loops](./python/2017-03-23-standrews/python-01/loops.ipynb)
+  * [Lists](./python/2017-03-23-standrews/python-01/lists.ipynb)
+  * [Making choices](./python/2017-03-23-standrews/python-01/choices.ipynb)
+  * [Working with multiple files](./python/2017-03-23-standrews/python-01/multiple.ipynb)
+  * [Functions](./python/2017-03-23-standrews/python-02/functions.ipynb)
+  * [Errors](./python/2017-03-23-standrews/python-02/errors.ipynb)
+  * [Defensive programming](./python/2017-03-23-standrews/python-02/defensive.ipynb)  
+
 ## Courses
 
 ### 2015-11-16 Manchester
