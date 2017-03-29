@@ -1,2 +1,5 @@
 # Jupyter intermediate files
-.ipynb_checkpoints/
+.ipynb_checkpoints
+
+# Emacs intermediate files
+*~
