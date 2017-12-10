@@ -80,3 +80,18 @@ Delivered to postgrads, postdocs and staff at the University of Dundee
 
 Delivered to postgrads, postdocs and staff at the University of St Andrews
 
+### 2017-05-18 St Andrews
+
+* [Repository](https://github.com/alex-konovalov/2017-05-18-standrews)
+* [Website](https://alex-konovalov.github.io/2017-05-18-standrews/)
+* Lead instructor: Alex Konovalov
+
+Delivered to postgrads, postdocs and staff at the University of St Andrews
+
+### 2017-12-04 St Andrews
+
+* [Repository](https://github.com/StAResComp/2017-12-04-standrews)
+* [Website](https://starescomp.github.io/2017-12-04-standrews/)
+* Lead instructor: Alex Konovalov
+
+Delivered to postgrads, postdocs and staff at the University of St Andrews
