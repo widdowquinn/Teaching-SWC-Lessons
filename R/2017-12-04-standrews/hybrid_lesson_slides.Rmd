@@ -1,0 +1,1940 @@
+---
+title: 'Programming in R'
+author: "Leighton Pritchard"
+date: "5-6/12/2017"
+output:
+  ioslides_presentation:
+    css: ./includes/custom.css
+    font-family: 'Helvetica'
+    widescreen: True
+    mathjax: local
+    self_contained: false
+# runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Etherpad
+
+<div class="attention">
+Please do take notes on the course `etherpad`:
+</div>
+
+[http://pad.software-carpentry.org/2017-12-04-standrews](http://pad.software-carpentry.org/2017-12-04-standrews)
+
+<div class="highlight">
+* **Communal notes**: share your understanding, and benefit from others
+* **Ask questions**: get detailed answers with links and examples
+* **A record/reference for after the course**
+</div>
+
+
+## Learning Objectives
+
+* Fundamentals of `R` and `RStudio`
+* Fundamentals of programming
+* Best practices for organising code
+* Best practices for reproducibility
+* Effective data analysis in `R`
+
+
+# 01. Introduction to <br />`R` and `RStudio`
+
+
+## Learning Objectives
+
+* Understand what `R` is
+* Understand what `RStudio` is
+* Understand why `R` is different from something like `Excel`
+
+
+## What is `R`?
+
+* `R` is a programming language
+* `R` is the software that interprets programs written in the `R` programming language
+
+<div class="highlight">
+* **Have you used `R` before?**
+</div>
+
+> * `R` is free (commercial support can be bought)
+> * `R` is widely-used and *interdisciplinary* (sciences, humanities, engineering, etc.)
+> * `R` has many excellent packages for statistics and data analysis, visualisation and graphics
+> * `R` has an international, friendly user community
+
+<div class="references">
+* RStudio community support: <https://community.rstudio.com/>
+* Stack Overflow: <https://stackoverflow.com/>
+</div>
+
+
+## "But I already know `Excel`…"
+
+<div class="highlight">
+* `Excel` is fine for many things, but `R` is great for reproducibility…
+</div>
+
+<center>
+<img src="images/dt160107.gif" width="80%" />
+</center>
+
+> * ***Separates data from analysis***
+> * Not point-and-click: *every step is explicit and transparent*
+> * Easy to share, adapt, reuse, publish analyses with new/modified data (GitHub)
+> * `R` can be run on supercomputers…
+
+    
+<div class="references">
+* Mike Croucher's MLPM talk: <https://mikecroucher.github.io/MLPM_talk/>
+</div>
+
+
+## What is `RStudio`?
+
+* `RStudio` is an *integrated development environment* (IDE) - all platforms
+
+<center>
+<img src="images/rstudio_window.png" width="50%" />
+<img src="images/RStudio-Screenshot.png" width="40%" />
+</center>
+
+<div class="highlight">
+* Interaction with `R` (console/'scratchpad')
+* Script/code editor
+* Graphics/visualisation
+* Project management (`git` integration)
+</div>
+
+
+# 02. Getting to know `RStudio`
+
+
+## Learning Objectives
+
+* Familiarity with the `RStudio` IDE
+* Introduce `R` syntax
+* Learn good project management practices
+* Set up a working directory with version control (`git`) in `RStudio`
+
+
+## `RStudio` overview - Interactive Demo
+
+<center>
+<img src="images/rstudio-start-view.png" width="75%" />
+</center>
+
+## Challenge 01 (5min)
+
+* **Try out some of your own calculations in the interactive console**
+
+```{r}
+2 ** 16
+15 %% 4
+15 %/% 4
+```
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+## Variables
+
+<div class="highlight">
+**Variables** are like *named boxes*
+</div>
+
+* An item of data goes in the box (called `Name`)
+* When we refer to the box (*variable*) by its name, we really mean *what's in the box*
+
+<center>
+<img src="images/boxes_variables_arrow.png" width="45%" />
+</center>
+
+
+## Variables - Interactive Demo
+
+```{r}
+name <- "Samia"
+name
+x <- 1 / 40
+x
+x ^ 2
+log(x)
+```
+
+
+## Functions
+
+* Function (`log()`, `sin()` etc.) ≈ "canned script"
+    * automate complicated tasks
+    * make code more readable and reusable
+* Some functions are built-in (in *base* packages, e.g. `sqrt()`, `lm()`, `plot()`)
+* Some functions are *imported* in *libraries*
+
+<div class="attention">
+* Functions usually take *arguments* (*input*)
+* Functions often *return* values (*output*)
+</div>
+
+## Getting Help For Functions
+
+<center>
+<div class="attention">
+INTERACTIVE DEMO
+</div>
+</center>
+
+```{r, eval=FALSE}
+args(fname)            # arguments for fname
+?fname                 # help page for fname
+help(fname)            # help page for fname
+??fname                # any mention of fname
+help.search("text")    # any mention of "text"
+vignette(fname)        # worked examples for fname
+vignette()             # show all available vignettes
+```
+
+## Removing Variables
+
+To remove variables from your workspace, use the `rm()` function
+
+```{r}
+x <- 1
+ls()
+rm(x, name)
+ls()
+```
+
+To remove all variables use the broom in the `Environment` tab (`Rstudio`), or:
+
+```{r}
+rm(list=ls())
+```
+
+
+## Challenge 02 (5min)
+
+What will be the value of each variable after each statement in the following program?
+
+```{r, echo=TRUE}
+mass <- 47.5
+age <- 122
+mass <- mass * 2.3
+age <- age - 20
+```
+
+* `mass = 47.5, age = 102`
+* `mass = 109.25, age = 102`
+* `mass = 47.5, age = 122`
+* `mass = 109.25, age = 122`
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+
+## Good Variable Names
+
+* Descriptive (but not *too* long)
+* Avoid existing names (e.g. `mean`, `matrix`, `list`, etc.)
+* Consistent style
+    * `periods.between.words`
+    * `underscores_between_words`
+    * `camelCaseToSeparateWords`
+
+<center>
+<div class="highlight">
+**IN `R`…**
+</div>
+</center>
+
+> * letters, numbers, underscores, and periods (`[a-zA-z0-9_.]`)
+> * cannot start with a number
+> * whitespace is not allowed
+
+
+## Good Project Management Practices
+
+<div class="highlight">
+**No single 'right way' - only good principles**
+</div>
+
+* Use a single working directory per project/analysis
+    - easier to move, share, and find files
+    - use *relative paths* to locate files
+* Treat raw data as read-only
+    * keep in separate subfolder (`data`)?
+* Clean data ready for work
+    * keep cleaned/modified data in separate folder?
+* Consider output generated by analysis to be disposable
+    * can be regenerated by running analysis/code
+    * don't place under version control
+
+<div class="references">
+* Good Enough Practices in Scientific Computing (2017) Wilson *et al.* <http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510>
+</class>
+
+## Example Directory Structure
+
+<center>
+<img src="images/working-directory-structure.png" width="100%" />
+</center>
+
+
+## Project Management in `RStudio`
+
+* `RStudio` tries to help you manage your projects
+    * `R Project` concept - files and subdirectory structure
+    * `git` integration
+    * switching between multiple projects within `RStudio`
+    * stores project history
+    
+<div class="highlight">
+**Let's create a project in `RStudio`**
+
+Using `git` for version control.
+</div>
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+<div class="references">
+`RStudio` projects: <https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects>
+</div>
+
+
+## Working in `RStudio`
+
+<div class="highlight">
+We can write code in several ways in `RStudio`
+</div>
+
+* At the console (you've done this)
+* In a script
+* As an interactive notebook
+* As a markdown file
+* As a Shiny app
+
+We're going to create a new dataset and `R` script.
+
+* Putting code in a script makes it easier to modify, share and run
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+
+# 03. A First Analysis in `RStudio`
+
+
+## Learning Objectives
+
+* Load data into an `R` project
+* Produce summary statistics of data
+* Extract subsets of data
+* Basic plotting in `R` (*base graphics*)
+
+
+## Our Task
+
+* Patients have been given a new treatment for arthritis
+* We have measurements of inflammation over a period of days for each patient
+* We want to produce a preliminary analysis and graphs for this data
+
+<div class="highlight">
+Download the file from the following link to your `data/` directory, and extract it
+</div>
+
+* [https://swcarpentry.github.io/r-novice-inflammation/files/r-novice-inflammation-data.zip](https://swcarpentry.github.io/r-novice-inflammation/files/r-novice-inflammation-data.zip)
+
+(the link is available on the course Etherpad page)
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+
+## Loading Data - Interactive Demo
+
+* You created data manually earlier, but this is rare
+* Data are most commonly read in from plain text files
+
+<div class="highlight">
+Data files can be inspected in `RStudio`
+</div>
+
+```{r, eval=FALSE}
+read.csv(file = "data/inflammation-01.csv", header = FALSE)
+```
+
+
+## Challenge 03 (5min)
+
+How would you open a similar data file that had:
+
+* a comma (`,`) as the decimal point character
+* semi-colon (`;`) as the field separator
+
+using `read.csv()`
+
+<center>
+<div class="attention">
+**Use the help function and documentation**
+</div>
+</center>
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+
+## Indexing Data - Interactive Demo
+
+* We use *indexing* to refer to elements of a variable
+    * square brackets: `[]`
+    * row, then column: `[row, column]`
+
+```{r, eval=FALSE}
+data[1, 1]     # First value in dataset
+data[30, 20]   # Middle value of dataset
+```
+
+* To get a range of values, use the `:` separator (meaning 'to')
+
+```{r, eval=FALSE}
+data[1:4, 1:4]   # rows 1 to 4; columns 1 to 4
+```
+
+* To select a complete row or column, leave it blank
+
+```{r, eval=FALSE}
+data[5, ]     # row 5
+data[, 16]    # column 16
+```
+
+
+## Summary Functions - Interactive Demo
+
+* `R` provides useful functions to summarise data
+* We can use *indexing* to get summary information on individual patients and days
+
+```{r, eval=FALSE}
+max(data)           # largest value in dataset
+max(data[2, ])      # largest value for patient 2
+min(data[, 7])      # smallest value on day 7
+mean(data[, 7])     # mean value on day 7
+sd(data[, 7])       # standard deviation of values on day 7
+```
+
+
+## Challenge 04 (5min)
+
+Given the *vector* in `R`:
+
+```{r}
+animal <- c("m", "o", "n", "k", "e", "y")
+```
+
+Can you generate slices that do the following:
+
+* return the first three characters
+* return the last three characters
+* return the first three characters *in reverse order*
+
+* What do `animal[-1]` and `animal[-4]` do?
+* Can you explain what `animal[-1:-4]` does?
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+
+## Repetitive Calculations - Interactive Demo
+
+* We could calculate mean inflammation for every patient (or day) this way, but it's tedious
+
+<div class="highlight">
+**Computers exist to do tedious things for us**
+</div>
+
+* `R` has several ways to automate this process
+* We'd like to `apply` a *function* (`mean`) to each row in the `data`:
+
+```{r, eval=FALSE}
+apply(X = data, MARGIN = 1, FUN = mean)
+```
+
+<div class="attention">
+* `MARGIN = 1`: rows
+* `MARGIN = 2`: columns
+</div>
+
+```{r, eval=FALSE}
+rowMeans(data)
+colMeans(data)
+```
+
+
+## Base Graphics
+
+> "The purpose of computing is insight, not numbers.” - Richard Hamming
+
+<div class="highlight">
+* `R` has many available graphics packages
+    * graphically beautiful
+    * specific problem domains
+* 'built-in' graphics are known as *base graphics*
+</div>
+
+* Base graphics are powerful tools for visualisation and understanding
+
+
+## Plotting - Interactive Demo
+
+```{r, eval=FALSE}
+plot(avg_inflammation_patient)
+
+max_day_inflammation <- apply(dat, 2, max)
+plot(max_day_inflammation)
+
+plot(apply(dat,2,min))       # 3 functions in one!
+```
+
+<center>
+<img src="images/plot1.png" width="30%" />
+<img src="images/plot2.png" width="30%" />
+<img src="images/plot3.png" width="30%" />
+</center>
+
+
+## Challenge 05 (5min)
+
+Can you add a plot to your script showing:
+
+* standard deviation, by day
+* a histogram of inflammation by day
+
+<div class="attention">
+**(don't forget to commit changes)**
+</div>
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+
+# 04. Data Types and <br />Structures in `R`
+
+
+## Learning Objectives
+
+* Basic data types in `R`
+* Common data structures in `R`
+* How to find out the type/structure of `R` data
+* Understand how `R`'s data types and structures relate to your own data
+
+
+## Data Types and Structures in `R`
+
+* `R` is mostly used for data analysis
+* `R` has special *types* and *structures* to help you work with data
+* Much of the focus is on tabular data (*data frames*) 
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+<div class="highlight">
+Understanding data types, their uses, and how they relate to your own data is key to successful analysis with `R`
+
+(it's not just about programming)
+</div>
+
+## What Data Types Do You Expect?
+
+<center>
+<div class="attention">
+**What data types would you expect to see?**
+
+What examples of data types can you think of from your own experience?
+</div>
+</center>
+
+## Data Types in `R`
+
+* Data *types* in `R` are *atomic*
+    * All data is one of these types
+    * All data *structures* are built from these
+    
+<div class="highlight">
+1. **logical**: `TRUE`, `FALSE`
+2. **numeric**:
+    * **integer**: `3`, `2L`, `123456`
+    * **double** (*decimal*): `3.0`, `-23.45`, `pi`
+3. **complex**: `3+0i`, `1+4i`
+4. **character** (*text*): `"a"`, `'SWC'`, `"This is not a string"`
+5. **raw**: binary data
+</div>
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+
+## Challenge 06 (5min)
+
+Create examples of data with the following characteristics:
+
+<div class="highlight">
+* name: `answer`, type: `logical`
+* name: `height`, type: `numeric`
+* name: `dog_name`, type: `character`
+</div>
+
+For each variable, test that it has the data type you intended
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+
+## Five Common `R` Data Structures
+
+* `vector`
+* `factor`
+* `list`
+* `matrix`
+* `data.frame`
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+
+## Challenge 07 (5min)
+
+Vectors are *atomic*: they can contain only a single data *type*
+
+What data type are the following vectors (`xx`)?
+
+```R
+xx <- c(1.7, "a")
+xx <- c(TRUE, 2)
+xx <- c("a", TRUE)
+```
+
+<div class="highlight">
+Options: `logical`, `integer`, `numeric`, `character`
+</div>
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+
+## Coercion
+
+* *Coercion* means changing data from one *type* to another
+* `R` will perform *implicit coercion* on vectors to make them atomic
+
+<div class="highlight">
+`logical` $\rightarrow$ `integer` $\rightarrow$ `double` $\rightarrow$ `complex` $\rightarrow$ `character`
+</div>
+
+<center>
+<div class="attention">
+**If there are formatting problems with your data, you might not have the type you expect when you import into `R`**
+</div>
+</center>
+
+* Manual coercion with `as.<type_name>()`
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+
+## Factors
+
+Data often comes in one of two types:
+
+* *quantitative*: e.g. integers or real numbers <br />(`weight <- 17.2`; `rooms <- 7`)
+* *categorical*:  e.g. ordered or unordered classes <br />(`grade <- "8"`, `coat <- "brindled"`)
+
+<div class="highlight">
+**This kind of distinction critical in many applications (e.g. statistical modelling)**
+</div>
+
+> * **Factors** are special vectors that represent *categorical* data
+    * Stored as vectors of *labelled integers*
+    * **Cannot be treated as strings/text**
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+
+## Challenge 08 (5min)
+
+Create a new `factor`, defining `control` and `case` experiments, and inspect the result:
+
+```{r}
+f <- factor(c("case", "control", "case", "control", "case"))
+str(f)
+```
+
+<div class="attention">
+**In some statistical analyses in `R` it is important that the `control` level is numbered `1`**
+</div>
+
+* Using the help available to you in `RStudio`, can you create a factor with the same values, but where the `control` level is numbered `1`?
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+
+## Matrices
+
+* *Matrices* are 2D *vectors* of atomic values
+    * An extremely important data type in numerical analyses
+    
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+```{r}
+# Create matrix of zeroes
+m1 <- matrix(0, ncol = 6, nrow = 3)
+
+# Create matrix of numbers 1 and 2
+m2 <- matrix(c(1, 2), ncol = 4, nrow = 3)
+```
+
+
+## Challenge 09 (5min)
+
+Can you create a matrix with:
+
+* 5 columns
+* 10 rows
+* Containing the numbers `1:50`
+
+<div class="highlight">
+* Did the `matrix()` function fill the matrix by column, or by row?
+* If the matrix was filled by row, can you create a new matrix that fills by column (or *vice versa*)
+
+**Use the `Rstudio` documentation to help**
+</div>
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+
+## Lists
+
+* `list`s are like *vectors*, but can hold *any combination of datatype*
+    * *elements* in a `list` are denoted by `[[]]` and can be named
+    
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+```{r}
+# create a list
+l <- list(1, 'a', TRUE, matrix(0, nrow = 2, ncol = 2), f)
+l_named <- list(a = "SWC", b = 1:4)
+```
+
+
+## Logical Indexing
+
+* We have used *indexing*, *slicing* and *names* to get data **by 'location'**
+
+```{r, eval=FALSE}
+> animal[c(2,4,6)]
+[1] "o" "k" "y"
+> m2[2:3, 3:4]
+     [,1] [,2]
+[1,]    2    1
+[2,]    1    2
+> l_named$b
+[1] 1 2 3 4
+```
+
+* *Logical indexes* can select data that meets certain criteria
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+```{r, eval=FALSE}
+x <- c(5.4, 6.2, 7.1, 4.8, 7.5)
+mask <- c(TRUE, FALSE, TRUE, FALSE, TRUE)
+x[mask]
+x[x > 7]
+```
+
+
+# 05. Dataframes
+
+
+## Learning Objectives
+
+* Understand the concept of a `data.frame`
+* Understand how a `data.frame` is built from `R` data structures
+* Know how to access any element of a `data.frame`
+* Read data into a `data.frame`
+* Write data out from a `data.frame`
+
+
+## Let's look at a `data.frame`
+
+* The `cats` data is a `data.frame`
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+```{r, eval=FALSE}
+> class(cats)
+[1] "data.frame"
+> cats
+    coat weight likes_string
+1 calico    2.1            1
+2  black    5.0            0
+3  tabby    3.2            1
+```
+
+## What is a `data.frame`?
+
+<div class="highlight">
+* The standard `R` data structure for storing tabular, *rectangular* data
+</div>
+
+* A named `list` of `vector`s having identical lengths.
+    * Each column is a `vector`
+    * Each `vector` can be a different data type
+    
+<div class="attention">
+* This is very much **LIKE** a spreadsheet, but…
+    * Columns are constrained to a type
+    * Columns are all the same length
+</div>
+
+
+## Creating a `data.frame`
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+```{r}
+# Create a data frame
+df <- data.frame(a=c(1,2,3), b=c('eeny', 'meeny', 'miney'),
+                 c=c(TRUE, FALSE, TRUE))
+summary(df)
+```
+
+
+## Challenge 10 (5min)
+
+I made some mistakes when defining this `data.frame`.
+
+Can you spot and fix them?
+
+```{r, eval=FALSE}
+author_book <- data.frame(author_first = c('Charles', 'Ernst', "Theodosius"),
+                          author_last = c(Darwin, Mayr, Dobzhansky),
+                          year = c(1942, 1970))
+```
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+
+## Challenge 11 (5min)
+
+Can you predict the class for each column in the following example?
+
+```{r}
+country_climate <- data.frame(country=c("Canada", "Panama",
+                                        "South Africa", "Australia"),
+                               climate=c("cold", "hot", "temperate",
+                                         "hot/temperate"),
+                               temperature=c(10, 30, 18, "15"),
+                               northern_hemisphere=c(TRUE, TRUE, FALSE,
+                                                     "FALSE"),
+                               has_kangaroo=c(FALSE, FALSE, FALSE, 1))
+```
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+
+## Challenge 12 (5min)
+
+Can you create the following data frame, but make `b` a vector of `character` elements, rather than a `factor`?
+
+```{r}
+df_chr <- data.frame(a=c(1,2,3), b=c('eeny', 'meeny', 'miney'),
+                     c=c(TRUE, FALSE, TRUE))
+```
+
+<center>
+<div class="attention">
+**Use the `RStudio` help**
+</div>
+</center>
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+
+## Adding rows and columns
+
+* We *bind* `vector`s to add columns, and `list`s to add rows
+    * Adding a new `factor` level may be required
+
+```{r}
+df <- cbind(df, vals = 3:1)
+levels(df$b) <- c('eeny', 'meeny', 'miney', 'mo')
+df <- rbind(df, list(4, 'mo', FALSE, 0))
+```
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+
+## Writing `data.frame` to file
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+```{r, eval=FALSE}
+write.table(df, "data/df_example.tab", sep="\t")
+```
+
+We need to provide
+
+* the `data.frame`
+* the path to the file being written
+* a column separator
+
+
+## Reading into a `data.frame`
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+<div class="highlight">
+* Download data from [https://raw.githubusercontent.com/resbaz/r-novice-gapminder-files/master/data/gapminder-FiveYearData.csv](https://raw.githubusercontent.com/resbaz/r-novice-gapminder-files/master/data/gapminder-FiveYearData.csv)
+* Put the file in the `data/` directory
+
+**The link is available on the course Etherpad**
+</div>
+
+```{r, eval=FALSE}
+gapminder <- read.table("data/gapminder-FiveYearData.csv", sep=",", header=TRUE)
+```
+
+* `R` can also read data direct from the internet
+
+```{r}
+url <- paste("https://raw.githubusercontent.com/resbaz/r-novice-gapminder-files/",
+             "master/data/gapminder-FiveYearData.csv", sep = '')
+gapminder <- read.table(url, sep=",", header=TRUE)
+```
+
+
+## Investigating `gapminder`
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+```{r, eval=FALSE}
+str(gapminder)              # structure of the data.frame
+typeof(gapminder$year)      # data type of a column
+length(gapminder)           # length of the data.frame
+nrow(gapminder)             # number of rows in data.frame
+ncol(gapminder)             # number of columns in data.frame
+dim(gapminder)              # number of rows and columns in data.frame
+colnames(gapminder)         # column names from data.frame
+head(gapminder)             # first few rows of dataframe
+summary(gapminder)          # summary of data in data.frame columns
+```
+
+
+## Subsets of `data.frame`s
+
+* `data.frame`s are `list`s and subset in the same way
+* `data.frame`s are 2D data (tabular) and subset like `matrix`es
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+```{r, eval=FALSE}
+gapminder[3]                  # single column (get dataframe)
+gapminder[["lifeExp"]]        # single column (get vector/factor)
+gapminder$year                # single column (get vector/factor)
+gapminder[1:3,]               # row slice (get dataframe)
+gapminder[3,]                 # row slice (get dataframe)
+gapminder[, 3]                # column slice (get vector/factor)
+gapminder[, 3, drop=FALSE]    # column slice (get dataframe)
+```
+
+
+## Challenge 13 (5min)
+
+I made some mistakes when subsetting `gapminder`, can you fix them?
+
+```{r, eval=FALSE}
+# Extract observations collected for the year 1957
+gapminder[gapminder$year = 1957,]
+
+# Extract all columns except 1 through 4
+gapminder[, -1:4]
+
+# Extract all rows where life expectancy is greater than 80 years
+gapminder[gapminder$lifeExp > 80]
+
+# ADVANCED: Extract rows for years 2002 and 2007
+gapminder[gapminder$year == 2002 | 2007]
+```
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+
+# 06. Packages
+
+
+## Learning Objectives
+
+* Understand what packages are
+* How to install a desired package
+* How to use a package in your code
+
+
+## Packages
+
+In `R`:
+
+* a *package* is the basic unit of reusable code
+* many useful and specialist tools are distributed as packages
+* over 10,000 packages are available at `CRAN`
+* you can distribute your own code as a package
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+```{r eval=FALSE}
+installed.packages()               # see installed packages
+install.packages("packagename")    # install a new package
+update.packages()                  # update installed packages
+library(packagename)               # import a package for use in your code
+```
+
+<div class="references">
+CRAN - the Comprehensive `R` Archive Network: <https://cran.r-project.org/>
+</div>
+
+
+## Challenge 14 (5min)
+
+Can you check if the following packages are installed on your system, and install them if necessary?
+
+```{r, eval=FALSE}
+dplyr
+ggplot2
+knitr
+```
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+
+# 07. Creating Publication-<br />Quality Graphics
+
+
+## Visualisation is Critical!
+
+<center>
+<img src="images/how_scientists_see_data.jpg" width="100%" />
+</center>
+
+
+## Learning Objectives
+
+* Be able to use `ggplot2` to generate publication-quality graphics
+* Understand the grammar of graphics
+
+
+## The Grammar of Graphics
+
+* `ggplot2` is part of the *Tidyverse*, a collection of packages for data science
+    - `ggplot2` is the graphics package
+    
+<div class="highlight">
+* **Implements the "Grammar of Graphics"**
+    - Separates data from its representation
+    - Helps iteratively update/refine plots
+    - Helps build complex, effective visualisations from simple elements
+</div>
+
+<div class="attention">
+* *data*
+* *aesthetics*
+* `geom`s
+* *layers*
+</div>
+
+<div class="references">
+* Tidyverse: <https://www.tidyverse.org/>
+</div>
+
+
+## A Basic Scatterplot
+
+* You can use `ggplot2` like *base graphics*
+    - `qplot()` ≈ `plot()`
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+```{r, eval=FALSE}
+library(ggplot2)
+plot(gapminder$lifeExp, gapminder$gdpPercap, col=gapminder$continent)
+qplot(lifeExp, gdpPercap, data=gapminder, colour=continent)
+```
+
+<center>
+<img src="images/plot_scatterplot.png" width="40%" />
+<img src="images/qplot_scatterplot.png" width="40%" />
+</center>
+
+
+## What is a Plot? *aesthetics*
+
+* Each observation in the *data* is a point
+* A point's *aesthetics* determine how it is rendered
+    - co-ordinates on the image; size; shape; colour
+* *aesthetics* can be constant or mapped to variables
+* Many different plots can be generated from the same data by changing *aesthetics*
+
+<center>
+<img src="images/qplot_scatterplot.png" width="45%" />
+</center>
+
+
+## What is a Plot? *aesthetics*
+
+* *aesthetics* define datapoint representations as a *new dataset*
+
+<center>
+<img src="images/scatterplot_data_table.png" width="25%" />
+</center>
+
+<div class="highlight">
+**This should remind you of a `data.frame`**
+</div>
+
+
+## What is a Plot? `geom`s
+
+<div class="highlight">
+`geom` (short for *geometry*) defines the "type" of representation
+</div>
+
+* If data are drawn as points: **scatterplot**
+* If data are drawn as lines: **line plot**
+* If data are drawn as bars: **bar chart** 
+
+<center>
+<img src="images/geom_types.png" width="60%" />
+</center>
+
+<div class="attention">
+* **`ggplot2` provides several `geom` types**
+</div>
+
+
+## What is a Plot? `geom`s
+
+<div class="highlight">
+**The same *data* and *aesthetics* can be shown with different `geom`**
+</div>
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+```{r, eval=FALSE}
+# Generate plot of GDP per capita against life Expectancy
+p <- ggplot(data=gapminder, aes(x=lifeExp, y=gdpPercap, color=continent))
+p + geom_point()
+p + geom_line()
+```
+
+
+## Challenge 15 (5min)
+
+Can you create another figure in your script showing how *life expectancy* changes as a function of *time*, as a scatterplot?
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+
+## What is a Plot? *layers*
+
+* We've just used another "Grammar of Graphics" concept: *layers*
+    - `ggplot2` plots are built as *layers*
+    
+<div class="highlight">
+All *layers* have two components
+
+1. *data* and *aesthetics*
+2. a `geom`
+</div>
+
+* *Data* and *aesthetics* can be defined in a *base* `ggplot` object
+    - values from the *base* are *inherited* by the other layers
+    - the *base* can be overridden in other layers
+
+
+## What is a Plot? *layers*
+
+* *Data* and *aesthetics* can be defined in a *base* `ggplot` object
+    - values from the *base* are *inherited* by the other layers
+    - the *base* can be overridden in other layers
+
+```{r, eval=FALSE}
+p <- ggplot(data=gapminder, aes(x=lifeExp, y=gdpPercap, colour=continent))
+p + geom_point()
+```
+
+<center>
+<img src="images/ggplot_layers_1.png" width=80% />
+</center>
+
+## What is a Plot? *layers*
+
+* *Data* and *aesthetics* can be defined in a *base* `ggplot` object
+    - values from the *base* are *inherited* by the other layers
+    - the *base* can be overridden in other layers
+
+```{r, eval=FALSE}
+p <- ggplot(data=gapminder, aes(x=lifeExp, y=gdpPercap, colour=continent))
+p + geom_line(aes(group=country))
+```
+
+<center>
+<img src="images/ggplot_layers_2.png" width=80% />
+</center>
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+## What is a Plot? *layers*
+
+* We can use several layers of `geom`s to build a plot
+    * `alpha` controls *opacity* for a layer
+
+```{r, eval=FALSE}
+p <- ggplot(data=gapminder, aes(x=lifeExp, y=gdpPercap, color=continent))
+p + geom_line(aes(group=country)) + geom_point(alpha=0.4)
+```
+
+<center>
+<img src="images/ggplot_layers_3.png" width=80% />
+</center>
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+
+## Challenge 16 (5min)
+
+Can you create another figure in your script showing how *life expectancy* changes as a function of *time*, coloured by continent, with two layers:
+
+* a line plot, grouping points by country
+* a scatterplot showing each data point, with 35% opacity
+
+(commit your changes to the `gapminder.R` script)
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+
+## Transformations and `scale`s
+
+* Data transformations are handled with `scale` layers
+
+<div class="highlight">
+* `scale` layers map data values to new aesthetics on the plot
+    - axis scaling (log scales)
+    - colour scaling (changing palettes)
+</div>
+
+<center>
+<img src="images/ggplot_layers_4.png" width=80% />
+</center>
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+
+## Statistics layers
+
+* Some `geom` layers transform the dataset
+   * Usually this is a data summary (e.g. smoothing or binning)
+   
+<center>
+<img src="images/ggplot_layers_5.png" width=80% />
+</center>
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+
+## Multi-panel figures
+
+* So far all our plots have all data in a single figure
+* Comparisons can be clearer with multiple panels:
+    - *facets*
+    - "small multiples plots"
+
+<div class="highlight">
+Use the `facet_wrap()` layer to generate grids of plots
+</div>
+    
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+```{r, eval=FALSE}
+# Compare life expectancy over time by continent
+p <- ggplot(data=gapminder, aes(x=year, y=lifeExp, colour=continent,
+                                group=country))
+p <- p + geom_line() + scale_y_log10()
+p + facet_wrap(~continent)
+```
+
+
+## Challenge 17 (10min)
+
+Can you create a scatterplot and contour densities of GDP per capita against population size, with colour filled by continent?
+
+**ADVANCED:** Transform the *x* axis to better visualise data spread, and use facets to panel density plots by year.
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+
+# 08. Working with<br />`data.frame`s in `dplyr`
+
+
+## Learning Objectives
+
+* How to manipulate `data.frame`s with the six *verbs* of `dplyr`
+    * a 'grammar of data manipulation'
+
+<div class="highlight">
+* `select()`
+* `filter()`
+* `group_by()`
+* `summarize()`
+* `mutate()`
+* `%>%` (pipe)
+</div>
+
+<div class="references">
+* `R` for Data Science: <http://r4ds.had.co.nz/>
+* Data Wrangling cheat sheet: <https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf>
+* Introduction to `dplyr`: <https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html>
+* Data Wrangling with `R` and `RStudio`: <https://www.rstudio.com/resources/webinars/data-wrangling-with-r-and-rstudio/>
+</div>
+
+
+## What and Why is `dplyr`?
+
+* `dplyr` is another package in the *Tidyverse*
+* Facilitates analysis by *groups*
+    * Helps avoid repetition
+    
+```{r, eval=FALSE}
+> mean(gapminder[gapminder$continent == "Africa", "gdpPercap"])
+[1] 2193.755
+> mean(gapminder[gapminder$continent == "Americas", "gdpPercap"])
+[1] 7136.11
+> mean(gapminder[gapminder$continent == "Asia", "gdpPercap"])
+[1] 7902.15
+```
+
+<div class="highlight">
+Avoiding repetition (though automation) makes code
+
+* **robust**
+* **reproducible**
+</div>
+
+
+## Split-Apply-Combine
+
+<center>
+<img src="images/splitapplycombine.png" width="100%"/>
+</center>
+
+
+## `select()` - Interactive Demo
+
+```{r, eval=FALSE}
+library(dplyr)
+```
+
+<center>
+<img src="images/dplyr_select.png" width="50%"/>
+</center>
+
+```{r, eval=FALSE}
+select(gapminder, year, country, gdpPercap)
+gapminder %>% select(year, country, gdpPercap)
+```
+
+
+## `filter()`
+
+* `filter()` selects rows on the basis of some condition
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+```{r, eval=FALSE}
+filter(gapminder, continent=="Europe")
+
+# Select gdpPercap by country and year, only for Europe
+eurodata <- gapminder %>%
+              filter(continent == "Europe") %>%
+              select(year, country, gdpPercap)
+```
+
+
+## Challenge 18 (5min)
+
+Can you write a single line (which may span multiple lines and include pipes) that produces a dataframe containing:
+
+* life expectancy, country, and year data
+* only for African nations
+
+How many rows does the dataframe have?
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+
+## `group_by()` - Interactive Demo
+
+<center>
+<img src="images/dplyr_group_by.png" width="50%"/>
+</center>
+
+```{r, eval=FALSE}
+group_by(gapminder, continent)
+gapminder %>% group_by(continent)
+```
+
+
+## `summarize()` - Interactive Demo
+
+<center>
+<img src="images/dplyr_summarize.png" width="50%"/>
+</center>
+
+```{r, eval=FALSE}
+# Produce table of mean GDP by continent
+gapminder %>%
+    group_by(continent) %>%
+    summarize(meangdpPercap=mean(gdpPercap))
+
+```
+
+
+## Challenge 19 (5min)
+
+* Can you calculate the average life expectancy per *country* in the `gapminder` data?
+* Which nation has longest life expectancy, and which the shortest?
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+
+## `count()` and `n()`
+
+* Two useful functions related to `summarize()`
+    - `count()`/`tally()`: a function that reports a table of counts by group
+    - `n()`: a function used *within* `summarize()`, `filter()` or `mutate()` to represent count by group
+    
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+```{r, eval=FALSE}
+gapminder %>%
+  filter(year == 2002) %>%
+  count(continent, sort = TRUE)
+
+gapminder %>%
+  group_by(continent) %>%
+  summarize(se_lifeExp = sd(lifeExp)/sqrt(n()))
+```
+
+
+## `mutate()`
+
+* `mutate()` is a function allowing creation of new variables
+
+<div class="highlight">
+several `dplyr` *verbs* can be chained in a single operation
+</div>
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+```{r, eval=FALSE}
+# Calculate GDP in $billion
+gdp_bill <- gapminder %>%
+  mutate(gdp_billion = gdpPercap * pop / 10^9)
+
+# Calculate total/sd of GDP by continent and year
+gdp_bycontinents_byyear <- gapminder %>%
+    mutate(gdp_billion=gdpPercap*pop/10^9) %>%
+    group_by(continent,year) %>%
+    summarize(mean_gdpPercap=mean(gdpPercap),
+              sd_gdpPercap=sd(gdpPercap),
+              mean_gdp_billion=mean(gdp_billion),
+              sd_gdp_billion=sd(gdp_billion))
+```
+
+
+# 09. Program Flow Control
+
+
+## Learning Objectives
+
+* How to make data-dependent choices in `R`
+* Use `if()` and `else()`
+* Repeat operations in `R`
+* Use `for()` loops
+* *vectorisation* to avoid repeating operations
+
+
+## `if()` … `else`
+
+* We often want to perform operations (or not) *conditional* on a piece of data
+    * The `if()` and `else` construct is useful for this
+    
+```R
+# if
+if (condition is true) {
+  PERFORM ACTION
+}
+
+# if ... else
+if (condition is true) {
+  PERFORM ACTION
+} else {  # i.e. if the condition is false,
+  PERFORM ALTERNATIVE ACTION
+}
+```
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+
+## Challenge 20 (5min)
+
+Can you use an `if()` statement to report whether there are any records from 2002 in the `gapminder` dataset?
+
+Can you do the same for 2012?
+
+<div class="attention">
+**HINT:** Look at the help for the `any()` function
+</div>
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+
+## `for()` loops
+
+* `for()` loops are a very common construct in programming
+    - `for` each `<item>` in a group, `<do something (with the item)>`
+* Not as useful in `R` as in some other languages
+
+```{r, eval=FALSE}
+for(iterator in set of values){
+  do a thing
+}
+```
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+
+## `while()` loops
+
+* `while()` loops are useful when you need to *do something* **while** some condition is true
+
+```{r, eval=FALSE}
+while(this condition is true){
+  do a thing
+}
+```
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+
+## Challenge 21 (5min)
+
+Can you use a `for()` loop and an `if()` statement to print whether each letter in the alphabet is a vowel?
+
+<div class="attention">
+**HINT:** Use `R`'s help for `letters` and `%in%`
+</div>
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+
+## Vectorisation
+
+* `for()` and `while()` loops can be useful, but are not *efficient*
+* Most functions in `R` are *vectorised*
+    - When applied to a *vector*, apply to all elements in that *vector*
+    - **No need to loop**
+    
+<div class="highlight">
+You've already seen and used much of this behaviour
+</div>
+    
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+```{r, eval=FALSE}
+x < 1:4
+x * 2
+y <- 6:9
+x + y
+m <- matrix(1:12, nrow = 3, ncol = 4)
+m * m
+m %*% m
+```
+
+
+## Challenge 22 (5min)
+
+We want to sum the following series of fractions
+
+$\frac{1}{1^2} + \frac{1}{2^2} + \frac{1}{3^2} + \ldots + \frac{1}{n^2}$
+
+for large values of $n$
+
+Can you do this using vectorisation for $n = 10,000$?
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+
+# 10. Functions
+
+
+## Learning Objectives
+
+* Why functions are important
+* How to write a new function
+* Defining a function that takes arguments
+* Returning a value from a function
+* Set default values for function arguments
+
+
+## Why Functions?
+
+* Functions let us run a complex series of commands in one go
+    - under a memorable/descriptive name
+    - invoked with that name
+    - with a defined set of inputs and outputs
+    - to perform a logically coherent task
+    
+<div class="highlight">    
+Functions are the building blocks of programming
+</div>
+
+* Small functions with one obvious, clearly-defined task are good
+
+## Defining a Function
+
+* You will often need to write your own functions
+* They take a standard form
+
+```{r, eval=FALSE}
+<function_name> <- function(<arg1>, <arg2>) {
+  <do something>
+  return(<result>)
+}
+```
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+```{r, eval=FALSE}
+my_sum <- function(a, b) {
+  the_sum <- a + b
+  return(the_sum)
+}
+```
+
+
+## Documentation
+
+* So far, you've been able to use `R`'s built-in help to see function documentation
+    - This isn't available for your functions unless you write it
+
+<center>    
+<div class="highlight">
+**Your future self will thank you!**
+
+(and so will your colleagues)
+
+*Write programs for people, not for computers*
+</div>
+</center>
+
+* State what the code does (and why)
+* Define inputs and outputs
+* Give an example
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+
+
+## Function Arguments
+
+* We can define functions that take multiple arguments
+* We can also define default values for arguments
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+```{r, eval=FALSE}
+# Calculate total GDP in gapminder data
+calcGDP <- function(data, year_in=NULL, country_in=NULL) {
+  gdp <- gapminder %>% mutate(gdp=(pop * gdpPercap))
+  if (!is.null(year_in)) {
+    gdp <- gdp %>% filter(year %in% year_in)
+  }
+  if (!is.null(country_in)) {
+    gdp <- gdp %>% filter(country %in% country_in)
+  }
+  return(gdp)
+}
+```
+
+
+## Challenge 23 (10min)
+
+Can you write a function that takes an optional argument called `letter`, which:
+
+* Plots the life expectancy per year for each country
+* Only for countries whose name starts with a letter in `letter`
+* Uses `facet_wrap()` to produce a grid of output graphs
+
+* **ADVANCED:** Make the facet wrapping optional
+
+<div class="highlight">
+**HINT:** The following code may be useful
+
+```{r, eval=FALSE}
+starts.with <- substr(gapminder$country, start = 1, stop = 1)
+az.countries <- gapminder[starts.with %in% c("A", "Z"), ]
+```
+</div>
+
+<img src="images/red_green_sticky.png" width="100%" />
+
+
+# 11. Dynamic Reports
+
+
+## Learning Objectives
+
+* Create dynamic, reproducible reports
+* Markdown syntax
+* Inline `R` code in documents
+* Producing documents in `.pdf`, `.html`, etc.
+
+
+## Literate Programming
+
+* A *programming paradigm* introduced by Donald Knuth
+* The program (or analysis) is explained in natural language
+    - The *source code* is interspersed
+* The whole document is *executable*
+
+<div class="highlight">
+**We can produce these documents in `RStudio`**
+</div>
+
+<div class="references">
+* Literate Programming, by Donald Knuth: <http://www.literateprogramming.com/knuthweb.pdf>
+</div>
+
+
+## Create an `R Markdown` file
+
+* `R Markdown` files embody Literate Programming in `R`
+* `File` $\rightarrow$ `New File` $\rightarrow$ `R Markdown`
+* Enter a title
+* Save the file (gets the extension `.Rmd`)
+
+<center>
+<img src="images/rmarkdown_dialog.png" width="40%" />
+<img src="images/rmarkdown_start.png" width="47%" />
+</center>
+
+
+## Components of an `R Markdown` file
+
+* Header information is *fenced* by `---`
+
+```{r, eval=FALSE}
+---
+title: "Literate Programming"
+author: "Leighton Pritchard"
+date: "04/12/2017"
+output: html_document
+---
+```
+
+* Natural language is written as plain text
+
+```{r, eval=FALSE}
+This is an R Markdown document. Markdown is a simple formatting syntax
+```
+
+* `R` code (which is executable) is *fenced* by *backticks*
+
+<center>
+<div class="attention">
+**Click on `Knit`**
+</div>
+</center>
+
+
+## Creating a Report
+
+* We're going to create an `R Markdown` report on the `gapminder` data
+
+<center>
+<div class="attention">
+**INTERACTIVE DEMO**
+</div>
+</center>
+
+<center>
+<img src="images/rmarkdown_final.png" width="40%" />
+</center>
+
+<div class="references">
+* `R Markdown` documentation: <http://rmarkdown.rstudio.com/>
+* `R Markdown` cheat sheet: <http://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf>
+* Getting started with `R Markdown`: <https://www.rstudio.com/resources/webinars/getting-started-with-r-markdown/>
+* Reproducible reporting: <https://www.rstudio.com/resources/webinars/reproducible-reporting/>
+</div>
+
+# 12. Conclusion
+
+
+## If we got this far…
+
+You've learned:
+
+<div class="highlight">
+* About `R`, `RStudio` and how to set up a project with version control
+* How to load data into `R` and produce summary statistics and plots with *base* tools
+* All the data types in `R`, and most of the important data structures
+* How to install and use packages
+* How to use the Tidyverse to manipulate and plot data
+* How to use program flow control and functions
+* How to create dynamic reports in `R`
+</div>
+
+<center>
+<div class="attention">
+**WELL DONE!!**
+</div>
+</center>

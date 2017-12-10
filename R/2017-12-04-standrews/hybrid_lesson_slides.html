@@ -1,0 +1,2245 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Programming in R</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Programming in R',
+                        useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                      },
+
+      // Author information
+      presenters: [
+            {
+        name:  'Leighton Pritchard' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <link href="hybrid_lesson_slides_files/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
+  <link href="hybrid_lesson_slides_files/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
+  <link href="hybrid_lesson_slides_files/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
+  <script src="hybrid_lesson_slides_files/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+  <script src="hybrid_lesson_slides_files/ioslides-13.5.1/js/prettify/prettify.js"></script>
+  <script src="hybrid_lesson_slides_files/ioslides-13.5.1/js/prettify/lang-r.js"></script>
+  <script src="hybrid_lesson_slides_files/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+  <script src="hybrid_lesson_slides_files/ioslides-13.5.1/js/hammer.js"></script>
+  <script src="hybrid_lesson_slides_files/ioslides-13.5.1/js/slide-controller.js"></script>
+  <script src="hybrid_lesson_slides_files/ioslides-13.5.1/js/slide-deck.js"></script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+
+  </style>
+
+  <link rel="stylesheet" href="includes/custom.css" />
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+            <p style="margin-top: 6px; margin-left: -2px;">5-6/12/2017</p>
+          </hgroup>
+  </slide>
+
+<slide class=""><hgroup><h2>Etherpad</h2></hgroup><article  id="etherpad">
+
+<div class="attention">
+<p>Please do take notes on the course <code>etherpad</code>:</p></div>
+
+<p><a href='http://pad.software-carpentry.org/2017-12-04-standrews' title=''>http://pad.software-carpentry.org/2017-12-04-standrews</a></p>
+
+<div class="highlight">
+<ul>
+<li><strong>Communal notes</strong>: share your understanding, and benefit from others</li>
+<li><strong>Ask questions</strong>: get detailed answers with links and examples</li>
+<li><strong>A record/reference for after the course</strong></li>
+</ul></div>
+
+</article></slide><slide class=""><hgroup><h2>Learning Objectives</h2></hgroup><article  id="learning-objectives">
+
+<ul>
+<li>Fundamentals of <code>R</code> and <code>RStudio</code></li>
+<li>Fundamentals of programming</li>
+<li>Best practices for organising code</li>
+<li>Best practices for reproducibility</li>
+<li>Effective data analysis in <code>R</code></li>
+</ul>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>01. Introduction to <br /><code>R</code> and <code>RStudio</code></h2></hgroup><article  id="introduction-to-r-and-rstudio">
+
+</article></slide><slide class=""><hgroup><h2>Learning Objectives</h2></hgroup><article  id="learning-objectives-1">
+
+<ul>
+<li>Understand what <code>R</code> is</li>
+<li>Understand what <code>RStudio</code> is</li>
+<li>Understand why <code>R</code> is different from something like <code>Excel</code></li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>What is <code>R</code>?</h2></hgroup><article  id="what-is-r">
+
+<ul>
+<li><code>R</code> is a programming language</li>
+<li><code>R</code> is the software that interprets programs written in the <code>R</code> programming language</li>
+</ul>
+
+<div class="highlight">
+<ul>
+<li><strong>Have you used <code>R</code> before?</strong></li>
+</ul></div>
+
+<ul class = 'build'>
+<li><code>R</code> is free (commercial support can be bought)</li>
+<li><code>R</code> is widely-used and <em>interdisciplinary</em> (sciences, humanities, engineering, etc.)</li>
+<li><code>R</code> has many excellent packages for statistics and data analysis, visualisation and graphics</li>
+<li><code>R</code> has an international, friendly user community</li>
+</ul>
+
+<div class="references">
+<ul>
+<li>RStudio community support: <a href='https://community.rstudio.com/' title=''>https://community.rstudio.com/</a></li>
+<li>Stack Overflow: <a href='https://stackoverflow.com/' title=''>https://stackoverflow.com/</a></li>
+</ul></div>
+
+</article></slide><slide class=""><hgroup><h2>&ldquo;But I already know <code>Excel</code>…&rdquo;</h2></hgroup><article  id="but-i-already-know-excel">
+
+<div class="highlight">
+<ul>
+<li><code>Excel</code> is fine for many things, but <code>R</code> is great for reproducibility…</li>
+</ul></div>
+
+<center>
+
+<img src="images/dt160107.gif" width="80%" />
+
+</center>
+
+<ul class = 'build'>
+<li><strong><em>Separates data from analysis</em></strong></li>
+<li>Not point-and-click: <em>every step is explicit and transparent</em></li>
+<li>Easy to share, adapt, reuse, publish analyses with new/modified data (GitHub)</li>
+<li><code>R</code> can be run on supercomputers…</li>
+</ul>
+
+<div class="references">
+<ul>
+<li>Mike Croucher’s MLPM talk: <a href='https://mikecroucher.github.io/MLPM_talk/' title=''>https://mikecroucher.github.io/MLPM_talk/</a></li>
+</ul></div>
+
+</article></slide><slide class=""><hgroup><h2>What is <code>RStudio</code>?</h2></hgroup><article  id="what-is-rstudio">
+
+<ul>
+<li><code>RStudio</code> is an <em>integrated development environment</em> (IDE) - all platforms</li>
+</ul>
+
+<center>
+
+<img src="images/rstudio_window.png" width="50%" /> <img src="images/RStudio-Screenshot.png" width="40%" />
+
+</center>
+
+<div class="highlight">
+<ul>
+<li>Interaction with <code>R</code> (console/&lsquo;scratchpad&rsquo;)</li>
+<li>Script/code editor</li>
+<li>Graphics/visualisation</li>
+<li>Project management (<code>git</code> integration)</li>
+</ul></div>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>02. Getting to know <code>RStudio</code></h2></hgroup><article  id="getting-to-know-rstudio">
+
+</article></slide><slide class=""><hgroup><h2>Learning Objectives</h2></hgroup><article  id="learning-objectives-2">
+
+<ul>
+<li>Familiarity with the <code>RStudio</code> IDE</li>
+<li>Introduce <code>R</code> syntax</li>
+<li>Learn good project management practices</li>
+<li>Set up a working directory with version control (<code>git</code>) in <code>RStudio</code></li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2><code>RStudio</code> overview - Interactive Demo</h2></hgroup><article  id="rstudio-overview---interactive-demo">
+
+<center>
+
+<img src="images/rstudio-start-view.png" width="75%" />
+
+</center>
+
+</article></slide><slide class=""><hgroup><h2>Challenge 01 (5min)</h2></hgroup><article  id="challenge-01-5min">
+
+<ul>
+<li><strong>Try out some of your own calculations in the interactive console</strong></li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>2 ** 16</pre>
+
+<pre >## [1] 65536</pre>
+
+<pre class = 'prettyprint lang-r'>15 %% 4</pre>
+
+<pre >## [1] 3</pre>
+
+<pre class = 'prettyprint lang-r'>15 %/% 4</pre>
+
+<pre >## [1] 3</pre>
+
+<p><img src="images/red_green_sticky.png" width="100%" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Variables</h2></hgroup><article  id="variables">
+
+<div class="highlight">
+<p><strong>Variables</strong> are like <em>named boxes</em></p></div>
+
+<ul>
+<li>An item of data goes in the box (called <code>Name</code>)</li>
+<li>When we refer to the box (<em>variable</em>) by its name, we really mean <em>what’s in the box</em></li>
+</ul>
+
+<center>
+
+<img src="images/boxes_variables_arrow.png" width="45%" />
+
+</center>
+
+</article></slide><slide class=""><hgroup><h2>Variables - Interactive Demo</h2></hgroup><article  id="variables---interactive-demo">
+
+<pre class = 'prettyprint lang-r'>name &lt;- &quot;Samia&quot;
+name</pre>
+
+<pre >## [1] &quot;Samia&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>x &lt;- 1 / 40
+x</pre>
+
+<pre >## [1] 0.025</pre>
+
+<pre class = 'prettyprint lang-r'>x ^ 2</pre>
+
+<pre >## [1] 0.000625</pre>
+
+<pre class = 'prettyprint lang-r'>log(x)</pre>
+
+<pre >## [1] -3.688879</pre>
+
+</article></slide><slide class=""><hgroup><h2>Functions</h2></hgroup><article  id="functions">
+
+<ul>
+<li>Function (<code>log()</code>, <code>sin()</code> etc.) ≈ &ldquo;canned script&rdquo;
+
+<ul>
+<li>automate complicated tasks</li>
+<li>make code more readable and reusable</li>
+</ul></li>
+<li>Some functions are built-in (in <em>base</em> packages, e.g. <code>sqrt()</code>, <code>lm()</code>, <code>plot()</code>)</li>
+<li>Some functions are <em>imported</em> in <em>libraries</em></li>
+</ul>
+
+<div class="attention">
+<ul>
+<li>Functions usually take <em>arguments</em> (<em>input</em>)</li>
+<li>Functions often <em>return</em> values (<em>output</em>)</li>
+</ul></div>
+
+</article></slide><slide class=""><hgroup><h2>Getting Help For Functions</h2></hgroup><article  id="getting-help-for-functions">
+
+<center>
+
+<div class="attention">
+<p>INTERACTIVE DEMO</p></div>
+
+</center>
+
+<pre class = 'prettyprint lang-r'>args(fname)            # arguments for fname
+?fname                 # help page for fname
+help(fname)            # help page for fname
+??fname                # any mention of fname
+help.search(&quot;text&quot;)    # any mention of &quot;text&quot;
+vignette(fname)        # worked examples for fname
+vignette()             # show all available vignettes</pre>
+
+</article></slide><slide class=""><hgroup><h2>Removing Variables</h2></hgroup><article  id="removing-variables">
+
+<p>To remove variables from your workspace, use the <code>rm()</code> function</p>
+
+<pre class = 'prettyprint lang-r'>x &lt;- 1
+ls()</pre>
+
+<pre >## [1] &quot;name&quot; &quot;x&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>rm(x, name)
+ls()</pre>
+
+<pre >## character(0)</pre>
+
+<p>To remove all variables use the broom in the <code>Environment</code> tab (<code>Rstudio</code>), or:</p>
+
+<pre class = 'prettyprint lang-r'>rm(list=ls())</pre>
+
+</article></slide><slide class=""><hgroup><h2>Challenge 02 (5min)</h2></hgroup><article  id="challenge-02-5min">
+
+<p>What will be the value of each variable after each statement in the following program?</p>
+
+<pre class = 'prettyprint lang-r'>mass &lt;- 47.5
+age &lt;- 122
+mass &lt;- mass * 2.3
+age &lt;- age - 20</pre>
+
+<ul>
+<li><code>mass = 47.5, age = 102</code></li>
+<li><code>mass = 109.25, age = 102</code></li>
+<li><code>mass = 47.5, age = 122</code></li>
+<li><code>mass = 109.25, age = 122</code></li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Good Variable Names</h2></hgroup><article  id="good-variable-names">
+
+<ul>
+<li>Descriptive (but not <em>too</em> long)</li>
+<li>Avoid existing names (e.g. <code>mean</code>, <code>matrix</code>, <code>list</code>, etc.)</li>
+<li>Consistent style
+
+<ul>
+<li><code>periods.between.words</code></li>
+<li><code>underscores_between_words</code></li>
+<li><code>camelCaseToSeparateWords</code></li>
+</ul></li>
+</ul>
+
+<center>
+
+<div class="highlight">
+<p><strong>IN <code>R</code>…</strong></p></div>
+
+</center>
+
+<ul class = 'build'>
+<li>letters, numbers, underscores, and periods (<code>[a-zA-z0-9_.]</code>)</li>
+<li>cannot start with a number</li>
+<li>whitespace is not allowed</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Good Project Management Practices</h2></hgroup><article  id="good-project-management-practices">
+
+<div class="highlight">
+<p><strong>No single &lsquo;right way&rsquo; - only good principles</strong></p></div>
+
+<ul>
+<li>Use a single working directory per project/analysis
+
+<ul>
+<li>easier to move, share, and find files</li>
+<li>use <em>relative paths</em> to locate files</li>
+</ul></li>
+<li>Treat raw data as read-only
+
+<ul>
+<li>keep in separate subfolder (<code>data</code>)?</li>
+</ul></li>
+<li>Clean data ready for work
+
+<ul>
+<li>keep cleaned/modified data in separate folder?</li>
+</ul></li>
+<li>Consider output generated by analysis to be disposable
+
+<ul>
+<li>can be regenerated by running analysis/code</li>
+<li>don’t place under version control</li>
+</ul></li>
+</ul>
+
+<div class="references">
+
+<ul>
+<li>Good Enough Practices in Scientific Computing (2017) Wilson <em>et al.</em> <a href='http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510' title=''>http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1005510</a> </class></li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Example Directory Structure</h2></hgroup><article  id="example-directory-structure">
+
+<center>
+
+<img src="images/working-directory-structure.png" width="100%" />
+
+</center>
+
+</article></slide><slide class=""><hgroup><h2>Project Management in <code>RStudio</code></h2></hgroup><article  id="project-management-in-rstudio">
+
+<ul>
+<li><code>RStudio</code> tries to help you manage your projects
+
+<ul>
+<li><code>R Project</code> concept - files and subdirectory structure</li>
+<li><code>git</code> integration</li>
+<li>switching between multiple projects within <code>RStudio</code></li>
+<li>stores project history</li>
+</ul></li>
+</ul>
+
+<div class="highlight">
+<p><strong>Let’s create a project in <code>RStudio</code></strong></p>
+
+<p>Using <code>git</code> for version control.</p></div>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+<p><img src="images/red_green_sticky.png" width="100%" /></p>
+
+<div class="references">
+<p><code>RStudio</code> projects: <a href='https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects' title=''>https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects</a></p></div>
+
+</article></slide><slide class=""><hgroup><h2>Working in <code>RStudio</code></h2></hgroup><article  id="working-in-rstudio">
+
+<div class="highlight">
+<p>We can write code in several ways in <code>RStudio</code></p></div>
+
+<ul>
+<li>At the console (you’ve done this)</li>
+<li>In a script</li>
+<li>As an interactive notebook</li>
+<li>As a markdown file</li>
+<li>As a Shiny app</li>
+</ul>
+
+<p>We’re going to create a new dataset and <code>R</code> script.</p>
+
+<ul>
+<li>Putting code in a script makes it easier to modify, share and run</li>
+</ul>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>03. A First Analysis in <code>RStudio</code></h2></hgroup><article  id="a-first-analysis-in-rstudio">
+
+</article></slide><slide class=""><hgroup><h2>Learning Objectives</h2></hgroup><article  id="learning-objectives-3">
+
+<ul>
+<li>Load data into an <code>R</code> project</li>
+<li>Produce summary statistics of data</li>
+<li>Extract subsets of data</li>
+<li>Basic plotting in <code>R</code> (<em>base graphics</em>)</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Our Task</h2></hgroup><article  id="our-task">
+
+<ul>
+<li>Patients have been given a new treatment for arthritis</li>
+<li>We have measurements of inflammation over a period of days for each patient</li>
+<li>We want to produce a preliminary analysis and graphs for this data</li>
+</ul>
+
+<div class="highlight">
+<p>Download the file from the following link to your <code>data/</code> directory, and extract it</p></div>
+
+<ul>
+<li><a href='https://swcarpentry.github.io/r-novice-inflammation/files/r-novice-inflammation-data.zip' title=''>https://swcarpentry.github.io/r-novice-inflammation/files/r-novice-inflammation-data.zip</a></li>
+</ul>
+
+<p>(the link is available on the course Etherpad page)</p>
+
+<p><img src="images/red_green_sticky.png" width="100%" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Loading Data - Interactive Demo</h2></hgroup><article  id="loading-data---interactive-demo">
+
+<ul>
+<li>You created data manually earlier, but this is rare</li>
+<li>Data are most commonly read in from plain text files</li>
+</ul>
+
+<div class="highlight">
+<p>Data files can be inspected in <code>RStudio</code></p></div>
+
+<pre class = 'prettyprint lang-r'>read.csv(file = &quot;data/inflammation-01.csv&quot;, header = FALSE)</pre>
+
+</article></slide><slide class=""><hgroup><h2>Challenge 03 (5min)</h2></hgroup><article  id="challenge-03-5min">
+
+<p>How would you open a similar data file that had:</p>
+
+<ul>
+<li>a comma (<code>,</code>) as the decimal point character</li>
+<li>semi-colon (<code>;</code>) as the field separator</li>
+</ul>
+
+<p>using <code>read.csv()</code></p>
+
+<center>
+
+<div class="attention">
+<p><strong>Use the help function and documentation</strong></p></div>
+
+</center>
+
+<p><img src="images/red_green_sticky.png" width="100%" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Indexing Data - Interactive Demo</h2></hgroup><article  id="indexing-data---interactive-demo">
+
+<ul>
+<li>We use <em>indexing</em> to refer to elements of a variable
+
+<ul>
+<li>square brackets: <code>[]</code></li>
+<li>row, then column: <code>[row, column]</code></li>
+</ul></li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>data[1, 1]     # First value in dataset
+data[30, 20]   # Middle value of dataset</pre>
+
+<ul>
+<li>To get a range of values, use the <code>:</code> separator (meaning &lsquo;to&rsquo;)</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>data[1:4, 1:4]   # rows 1 to 4; columns 1 to 4</pre>
+
+<ul>
+<li>To select a complete row or column, leave it blank</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>data[5, ]     # row 5
+data[, 16]    # column 16</pre>
+
+</article></slide><slide class=""><hgroup><h2>Summary Functions - Interactive Demo</h2></hgroup><article  id="summary-functions---interactive-demo">
+
+<ul>
+<li><code>R</code> provides useful functions to summarise data</li>
+<li>We can use <em>indexing</em> to get summary information on individual patients and days</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>max(data)           # largest value in dataset
+max(data[2, ])      # largest value for patient 2
+min(data[, 7])      # smallest value on day 7
+mean(data[, 7])     # mean value on day 7
+sd(data[, 7])       # standard deviation of values on day 7</pre>
+
+</article></slide><slide class=""><hgroup><h2>Challenge 04 (5min)</h2></hgroup><article  id="challenge-04-5min">
+
+<p>Given the <em>vector</em> in <code>R</code>:</p>
+
+<pre class = 'prettyprint lang-r'>animal &lt;- c(&quot;m&quot;, &quot;o&quot;, &quot;n&quot;, &quot;k&quot;, &quot;e&quot;, &quot;y&quot;)</pre>
+
+<p>Can you generate slices that do the following:</p>
+
+<ul>
+<li>return the first three characters</li>
+<li>return the last three characters</li>
+<li><p>return the first three characters <em>in reverse order</em></p></li>
+<li>What do <code>animal[-1]</code> and <code>animal[-4]</code> do?</li>
+<li><p>Can you explain what <code>animal[-1:-4]</code> does?</p></li>
+</ul>
+
+<p><img src="images/red_green_sticky.png" width="100%" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Repetitive Calculations - Interactive Demo</h2></hgroup><article  id="repetitive-calculations---interactive-demo">
+
+<ul>
+<li>We could calculate mean inflammation for every patient (or day) this way, but it’s tedious</li>
+</ul>
+
+<div class="highlight">
+<p><strong>Computers exist to do tedious things for us</strong></p></div>
+
+<ul>
+<li><code>R</code> has several ways to automate this process</li>
+<li>We’d like to <code>apply</code> a <em>function</em> (<code>mean</code>) to each row in the <code>data</code>:</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>apply(X = data, MARGIN = 1, FUN = mean)</pre>
+
+<div class="attention">
+<ul>
+<li><code>MARGIN = 1</code>: rows</li>
+<li><code>MARGIN = 2</code>: columns</li>
+</ul></div>
+
+<pre class = 'prettyprint lang-r'>rowMeans(data)
+colMeans(data)</pre>
+
+</article></slide><slide class=""><hgroup><h2>Base Graphics</h2></hgroup><article  id="base-graphics">
+
+<blockquote>
+<p>&ldquo;The purpose of computing is insight, not numbers.&rdquo; - Richard Hamming</p>
+</blockquote>
+
+<div class="highlight">
+<ul>
+<li><code>R</code> has many available graphics packages
+
+<ul>
+<li>graphically beautiful</li>
+<li>specific problem domains</li>
+</ul></li>
+<li>&lsquo;built-in&rsquo; graphics are known as <em>base graphics</em></li>
+</ul></div>
+
+<ul>
+<li>Base graphics are powerful tools for visualisation and understanding</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Plotting - Interactive Demo</h2></hgroup><article  id="plotting---interactive-demo">
+
+<pre class = 'prettyprint lang-r'>plot(avg_inflammation_patient)
+
+max_day_inflammation &lt;- apply(dat, 2, max)
+plot(max_day_inflammation)
+
+plot(apply(dat,2,min))       # 3 functions in one!</pre>
+
+<center>
+
+<img src="images/plot1.png" width="30%" /> <img src="images/plot2.png" width="30%" /> <img src="images/plot3.png" width="30%" />
+
+</center>
+
+</article></slide><slide class=""><hgroup><h2>Challenge 05 (5min)</h2></hgroup><article  id="challenge-05-5min">
+
+<p>Can you add a plot to your script showing:</p>
+
+<ul>
+<li>standard deviation, by day</li>
+<li>a histogram of inflammation by day</li>
+</ul>
+
+<div class="attention">
+<p><strong>(don’t forget to commit changes)</strong></p></div>
+
+<p><img src="images/red_green_sticky.png" width="100%" /></p>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>04. Data Types and <br />Structures in <code>R</code></h2></hgroup><article  id="data-types-and-structures-in-r">
+
+</article></slide><slide class=""><hgroup><h2>Learning Objectives</h2></hgroup><article  id="learning-objectives-4">
+
+<ul>
+<li>Basic data types in <code>R</code></li>
+<li>Common data structures in <code>R</code></li>
+<li>How to find out the type/structure of <code>R</code> data</li>
+<li>Understand how <code>R</code>’s data types and structures relate to your own data</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Data Types and Structures in <code>R</code></h2></hgroup><article  id="data-types-and-structures-in-r-1">
+
+<ul>
+<li><code>R</code> is mostly used for data analysis</li>
+<li><code>R</code> has special <em>types</em> and <em>structures</em> to help you work with data</li>
+<li>Much of the focus is on tabular data (<em>data frames</em>)</li>
+</ul>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+<div class="highlight">
+<p>Understanding data types, their uses, and how they relate to your own data is key to successful analysis with <code>R</code></p>
+
+<p>(it’s not just about programming)</p></div>
+
+</article></slide><slide class=""><hgroup><h2>What Data Types Do You Expect?</h2></hgroup><article  id="what-data-types-do-you-expect">
+
+<center>
+
+<div class="attention">
+<p><strong>What data types would you expect to see?</strong></p>
+
+<p>What examples of data types can you think of from your own experience?</p></div>
+
+</center>
+
+</article></slide><slide class=""><hgroup><h2>Data Types in <code>R</code></h2></hgroup><article  id="data-types-in-r">
+
+<ul>
+<li>Data <em>types</em> in <code>R</code> are <em>atomic</em>
+
+<ul>
+<li>All data is one of these types</li>
+<li>All data <em>structures</em> are built from these</li>
+</ul></li>
+</ul>
+
+<div class="highlight">
+<ol>
+<li><strong>logical</strong>: <code>TRUE</code>, <code>FALSE</code></li>
+<li><strong>numeric</strong>:
+
+<ul>
+<li><strong>integer</strong>: <code>3</code>, <code>2L</code>, <code>123456</code></li>
+<li><strong>double</strong> (<em>decimal</em>): <code>3.0</code>, <code>-23.45</code>, <code>pi</code></li>
+</ul></li>
+<li><strong>complex</strong>: <code>3+0i</code>, <code>1+4i</code></li>
+<li><strong>character</strong> (<em>text</em>): <code>&quot;a&quot;</code>, <code>&#39;SWC&#39;</code>, <code>&quot;This is not a string&quot;</code></li>
+<li><strong>raw</strong>: binary data</li>
+</ol></div>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+</article></slide><slide class=""><hgroup><h2>Challenge 06 (5min)</h2></hgroup><article  id="challenge-06-5min">
+
+<p>Create examples of data with the following characteristics:</p>
+
+<div class="highlight">
+<ul>
+<li>name: <code>answer</code>, type: <code>logical</code></li>
+<li>name: <code>height</code>, type: <code>numeric</code></li>
+<li>name: <code>dog_name</code>, type: <code>character</code></li>
+</ul></div>
+
+<p>For each variable, test that it has the data type you intended</p>
+
+<p><img src="images/red_green_sticky.png" width="100%" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Five Common <code>R</code> Data Structures</h2></hgroup><article  id="five-common-r-data-structures">
+
+<ul>
+<li><code>vector</code></li>
+<li><code>factor</code></li>
+<li><code>list</code></li>
+<li><code>matrix</code></li>
+<li><code>data.frame</code></li>
+</ul>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+</article></slide><slide class=""><hgroup><h2>Challenge 07 (5min)</h2></hgroup><article  id="challenge-07-5min">
+
+<p>Vectors are <em>atomic</em>: they can contain only a single data <em>type</em></p>
+
+<p>What data type are the following vectors (<code>xx</code>)?</p>
+
+<pre class = 'prettyprint lang-r'>xx &lt;- c(1.7, &quot;a&quot;)
+xx &lt;- c(TRUE, 2)
+xx &lt;- c(&quot;a&quot;, TRUE)</pre>
+
+<div class="highlight">
+<p>Options: <code>logical</code>, <code>integer</code>, <code>numeric</code>, <code>character</code></p></div>
+
+<p><img src="images/red_green_sticky.png" width="100%" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Coercion</h2></hgroup><article  id="coercion">
+
+<ul>
+<li><em>Coercion</em> means changing data from one <em>type</em> to another</li>
+<li><code>R</code> will perform <em>implicit coercion</em> on vectors to make them atomic</li>
+</ul>
+
+<div class="highlight">
+<p><code>logical</code> \(\rightarrow\) <code>integer</code> \(\rightarrow\) <code>double</code> \(\rightarrow\) <code>complex</code> \(\rightarrow\) <code>character</code></p></div>
+
+<center>
+
+<div class="attention">
+<p><strong>If there are formatting problems with your data, you might not have the type you expect when you import into <code>R</code></strong></p></div>
+
+</center>
+
+<ul>
+<li>Manual coercion with <code>as.&lt;type_name&gt;()</code></li>
+</ul>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+</article></slide><slide class=""><hgroup><h2>Factors</h2></hgroup><article  id="factors">
+
+<p>Data often comes in one of two types:</p>
+
+<ul>
+<li><em>quantitative</em>: e.g. integers or real numbers <br />(<code>weight &lt;- 17.2</code>; <code>rooms &lt;- 7</code>)</li>
+<li><em>categorical</em>: e.g. ordered or unordered classes <br />(<code>grade &lt;- &quot;8&quot;</code>, <code>coat &lt;- &quot;brindled&quot;</code>)</li>
+</ul>
+
+<div class="highlight">
+<p><strong>This kind of distinction critical in many applications (e.g. statistical modelling)</strong></p></div>
+
+<ul class = 'build'>
+<li><strong>Factors</strong> are special vectors that represent <em>categorical</em> data</li>
+<li>Stored as vectors of <em>labelled integers</em></li>
+<li><strong>Cannot be treated as strings/text</strong></li>
+</ul>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+</article></slide><slide class=""><hgroup><h2>Challenge 08 (5min)</h2></hgroup><article  id="challenge-08-5min">
+
+<p>Create a new <code>factor</code>, defining <code>control</code> and <code>case</code> experiments, and inspect the result:</p>
+
+<pre class = 'prettyprint lang-r'>f &lt;- factor(c(&quot;case&quot;, &quot;control&quot;, &quot;case&quot;, &quot;control&quot;, &quot;case&quot;))
+str(f)</pre>
+
+<pre >##  Factor w/ 2 levels &quot;case&quot;,&quot;control&quot;: 1 2 1 2 1</pre>
+
+<div class="attention">
+<p><strong>In some statistical analyses in <code>R</code> it is important that the <code>control</code> level is numbered <code>1</code></strong></p></div>
+
+<ul>
+<li>Using the help available to you in <code>RStudio</code>, can you create a factor with the same values, but where the <code>control</code> level is numbered <code>1</code>?</li>
+</ul>
+
+<p><img src="images/red_green_sticky.png" width="100%" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Matrices</h2></hgroup><article  id="matrices">
+
+<ul>
+<li><em>Matrices</em> are 2D <em>vectors</em> of atomic values
+
+<ul>
+<li>An extremely important data type in numerical analyses</li>
+</ul></li>
+</ul>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+<pre class = 'prettyprint lang-r'># Create matrix of zeroes
+m1 &lt;- matrix(0, ncol = 6, nrow = 3)
+
+# Create matrix of numbers 1 and 2
+m2 &lt;- matrix(c(1, 2), ncol = 4, nrow = 3)</pre>
+
+</article></slide><slide class=""><hgroup><h2>Challenge 09 (5min)</h2></hgroup><article  id="challenge-09-5min">
+
+<p>Can you create a matrix with:</p>
+
+<ul>
+<li>5 columns</li>
+<li>10 rows</li>
+<li>Containing the numbers <code>1:50</code></li>
+</ul>
+
+<div class="highlight">
+<ul>
+<li>Did the <code>matrix()</code> function fill the matrix by column, or by row?</li>
+<li>If the matrix was filled by row, can you create a new matrix that fills by column (or <em>vice versa</em>)</li>
+</ul>
+
+<p><strong>Use the <code>Rstudio</code> documentation to help</strong></p></div>
+
+<p><img src="images/red_green_sticky.png" width="100%" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Lists</h2></hgroup><article  id="lists">
+
+<ul>
+<li><code>list</code>s are like <em>vectors</em>, but can hold <em>any combination of datatype</em>
+
+<ul>
+<li><em>elements</em> in a <code>list</code> are denoted by <code>[[]]</code> and can be named</li>
+</ul></li>
+</ul>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+<pre class = 'prettyprint lang-r'># create a list
+l &lt;- list(1, &#39;a&#39;, TRUE, matrix(0, nrow = 2, ncol = 2), f)
+l_named &lt;- list(a = &quot;SWC&quot;, b = 1:4)</pre>
+
+</article></slide><slide class=""><hgroup><h2>Logical Indexing</h2></hgroup><article  id="logical-indexing">
+
+<ul>
+<li>We have used <em>indexing</em>, <em>slicing</em> and <em>names</em> to get data <strong>by &lsquo;location&rsquo;</strong></li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>&gt; animal[c(2,4,6)]
+[1] &quot;o&quot; &quot;k&quot; &quot;y&quot;
+&gt; m2[2:3, 3:4]
+     [,1] [,2]
+[1,]    2    1
+[2,]    1    2
+&gt; l_named$b
+[1] 1 2 3 4</pre>
+
+<ul>
+<li><em>Logical indexes</em> can select data that meets certain criteria</li>
+</ul>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+<pre class = 'prettyprint lang-r'>x &lt;- c(5.4, 6.2, 7.1, 4.8, 7.5)
+mask &lt;- c(TRUE, FALSE, TRUE, FALSE, TRUE)
+x[mask]
+x[x &gt; 7]</pre>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>05. Dataframes</h2></hgroup><article  id="dataframes">
+
+</article></slide><slide class=""><hgroup><h2>Learning Objectives</h2></hgroup><article  id="learning-objectives-5">
+
+<ul>
+<li>Understand the concept of a <code>data.frame</code></li>
+<li>Understand how a <code>data.frame</code> is built from <code>R</code> data structures</li>
+<li>Know how to access any element of a <code>data.frame</code></li>
+<li>Read data into a <code>data.frame</code></li>
+<li>Write data out from a <code>data.frame</code></li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Let’s look at a <code>data.frame</code></h2></hgroup><article  id="lets-look-at-a-data.frame">
+
+<ul>
+<li>The <code>cats</code> data is a <code>data.frame</code></li>
+</ul>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+<pre class = 'prettyprint lang-r'>&gt; class(cats)
+[1] &quot;data.frame&quot;
+&gt; cats
+    coat weight likes_string
+1 calico    2.1            1
+2  black    5.0            0
+3  tabby    3.2            1</pre>
+
+</article></slide><slide class=""><hgroup><h2>What is a <code>data.frame</code>?</h2></hgroup><article  id="what-is-a-data.frame">
+
+<div class="highlight">
+<ul>
+<li>The standard <code>R</code> data structure for storing tabular, <em>rectangular</em> data</li>
+</ul></div>
+
+<ul>
+<li>A named <code>list</code> of <code>vector</code>s having identical lengths.
+
+<ul>
+<li>Each column is a <code>vector</code></li>
+<li>Each <code>vector</code> can be a different data type</li>
+</ul></li>
+</ul>
+
+<div class="attention">
+<ul>
+<li>This is very much <strong>LIKE</strong> a spreadsheet, but…
+
+<ul>
+<li>Columns are constrained to a type</li>
+<li>Columns are all the same length</li>
+</ul></li>
+</ul></div>
+
+</article></slide><slide class=""><hgroup><h2>Creating a <code>data.frame</code></h2></hgroup><article  id="creating-a-data.frame">
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+<pre class = 'prettyprint lang-r'># Create a data frame
+df &lt;- data.frame(a=c(1,2,3), b=c(&#39;eeny&#39;, &#39;meeny&#39;, &#39;miney&#39;),
+                 c=c(TRUE, FALSE, TRUE))
+summary(df)</pre>
+
+<pre >##        a           b         c          
+##  Min.   :1.0   eeny :1   Mode :logical  
+##  1st Qu.:1.5   meeny:1   FALSE:1        
+##  Median :2.0   miney:1   TRUE :2        
+##  Mean   :2.0                            
+##  3rd Qu.:2.5                            
+##  Max.   :3.0</pre>
+
+</article></slide><slide class=""><hgroup><h2>Challenge 10 (5min)</h2></hgroup><article  id="challenge-10-5min">
+
+<p>I made some mistakes when defining this <code>data.frame</code>.</p>
+
+<p>Can you spot and fix them?</p>
+
+<pre class = 'prettyprint lang-r'>author_book &lt;- data.frame(author_first = c(&#39;Charles&#39;, &#39;Ernst&#39;, &quot;Theodosius&quot;),
+                          author_last = c(Darwin, Mayr, Dobzhansky),
+                          year = c(1942, 1970))</pre>
+
+<p><img src="images/red_green_sticky.png" width="100%" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Challenge 11 (5min)</h2></hgroup><article  id="challenge-11-5min">
+
+<p>Can you predict the class for each column in the following example?</p>
+
+<pre class = 'prettyprint lang-r'>country_climate &lt;- data.frame(country=c(&quot;Canada&quot;, &quot;Panama&quot;,
+                                        &quot;South Africa&quot;, &quot;Australia&quot;),
+                               climate=c(&quot;cold&quot;, &quot;hot&quot;, &quot;temperate&quot;,
+                                         &quot;hot/temperate&quot;),
+                               temperature=c(10, 30, 18, &quot;15&quot;),
+                               northern_hemisphere=c(TRUE, TRUE, FALSE,
+                                                     &quot;FALSE&quot;),
+                               has_kangaroo=c(FALSE, FALSE, FALSE, 1))</pre>
+
+<p><img src="images/red_green_sticky.png" width="100%" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Challenge 12 (5min)</h2></hgroup><article  id="challenge-12-5min">
+
+<p>Can you create the following data frame, but make <code>b</code> a vector of <code>character</code> elements, rather than a <code>factor</code>?</p>
+
+<pre class = 'prettyprint lang-r'>df_chr &lt;- data.frame(a=c(1,2,3), b=c(&#39;eeny&#39;, &#39;meeny&#39;, &#39;miney&#39;),
+                     c=c(TRUE, FALSE, TRUE))</pre>
+
+<center>
+
+<div class="attention">
+<p><strong>Use the <code>RStudio</code> help</strong></p></div>
+
+</center>
+
+<p><img src="images/red_green_sticky.png" width="100%" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Adding rows and columns</h2></hgroup><article  id="adding-rows-and-columns">
+
+<ul>
+<li>We <em>bind</em> <code>vector</code>s to add columns, and <code>list</code>s to add rows
+
+<ul>
+<li>Adding a new <code>factor</code> level may be required</li>
+</ul></li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>df &lt;- cbind(df, vals = 3:1)
+levels(df$b) &lt;- c(&#39;eeny&#39;, &#39;meeny&#39;, &#39;miney&#39;, &#39;mo&#39;)
+df &lt;- rbind(df, list(4, &#39;mo&#39;, FALSE, 0))</pre>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+</article></slide><slide class=""><hgroup><h2>Writing <code>data.frame</code> to file</h2></hgroup><article  id="writing-data.frame-to-file">
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+<pre class = 'prettyprint lang-r'>write.table(df, &quot;data/df_example.tab&quot;, sep=&quot;\t&quot;)</pre>
+
+<p>We need to provide</p>
+
+<ul>
+<li>the <code>data.frame</code></li>
+<li>the path to the file being written</li>
+<li>a column separator</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Reading into a <code>data.frame</code></h2></hgroup><article  id="reading-into-a-data.frame">
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+<div class="highlight">
+<ul>
+<li>Download data from <a href='https://raw.githubusercontent.com/resbaz/r-novice-gapminder-files/master/data/gapminder-FiveYearData.csv' title=''>https://raw.githubusercontent.com/resbaz/r-novice-gapminder-files/master/data/gapminder-FiveYearData.csv</a></li>
+<li>Put the file in the <code>data/</code> directory</li>
+</ul>
+
+<p><strong>The link is available on the course Etherpad</strong></p></div>
+
+<pre class = 'prettyprint lang-r'>gapminder &lt;- read.table(&quot;data/gapminder-FiveYearData.csv&quot;, sep=&quot;,&quot;, header=TRUE)</pre>
+
+<ul>
+<li><code>R</code> can also read data direct from the internet</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>url &lt;- paste(&quot;https://raw.githubusercontent.com/resbaz/r-novice-gapminder-files/&quot;,
+             &quot;master/data/gapminder-FiveYearData.csv&quot;, sep = &#39;&#39;)
+gapminder &lt;- read.table(url, sep=&quot;,&quot;, header=TRUE)</pre>
+
+</article></slide><slide class=""><hgroup><h2>Investigating <code>gapminder</code></h2></hgroup><article  id="investigating-gapminder">
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+<pre class = 'prettyprint lang-r'>str(gapminder)              # structure of the data.frame
+typeof(gapminder$year)      # data type of a column
+length(gapminder)           # length of the data.frame
+nrow(gapminder)             # number of rows in data.frame
+ncol(gapminder)             # number of columns in data.frame
+dim(gapminder)              # number of rows and columns in data.frame
+colnames(gapminder)         # column names from data.frame
+head(gapminder)             # first few rows of dataframe
+summary(gapminder)          # summary of data in data.frame columns</pre>
+
+</article></slide><slide class=""><hgroup><h2>Subsets of <code>data.frame</code>s</h2></hgroup><article  id="subsets-of-data.frames">
+
+<ul>
+<li><code>data.frame</code>s are <code>list</code>s and subset in the same way</li>
+<li><code>data.frame</code>s are 2D data (tabular) and subset like <code>matrix</code>es</li>
+</ul>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+<pre class = 'prettyprint lang-r'>gapminder[3]                  # single column (get dataframe)
+gapminder[[&quot;lifeExp&quot;]]        # single column (get vector/factor)
+gapminder$year                # single column (get vector/factor)
+gapminder[1:3,]               # row slice (get dataframe)
+gapminder[3,]                 # row slice (get dataframe)
+gapminder[, 3]                # column slice (get vector/factor)
+gapminder[, 3, drop=FALSE]    # column slice (get dataframe)</pre>
+
+</article></slide><slide class=""><hgroup><h2>Challenge 13 (5min)</h2></hgroup><article  id="challenge-13-5min">
+
+<p>I made some mistakes when subsetting <code>gapminder</code>, can you fix them?</p>
+
+<pre class = 'prettyprint lang-r'># Extract observations collected for the year 1957
+gapminder[gapminder$year = 1957,]
+
+# Extract all columns except 1 through 4
+gapminder[, -1:4]
+
+# Extract all rows where life expectancy is greater than 80 years
+gapminder[gapminder$lifeExp &gt; 80]
+
+# ADVANCED: Extract rows for years 2002 and 2007
+gapminder[gapminder$year == 2002 | 2007]</pre>
+
+<p><img src="images/red_green_sticky.png" width="100%" /></p>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>06. Packages</h2></hgroup><article  id="packages">
+
+</article></slide><slide class=""><hgroup><h2>Learning Objectives</h2></hgroup><article  id="learning-objectives-6">
+
+<ul>
+<li>Understand what packages are</li>
+<li>How to install a desired package</li>
+<li>How to use a package in your code</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Packages</h2></hgroup><article  id="packages-1">
+
+<p>In <code>R</code>:</p>
+
+<ul>
+<li>a <em>package</em> is the basic unit of reusable code</li>
+<li>many useful and specialist tools are distributed as packages</li>
+<li>over 10,000 packages are available at <code>CRAN</code></li>
+<li>you can distribute your own code as a package</li>
+</ul>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+<pre class = 'prettyprint lang-r'>installed.packages()               # see installed packages
+install.packages(&quot;packagename&quot;)    # install a new package
+update.packages()                  # update installed packages
+library(packagename)               # import a package for use in your code</pre>
+
+<div class="references">
+<p>CRAN - the Comprehensive <code>R</code> Archive Network: <a href='https://cran.r-project.org/' title=''>https://cran.r-project.org/</a></p></div>
+
+</article></slide><slide class=""><hgroup><h2>Challenge 14 (5min)</h2></hgroup><article  id="challenge-14-5min">
+
+<p>Can you check if the following packages are installed on your system, and install them if necessary?</p>
+
+<pre class = 'prettyprint lang-r'>dplyr
+ggplot2
+knitr</pre>
+
+<p><img src="images/red_green_sticky.png" width="100%" /></p>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>07. Creating Publication-<br />Quality Graphics</h2></hgroup><article  id="creating-publication--quality-graphics">
+
+</article></slide><slide class=""><hgroup><h2>Visualisation is Critical!</h2></hgroup><article  id="visualisation-is-critical">
+
+<center>
+
+<img src="images/how_scientists_see_data.jpg" width="100%" />
+
+</center>
+
+</article></slide><slide class=""><hgroup><h2>Learning Objectives</h2></hgroup><article  id="learning-objectives-7">
+
+<ul>
+<li>Be able to use <code>ggplot2</code> to generate publication-quality graphics</li>
+<li>Understand the grammar of graphics</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>The Grammar of Graphics</h2></hgroup><article  id="the-grammar-of-graphics">
+
+<ul>
+<li><code>ggplot2</code> is part of the <em>Tidyverse</em>, a collection of packages for data science
+
+<ul>
+<li><code>ggplot2</code> is the graphics package</li>
+</ul></li>
+</ul>
+
+<div class="highlight">
+<ul>
+<li><strong>Implements the &ldquo;Grammar of Graphics&rdquo;</strong>
+
+<ul>
+<li>Separates data from its representation</li>
+<li>Helps iteratively update/refine plots</li>
+<li>Helps build complex, effective visualisations from simple elements</li>
+</ul></li>
+</ul></div>
+
+<div class="attention">
+<ul>
+<li><em>data</em></li>
+<li><em>aesthetics</em></li>
+<li><code>geom</code>s</li>
+<li><em>layers</em></li>
+</ul></div>
+
+<div class="references">
+<ul>
+<li>Tidyverse: <a href='https://www.tidyverse.org/' title=''>https://www.tidyverse.org/</a></li>
+</ul></div>
+
+</article></slide><slide class=""><hgroup><h2>A Basic Scatterplot</h2></hgroup><article  id="a-basic-scatterplot">
+
+<ul>
+<li>You can use <code>ggplot2</code> like <em>base graphics</em>
+
+<ul>
+<li><code>qplot()</code> ≈ <code>plot()</code></li>
+</ul></li>
+</ul>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+<pre class = 'prettyprint lang-r'>library(ggplot2)
+plot(gapminder$lifeExp, gapminder$gdpPercap, col=gapminder$continent)
+qplot(lifeExp, gdpPercap, data=gapminder, colour=continent)</pre>
+
+<center>
+
+<img src="images/plot_scatterplot.png" width="40%" /> <img src="images/qplot_scatterplot.png" width="40%" />
+
+</center>
+
+</article></slide><slide class=""><hgroup><h2>What is a Plot? <em>aesthetics</em></h2></hgroup><article  id="what-is-a-plot-aesthetics">
+
+<ul>
+<li>Each observation in the <em>data</em> is a point</li>
+<li>A point’s <em>aesthetics</em> determine how it is rendered
+
+<ul>
+<li>co-ordinates on the image; size; shape; colour</li>
+</ul></li>
+<li><em>aesthetics</em> can be constant or mapped to variables</li>
+<li>Many different plots can be generated from the same data by changing <em>aesthetics</em></li>
+</ul>
+
+<center>
+
+<img src="images/qplot_scatterplot.png" width="45%" />
+
+</center>
+
+</article></slide><slide class=""><hgroup><h2>What is a Plot? <em>aesthetics</em></h2></hgroup><article  id="what-is-a-plot-aesthetics-1">
+
+<ul>
+<li><em>aesthetics</em> define datapoint representations as a <em>new dataset</em></li>
+</ul>
+
+<center>
+
+<img src="images/scatterplot_data_table.png" width="25%" />
+
+</center>
+
+<div class="highlight">
+<p><strong>This should remind you of a <code>data.frame</code></strong></p></div>
+
+</article></slide><slide class=""><hgroup><h2>What is a Plot? <code>geom</code>s</h2></hgroup><article  id="what-is-a-plot-geoms">
+
+<div class="highlight">
+<p><code>geom</code> (short for <em>geometry</em>) defines the &ldquo;type&rdquo; of representation</p></div>
+
+<ul>
+<li>If data are drawn as points: <strong>scatterplot</strong></li>
+<li>If data are drawn as lines: <strong>line plot</strong></li>
+<li>If data are drawn as bars: <strong>bar chart</strong></li>
+</ul>
+
+<center>
+
+<img src="images/geom_types.png" width="60%" />
+
+</center>
+
+<div class="attention">
+<ul>
+<li><strong><code>ggplot2</code> provides several <code>geom</code> types</strong></li>
+</ul></div>
+
+</article></slide><slide class=""><hgroup><h2>What is a Plot? <code>geom</code>s</h2></hgroup><article  id="what-is-a-plot-geoms-1">
+
+<div class="highlight">
+<p><strong>The same <em>data</em> and <em>aesthetics</em> can be shown with different <code>geom</code></strong></p></div>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+<pre class = 'prettyprint lang-r'># Generate plot of GDP per capita against life Expectancy
+p &lt;- ggplot(data=gapminder, aes(x=lifeExp, y=gdpPercap, color=continent))
+p + geom_point()
+p + geom_line()</pre>
+
+</article></slide><slide class=""><hgroup><h2>Challenge 15 (5min)</h2></hgroup><article  id="challenge-15-5min">
+
+<p>Can you create another figure in your script showing how <em>life expectancy</em> changes as a function of <em>time</em>, as a scatterplot?</p>
+
+<p><img src="images/red_green_sticky.png" width="100%" /></p>
+
+</article></slide><slide class=""><hgroup><h2>What is a Plot? <em>layers</em></h2></hgroup><article  id="what-is-a-plot-layers">
+
+<ul>
+<li>We’ve just used another &ldquo;Grammar of Graphics&rdquo; concept: <em>layers</em>
+
+<ul>
+<li><code>ggplot2</code> plots are built as <em>layers</em></li>
+</ul></li>
+</ul>
+
+<div class="highlight">
+<p>All <em>layers</em> have two components</p>
+
+<ol>
+<li><em>data</em> and <em>aesthetics</em></li>
+<li>a <code>geom</code></li>
+</ol></div>
+
+<ul>
+<li><em>Data</em> and <em>aesthetics</em> can be defined in a <em>base</em> <code>ggplot</code> object
+
+<ul>
+<li>values from the <em>base</em> are <em>inherited</em> by the other layers</li>
+<li>the <em>base</em> can be overridden in other layers</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>What is a Plot? <em>layers</em></h2></hgroup><article  id="what-is-a-plot-layers-1">
+
+<ul>
+<li><em>Data</em> and <em>aesthetics</em> can be defined in a <em>base</em> <code>ggplot</code> object
+
+<ul>
+<li>values from the <em>base</em> are <em>inherited</em> by the other layers</li>
+<li>the <em>base</em> can be overridden in other layers</li>
+</ul></li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>p &lt;- ggplot(data=gapminder, aes(x=lifeExp, y=gdpPercap, colour=continent))
+p + geom_point()</pre>
+
+<center>
+
+<img src="images/ggplot_layers_1.png" width=80% />
+
+</center>
+
+</article></slide><slide class=""><hgroup><h2>What is a Plot? <em>layers</em></h2></hgroup><article  id="what-is-a-plot-layers-2">
+
+<ul>
+<li><em>Data</em> and <em>aesthetics</em> can be defined in a <em>base</em> <code>ggplot</code> object
+
+<ul>
+<li>values from the <em>base</em> are <em>inherited</em> by the other layers</li>
+<li>the <em>base</em> can be overridden in other layers</li>
+</ul></li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>p &lt;- ggplot(data=gapminder, aes(x=lifeExp, y=gdpPercap, colour=continent))
+p + geom_line(aes(group=country))</pre>
+
+<center>
+
+<img src="images/ggplot_layers_2.png" width=80% />
+
+</center>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+</article></slide><slide class=""><hgroup><h2>What is a Plot? <em>layers</em></h2></hgroup><article  id="what-is-a-plot-layers-3">
+
+<ul>
+<li>We can use several layers of <code>geom</code>s to build a plot
+
+<ul>
+<li><code>alpha</code> controls <em>opacity</em> for a layer</li>
+</ul></li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>p &lt;- ggplot(data=gapminder, aes(x=lifeExp, y=gdpPercap, color=continent))
+p + geom_line(aes(group=country)) + geom_point(alpha=0.4)</pre>
+
+<center>
+
+<img src="images/ggplot_layers_3.png" width=80% />
+
+</center>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+</article></slide><slide class=""><hgroup><h2>Challenge 16 (5min)</h2></hgroup><article  id="challenge-16-5min">
+
+<p>Can you create another figure in your script showing how <em>life expectancy</em> changes as a function of <em>time</em>, coloured by continent, with two layers:</p>
+
+<ul>
+<li>a line plot, grouping points by country</li>
+<li>a scatterplot showing each data point, with 35% opacity</li>
+</ul>
+
+<p>(commit your changes to the <code>gapminder.R</code> script)</p>
+
+<p><img src="images/red_green_sticky.png" width="100%" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Transformations and <code>scale</code>s</h2></hgroup><article  id="transformations-and-scales">
+
+<ul>
+<li>Data transformations are handled with <code>scale</code> layers</li>
+</ul>
+
+<div class="highlight">
+<ul>
+<li><code>scale</code> layers map data values to new aesthetics on the plot
+
+<ul>
+<li>axis scaling (log scales)</li>
+<li>colour scaling (changing palettes)</li>
+</ul></li>
+</ul></div>
+
+<center>
+
+<img src="images/ggplot_layers_4.png" width=80% />
+
+</center>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+</article></slide><slide class=""><hgroup><h2>Statistics layers</h2></hgroup><article  id="statistics-layers">
+
+<ul>
+<li>Some <code>geom</code> layers transform the dataset
+
+<ul>
+<li>Usually this is a data summary (e.g. smoothing or binning)</li>
+</ul></li>
+</ul>
+
+<center>
+
+<img src="images/ggplot_layers_5.png" width=80% />
+
+</center>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+</article></slide><slide class=""><hgroup><h2>Multi-panel figures</h2></hgroup><article  id="multi-panel-figures">
+
+<ul>
+<li>So far all our plots have all data in a single figure</li>
+<li>Comparisons can be clearer with multiple panels:
+
+<ul>
+<li><em>facets</em></li>
+<li>&ldquo;small multiples plots&rdquo;</li>
+</ul></li>
+</ul>
+
+<div class="highlight">
+<p>Use the <code>facet_wrap()</code> layer to generate grids of plots</p></div>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+<pre class = 'prettyprint lang-r'># Compare life expectancy over time by continent
+p &lt;- ggplot(data=gapminder, aes(x=year, y=lifeExp, colour=continent,
+                                group=country))
+p &lt;- p + geom_line() + scale_y_log10()
+p + facet_wrap(~continent)</pre>
+
+</article></slide><slide class=""><hgroup><h2>Challenge 17 (10min)</h2></hgroup><article  id="challenge-17-10min">
+
+<p>Can you create a scatterplot and contour densities of GDP per capita against population size, with colour filled by continent?</p>
+
+<p><strong>ADVANCED:</strong> Transform the <em>x</em> axis to better visualise data spread, and use facets to panel density plots by year.</p>
+
+<p><img src="images/red_green_sticky.png" width="100%" /></p>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>08. Working with<br /><code>data.frame</code>s in <code>dplyr</code></h2></hgroup><article  id="working-with-data.frames-in-dplyr">
+
+</article></slide><slide class=""><hgroup><h2>Learning Objectives</h2></hgroup><article  id="learning-objectives-8">
+
+<ul>
+<li>How to manipulate <code>data.frame</code>s with the six <em>verbs</em> of <code>dplyr</code>
+
+<ul>
+<li>a &lsquo;grammar of data manipulation&rsquo;</li>
+</ul></li>
+</ul>
+
+<div class="highlight">
+<ul>
+<li><code>select()</code></li>
+<li><code>filter()</code></li>
+<li><code>group_by()</code></li>
+<li><code>summarize()</code></li>
+<li><code>mutate()</code></li>
+<li><code>%&gt;%</code> (pipe)</li>
+</ul></div>
+
+<div class="references">
+<ul>
+<li><code>R</code> for Data Science: <a href='http://r4ds.had.co.nz/' title=''>http://r4ds.had.co.nz/</a></li>
+<li>Data Wrangling cheat sheet: <a href='https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf' title=''>https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf</a></li>
+<li>Introduction to <code>dplyr</code>: <a href='https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html' title=''>https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html</a></li>
+<li>Data Wrangling with <code>R</code> and <code>RStudio</code>: <a href='https://www.rstudio.com/resources/webinars/data-wrangling-with-r-and-rstudio/' title=''>https://www.rstudio.com/resources/webinars/data-wrangling-with-r-and-rstudio/</a></li>
+</ul></div>
+
+</article></slide><slide class=""><hgroup><h2>What and Why is <code>dplyr</code>?</h2></hgroup><article  id="what-and-why-is-dplyr">
+
+<ul>
+<li><code>dplyr</code> is another package in the <em>Tidyverse</em></li>
+<li>Facilitates analysis by <em>groups</em>
+
+<ul>
+<li>Helps avoid repetition</li>
+</ul></li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>&gt; mean(gapminder[gapminder$continent == &quot;Africa&quot;, &quot;gdpPercap&quot;])
+[1] 2193.755
+&gt; mean(gapminder[gapminder$continent == &quot;Americas&quot;, &quot;gdpPercap&quot;])
+[1] 7136.11
+&gt; mean(gapminder[gapminder$continent == &quot;Asia&quot;, &quot;gdpPercap&quot;])
+[1] 7902.15</pre>
+
+<div class="highlight">
+<p>Avoiding repetition (though automation) makes code</p>
+
+<ul>
+<li><strong>robust</strong></li>
+<li><strong>reproducible</strong></li>
+</ul></div>
+
+</article></slide><slide class=""><hgroup><h2>Split-Apply-Combine</h2></hgroup><article  id="split-apply-combine">
+
+<center>
+
+<img src="images/splitapplycombine.png" width="100%"/>
+
+</center>
+
+</article></slide><slide class=""><hgroup><h2><code>select()</code> - Interactive Demo</h2></hgroup><article  id="select---interactive-demo">
+
+<pre class = 'prettyprint lang-r'>library(dplyr)</pre>
+
+<center>
+
+<img src="images/dplyr_select.png" width="50%"/>
+
+</center>
+
+<pre class = 'prettyprint lang-r'>select(gapminder, year, country, gdpPercap)
+gapminder %&gt;% select(year, country, gdpPercap)</pre>
+
+</article></slide><slide class=""><hgroup><h2><code>filter()</code></h2></hgroup><article  id="filter">
+
+<ul>
+<li><code>filter()</code> selects rows on the basis of some condition</li>
+</ul>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+<pre class = 'prettyprint lang-r'>filter(gapminder, continent==&quot;Europe&quot;)
+
+# Select gdpPercap by country and year, only for Europe
+eurodata &lt;- gapminder %&gt;%
+              filter(continent == &quot;Europe&quot;) %&gt;%
+              select(year, country, gdpPercap)</pre>
+
+</article></slide><slide class=""><hgroup><h2>Challenge 18 (5min)</h2></hgroup><article  id="challenge-18-5min">
+
+<p>Can you write a single line (which may span multiple lines and include pipes) that produces a dataframe containing:</p>
+
+<ul>
+<li>life expectancy, country, and year data</li>
+<li>only for African nations</li>
+</ul>
+
+<p>How many rows does the dataframe have?</p>
+
+<p><img src="images/red_green_sticky.png" width="100%" /></p>
+
+</article></slide><slide class=""><hgroup><h2><code>group_by()</code> - Interactive Demo</h2></hgroup><article  id="group_by---interactive-demo">
+
+<center>
+
+<img src="images/dplyr_group_by.png" width="50%"/>
+
+</center>
+
+<pre class = 'prettyprint lang-r'>group_by(gapminder, continent)
+gapminder %&gt;% group_by(continent)</pre>
+
+</article></slide><slide class=""><hgroup><h2><code>summarize()</code> - Interactive Demo</h2></hgroup><article  id="summarize---interactive-demo">
+
+<center>
+
+<img src="images/dplyr_summarize.png" width="50%"/>
+
+</center>
+
+<pre class = 'prettyprint lang-r'># Produce table of mean GDP by continent
+gapminder %&gt;%
+    group_by(continent) %&gt;%
+    summarize(meangdpPercap=mean(gdpPercap))</pre>
+
+</article></slide><slide class=""><hgroup><h2>Challenge 19 (5min)</h2></hgroup><article  id="challenge-19-5min">
+
+<ul>
+<li>Can you calculate the average life expectancy per <em>country</em> in the <code>gapminder</code> data?</li>
+<li>Which nation has longest life expectancy, and which the shortest?</li>
+</ul>
+
+<p><img src="images/red_green_sticky.png" width="100%" /></p>
+
+</article></slide><slide class=""><hgroup><h2><code>count()</code> and <code>n()</code></h2></hgroup><article  id="count-and-n">
+
+<ul>
+<li>Two useful functions related to <code>summarize()</code>
+
+<ul>
+<li><code>count()</code>/<code>tally()</code>: a function that reports a table of counts by group</li>
+<li><code>n()</code>: a function used <em>within</em> <code>summarize()</code>, <code>filter()</code> or <code>mutate()</code> to represent count by group</li>
+</ul></li>
+</ul>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+<pre class = 'prettyprint lang-r'>gapminder %&gt;%
+  filter(year == 2002) %&gt;%
+  count(continent, sort = TRUE)
+
+gapminder %&gt;%
+  group_by(continent) %&gt;%
+  summarize(se_lifeExp = sd(lifeExp)/sqrt(n()))</pre>
+
+</article></slide><slide class=""><hgroup><h2><code>mutate()</code></h2></hgroup><article  id="mutate">
+
+<ul>
+<li><code>mutate()</code> is a function allowing creation of new variables</li>
+</ul>
+
+<div class="highlight">
+<p>several <code>dplyr</code> <em>verbs</em> can be chained in a single operation</p></div>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+<pre class = 'prettyprint lang-r'># Calculate GDP in $billion
+gdp_bill &lt;- gapminder %&gt;%
+  mutate(gdp_billion = gdpPercap * pop / 10^9)
+
+# Calculate total/sd of GDP by continent and year
+gdp_bycontinents_byyear &lt;- gapminder %&gt;%
+    mutate(gdp_billion=gdpPercap*pop/10^9) %&gt;%
+    group_by(continent,year) %&gt;%
+    summarize(mean_gdpPercap=mean(gdpPercap),
+              sd_gdpPercap=sd(gdpPercap),
+              mean_gdp_billion=mean(gdp_billion),
+              sd_gdp_billion=sd(gdp_billion))</pre>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>09. Program Flow Control</h2></hgroup><article  id="program-flow-control">
+
+</article></slide><slide class=""><hgroup><h2>Learning Objectives</h2></hgroup><article  id="learning-objectives-9">
+
+<ul>
+<li>How to make data-dependent choices in <code>R</code></li>
+<li>Use <code>if()</code> and <code>else()</code></li>
+<li>Repeat operations in <code>R</code></li>
+<li>Use <code>for()</code> loops</li>
+<li><em>vectorisation</em> to avoid repeating operations</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2><code>if()</code> … <code>else</code></h2></hgroup><article  id="if-else">
+
+<ul>
+<li>We often want to perform operations (or not) <em>conditional</em> on a piece of data
+
+<ul>
+<li>The <code>if()</code> and <code>else</code> construct is useful for this</li>
+</ul></li>
+</ul>
+
+<pre class = 'prettyprint lang-r'># if
+if (condition is true) {
+  PERFORM ACTION
+}
+
+# if ... else
+if (condition is true) {
+  PERFORM ACTION
+} else {  # i.e. if the condition is false,
+  PERFORM ALTERNATIVE ACTION
+}</pre>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+</article></slide><slide class=""><hgroup><h2>Challenge 20 (5min)</h2></hgroup><article  id="challenge-20-5min">
+
+<p>Can you use an <code>if()</code> statement to report whether there are any records from 2002 in the <code>gapminder</code> dataset?</p>
+
+<p>Can you do the same for 2012?</p>
+
+<div class="attention">
+<p><strong>HINT:</strong> Look at the help for the <code>any()</code> function</p></div>
+
+<p><img src="images/red_green_sticky.png" width="100%" /></p>
+
+</article></slide><slide class=""><hgroup><h2><code>for()</code> loops</h2></hgroup><article  id="for-loops">
+
+<ul>
+<li><code>for()</code> loops are a very common construct in programming
+
+<ul>
+<li><code>for</code> each <code>&lt;item&gt;</code> in a group, <code>&lt;do something (with the item)&gt;</code></li>
+</ul></li>
+<li>Not as useful in <code>R</code> as in some other languages</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>for(iterator in set of values){
+  do a thing
+}</pre>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+</article></slide><slide class=""><hgroup><h2><code>while()</code> loops</h2></hgroup><article  id="while-loops">
+
+<ul>
+<li><code>while()</code> loops are useful when you need to <em>do something</em> <strong>while</strong> some condition is true</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>while(this condition is true){
+  do a thing
+}</pre>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+</article></slide><slide class=""><hgroup><h2>Challenge 21 (5min)</h2></hgroup><article  id="challenge-21-5min">
+
+<p>Can you use a <code>for()</code> loop and an <code>if()</code> statement to print whether each letter in the alphabet is a vowel?</p>
+
+<div class="attention">
+<p><strong>HINT:</strong> Use <code>R</code>’s help for <code>letters</code> and <code>%in%</code></p></div>
+
+<p><img src="images/red_green_sticky.png" width="100%" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Vectorisation</h2></hgroup><article  id="vectorisation">
+
+<ul>
+<li><code>for()</code> and <code>while()</code> loops can be useful, but are not <em>efficient</em></li>
+<li>Most functions in <code>R</code> are <em>vectorised</em>
+
+<ul>
+<li>When applied to a <em>vector</em>, apply to all elements in that <em>vector</em></li>
+<li><strong>No need to loop</strong></li>
+</ul></li>
+</ul>
+
+<div class="highlight">
+<p>You’ve already seen and used much of this behaviour</p></div>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+<pre class = 'prettyprint lang-r'>x &lt; 1:4
+x * 2
+y &lt;- 6:9
+x + y
+m &lt;- matrix(1:12, nrow = 3, ncol = 4)
+m * m
+m %*% m</pre>
+
+</article></slide><slide class=""><hgroup><h2>Challenge 22 (5min)</h2></hgroup><article  id="challenge-22-5min">
+
+<p>We want to sum the following series of fractions</p>
+
+<p>\(\frac{1}{1^2} + \frac{1}{2^2} + \frac{1}{3^2} + \ldots + \frac{1}{n^2}\)</p>
+
+<p>for large values of \(n\)</p>
+
+<p>Can you do this using vectorisation for \(n = 10,000\)?</p>
+
+<p><img src="images/red_green_sticky.png" width="100%" /></p>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>10. Functions</h2></hgroup><article  id="functions-1">
+
+</article></slide><slide class=""><hgroup><h2>Learning Objectives</h2></hgroup><article  id="learning-objectives-10">
+
+<ul>
+<li>Why functions are important</li>
+<li>How to write a new function</li>
+<li>Defining a function that takes arguments</li>
+<li>Returning a value from a function</li>
+<li>Set default values for function arguments</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Why Functions?</h2></hgroup><article  id="why-functions">
+
+<ul>
+<li>Functions let us run a complex series of commands in one go
+
+<ul>
+<li>under a memorable/descriptive name</li>
+<li>invoked with that name</li>
+<li>with a defined set of inputs and outputs</li>
+<li>to perform a logically coherent task</li>
+</ul></li>
+</ul>
+
+<div class="highlight">
+<p>Functions are the building blocks of programming</p></div>
+
+<ul>
+<li>Small functions with one obvious, clearly-defined task are good</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Defining a Function</h2></hgroup><article  id="defining-a-function">
+
+<ul>
+<li>You will often need to write your own functions</li>
+<li>They take a standard form</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>&lt;function_name&gt; &lt;- function(&lt;arg1&gt;, &lt;arg2&gt;) {
+  &lt;do something&gt;
+  return(&lt;result&gt;)
+}</pre>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+<pre class = 'prettyprint lang-r'>my_sum &lt;- function(a, b) {
+  the_sum &lt;- a + b
+  return(the_sum)
+}</pre>
+
+</article></slide><slide class=""><hgroup><h2>Documentation</h2></hgroup><article  id="documentation">
+
+<ul>
+<li>So far, you’ve been able to use <code>R</code>’s built-in help to see function documentation
+
+<ul>
+<li>This isn’t available for your functions unless you write it</li>
+</ul></li>
+</ul>
+
+<center>
+
+<div class="highlight">
+<p><strong>Your future self will thank you!</strong></p>
+
+<p>(and so will your colleagues)</p>
+
+<p><em>Write programs for people, not for computers</em></p></div>
+
+</center>
+
+<ul>
+<li>State what the code does (and why)</li>
+<li>Define inputs and outputs</li>
+<li>Give an example</li>
+</ul>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+</article></slide><slide class=""><hgroup><h2>Function Arguments</h2></hgroup><article  id="function-arguments">
+
+<ul>
+<li>We can define functions that take multiple arguments</li>
+<li>We can also define default values for arguments</li>
+</ul>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+<pre class = 'prettyprint lang-r'># Calculate total GDP in gapminder data
+calcGDP &lt;- function(data, year_in=NULL, country_in=NULL) {
+  gdp &lt;- gapminder %&gt;% mutate(gdp=(pop * gdpPercap))
+  if (!is.null(year_in)) {
+    gdp &lt;- gdp %&gt;% filter(year %in% year_in)
+  }
+  if (!is.null(country_in)) {
+    gdp &lt;- gdp %&gt;% filter(country %in% country_in)
+  }
+  return(gdp)
+}</pre>
+
+</article></slide><slide class=""><hgroup><h2>Challenge 23 (10min)</h2></hgroup><article  id="challenge-23-10min">
+
+<p>Can you write a function that takes an optional argument called <code>letter</code>, which:</p>
+
+<ul>
+<li>Plots the life expectancy per year for each country</li>
+<li>Only for countries whose name starts with a letter in <code>letter</code></li>
+<li><p>Uses <code>facet_wrap()</code> to produce a grid of output graphs</p></li>
+<li><p><strong>ADVANCED:</strong> Make the facet wrapping optional</p></li>
+</ul>
+
+<div class="highlight">
+<p><strong>HINT:</strong> The following code may be useful</p>
+
+<pre class = 'prettyprint lang-r'>starts.with &lt;- substr(gapminder$country, start = 1, stop = 1)
+az.countries &lt;- gapminder[starts.with %in% c(&quot;A&quot;, &quot;Z&quot;), ]</pre></div>
+
+<p><img src="images/red_green_sticky.png" width="100%" /></p>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>11. Dynamic Reports</h2></hgroup><article  id="dynamic-reports">
+
+</article></slide><slide class=""><hgroup><h2>Learning Objectives</h2></hgroup><article  id="learning-objectives-11">
+
+<ul>
+<li>Create dynamic, reproducible reports</li>
+<li>Markdown syntax</li>
+<li>Inline <code>R</code> code in documents</li>
+<li>Producing documents in <code>.pdf</code>, <code>.html</code>, etc.</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Literate Programming</h2></hgroup><article  id="literate-programming">
+
+<ul>
+<li>A <em>programming paradigm</em> introduced by Donald Knuth</li>
+<li>The program (or analysis) is explained in natural language
+
+<ul>
+<li>The <em>source code</em> is interspersed</li>
+</ul></li>
+<li>The whole document is <em>executable</em></li>
+</ul>
+
+<div class="highlight">
+<p><strong>We can produce these documents in <code>RStudio</code></strong></p></div>
+
+<div class="references">
+<ul>
+<li>Literate Programming, by Donald Knuth: <a href='http://www.literateprogramming.com/knuthweb.pdf' title=''>http://www.literateprogramming.com/knuthweb.pdf</a></li>
+</ul></div>
+
+</article></slide><slide class=""><hgroup><h2>Create an <code>R Markdown</code> file</h2></hgroup><article  id="create-an-r-markdown-file">
+
+<ul>
+<li><code>R Markdown</code> files embody Literate Programming in <code>R</code></li>
+<li><code>File</code> \(\rightarrow\) <code>New File</code> \(\rightarrow\) <code>R Markdown</code></li>
+<li>Enter a title</li>
+<li>Save the file (gets the extension <code>.Rmd</code>)</li>
+</ul>
+
+<center>
+
+<img src="images/rmarkdown_dialog.png" width="40%" /> <img src="images/rmarkdown_start.png" width="47%" />
+
+</center>
+
+</article></slide><slide class=""><hgroup><h2>Components of an <code>R Markdown</code> file</h2></hgroup><article  id="components-of-an-r-markdown-file">
+
+<ul>
+<li>Header information is <em>fenced</em> by <code>---</code></li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>---
+title: &quot;Literate Programming&quot;
+author: &quot;Leighton Pritchard&quot;
+date: &quot;04/12/2017&quot;
+output: html_document
+---</pre>
+
+<ul>
+<li>Natural language is written as plain text</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>This is an R Markdown document. Markdown is a simple formatting syntax</pre>
+
+<ul>
+<li><code>R</code> code (which is executable) is <em>fenced</em> by <em>backticks</em></li>
+</ul>
+
+<center>
+
+<div class="attention">
+<p><strong>Click on <code>Knit</code></strong></p></div>
+
+</center>
+
+</article></slide><slide class=""><hgroup><h2>Creating a Report</h2></hgroup><article  id="creating-a-report">
+
+<ul>
+<li>We’re going to create an <code>R Markdown</code> report on the <code>gapminder</code> data</li>
+</ul>
+
+<center>
+
+<div class="attention">
+<p><strong>INTERACTIVE DEMO</strong></p></div>
+
+</center>
+
+<center>
+
+<img src="images/rmarkdown_final.png" width="40%" />
+
+</center>
+
+<div class="references">
+<ul>
+<li><code>R Markdown</code> documentation: <a href='http://rmarkdown.rstudio.com/' title=''>http://rmarkdown.rstudio.com/</a></li>
+<li><code>R Markdown</code> cheat sheet: <a href='http://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf' title=''>http://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf</a></li>
+<li>Getting started with <code>R Markdown</code>: <a href='https://www.rstudio.com/resources/webinars/getting-started-with-r-markdown/' title=''>https://www.rstudio.com/resources/webinars/getting-started-with-r-markdown/</a></li>
+<li>Reproducible reporting: <a href='https://www.rstudio.com/resources/webinars/reproducible-reporting/' title=''>https://www.rstudio.com/resources/webinars/reproducible-reporting/</a></li>
+</ul></div>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>12. Conclusion</h2></hgroup><article  id="conclusion">
+
+</article></slide><slide class=""><hgroup><h2>If we got this far…</h2></hgroup><article  id="if-we-got-this-far">
+
+<p>You’ve learned:</p>
+
+<div class="highlight">
+<ul>
+<li>About <code>R</code>, <code>RStudio</code> and how to set up a project with version control</li>
+<li>How to load data into <code>R</code> and produce summary statistics and plots with <em>base</em> tools</li>
+<li>All the data types in <code>R</code>, and most of the important data structures</li>
+<li>How to install and use packages</li>
+<li>How to use the Tidyverse to manipulate and plot data</li>
+<li>How to use program flow control and functions</li>
+<li>How to create dynamic reports in <code>R</code></li>
+</ul></div>
+
+<center>
+
+<div class="attention">
+<p><strong>WELL DONE!!</strong></p></div>
+
+</center></article></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "hybrid_lesson_slides_files/mathjax-local/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>
