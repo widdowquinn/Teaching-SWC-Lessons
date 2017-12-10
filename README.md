@@ -11,11 +11,25 @@ All of this work derives from the original Software and Data Carpentry lessons, 
 * Data Carpentry: [http://www.datacarpentry.org/](http://www.datacarpentry.org/)
 * Library Carpentry: [https://librarycarpentry.github.io/](https://librarycarpentry.github.io/)
 
-## Slidesets
+## Slide and Notes sets
 
-* 2017-03-23 St Andrews:
-  * [Python lesson 01](./python/2017-03-23-standrews/python-01/slides.html)
-  * [Python lesson 02](./python/2017-03-23-standrews/python-02/slides.html)
+* **2015-11-16 Manchester:**
+  * [Make lesson slides](./make/2015-11-16-manchester/slides/index.html)
+  * [Make lesson slides](./make/2015-11-16-manchester/SPEAKER_NOTES.pdf)
+
+* **2017-03-23 St Andrews:**
+  * [Python lesson 01 slides](./python/2017-03-23-standrews/python-01/slides.html)
+  * [Python lesson 01 notes](./python/2017-03-23-standrews/python-01/notes.pdf)
+  * [Python lesson 02 slides](./python/2017-03-23-standrews/python-02/slides.html)
+  * [Python lesson 02 notes](./python/2017-03-23-standrews/python-02/notes.pdf)
+  
+* **2017-05-18 St Andrews:**
+  * [Python lesson 01 slides](./python/2017-05-18-standrews/python-01/slides.html)
+  * [Python lesson 01 notes](./python/2017-05-18-standrews/python-01/notes.pdf)
+  * [Python lesson 02 slides](./python/2017-05-18-standrews/python-02/slides.html)
+  * [Python lesson 02 notes](./python/2017-05-18-standrews/python-02/notes.pdf)
+  * [Reproducible Research](./python/2017-05-18-standrews/python-02/slides-reproducible_research.html)
+  * [NLTK examples](./python/2017-05-18-standrews/extras/nltk_example.html)  
 
 ## Jupyter Notebooks
 
@@ -27,7 +41,7 @@ You can start an instance of this repository under MyBinder, by clicking on [thi
 
 The Jupyter notebooks are linked directly below:
 
-* 2017-03-23 St Andrews:
+* **2017-03-23 St Andrews:**
   * [Variables](./python/2017-03-23-standrews/python-01/variables.ipynb)
   * [Data analysis and visualisation](./python/2017-03-23-standrews/python-01/analysis.ipynb)
   * [Loops](./python/2017-03-23-standrews/python-01/loops.ipynb)
@@ -37,6 +51,18 @@ The Jupyter notebooks are linked directly below:
   * [Functions](./python/2017-03-23-standrews/python-02/functions.ipynb)
   * [Errors](./python/2017-03-23-standrews/python-02/errors.ipynb)
   * [Defensive programming](./python/2017-03-23-standrews/python-02/defensive.ipynb)  
+  
+* **2017-05-18 St Andrews:**
+  * [Variables](./python/2017-05-18-standrews/python-01/variables.ipynb)
+  * [Data analysis and visualisation](./python/2017-05-18-standrews/python-01/analysis.ipynb)
+  * [Loops](./python/2017-05-18-standrews/python-01/loops.ipynb)
+  * [Lists](./python/2017-05-18-standrews/python-01/lists.ipynb)
+  * [Making choices](./python/2017-05-18-standrews/python-01/choices.ipynb)
+  * [Working with multiple files](./python/2017-05-18-standrews/python-01/multiple.ipynb)
+  * [Functions](./python/2017-05-18-standrews/python-02/functions.ipynb)
+  * [Errors](./python/2017-05-18-standrews/python-02/errors.ipynb)
+  * [Defensive programming](./python/2017-05-18-standrews/python-02/defensive.ipynb)
+  * [NLTK examples](./python/2017-05-18-standrews/extras/nltk_example.ipynb)
 
 ## Courses
 
