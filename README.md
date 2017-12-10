@@ -13,9 +13,13 @@ All of this work derives from the original Software and Data Carpentry lessons, 
 
 ## Slide and Notes sets
 
+### Make
+
 * **2015-11-16 Manchester:**
   * [Make lesson slides](./make/2015-11-16-manchester/slides/index.html)
-  * [Make lesson slides](./make/2015-11-16-manchester/SPEAKER_NOTES.pdf)
+  * [Make lesson notes](./make/2015-11-16-manchester/SPEAKER_NOTES.pdf)
+
+### Python
 
 * **2017-03-23 St Andrews:**
   * [Python lesson 01 slides](./python/2017-03-23-standrews/python-01/slides.html)
@@ -30,6 +34,22 @@ All of this work derives from the original Software and Data Carpentry lessons, 
   * [Python lesson 02 notes](./python/2017-05-18-standrews/python-02/notes.pdf)
   * [Reproducible Research](./python/2017-05-18-standrews/python-02/slides-reproducible_research.html)
   * [NLTK examples](./python/2017-05-18-standrews/extras/nltk_example.html)  
+
+### R
+
+* **2016-01-11 Dundee:**
+  * [R lesson slides](./R/2016-01-11-dundee/slides/index.html)
+  * [R lesson notes](./R/2016-01-11-dundee/speaker_notes.pdf)
+
+* **2017-01-09 Dundee:**
+  * [Introduction to RStudio slides](./R/2017-01-09-dundee/intro_slides/index.html)
+  * [Introduction to RStudio notes](./R/2017-01-09-dundee/intro_to_rstudio_notes.pdf)
+  * [R for Reproducible Data Analysis slides](./R/2017-01-09-dundee/reproducible_slides/index.html)
+  * [R for Reproducible Data Analysis notes](./R/2017-01-09-dundee/speaker_notes.pdf)
+
+* **2017-12-04 St Andrews:**
+  * [R lesson slides](./R/2017-12-04-standrews/hybrid_lesson_slides.html)
+  * [R lesson notes](./R/2017-12-04-standrews/NOTES.pdf)
 
 ## Jupyter Notebooks
 
