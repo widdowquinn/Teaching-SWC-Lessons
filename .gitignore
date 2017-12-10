@@ -3,3 +3,6 @@
 
 # Emacs intermediate files
 *~
+
+# Ignore local Python virtualenv
+venv-*
