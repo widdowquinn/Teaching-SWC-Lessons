@@ -14,13 +14,13 @@ Please use the EtherPad to take communal notes:
 
 ### Git checkout
 
-![Git checkout](img/git-checkout.svg)
+![Git checkout](img/git-checkout.png)
 
 ----
 
 ### How git works
 
-![Git staging](img/git_staging.svg)
+![Git staging](img/git_staging.png)
 
 ----
 
@@ -42,13 +42,13 @@ Please use the EtherPad to take communal notes:
 
 ### A freshly-made GitHub repository
 
-![Freshly-made GitHub repo](img/git-freshly-made-github-repo.svg)
+![Freshly-made GitHub repo](img/git-freshly-made-github-repo.png)
 
 ----
 
 ### GitHub repo after first push
 
-![GitHub repo after first push](img/github-repo-after-first-push.svg)
+![GitHub repo after first push](img/github-repo-after-first-push.png)
 
 ---
 
@@ -74,7 +74,7 @@ Please use the EtherPad to take communal notes:
 
 ### The conflicting changes
 
-![The conflicting changes](img/conflict.svg)
+![The conflicting changes](img/conflict.png)
 
 ---
 

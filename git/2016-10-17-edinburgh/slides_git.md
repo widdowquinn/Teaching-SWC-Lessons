@@ -64,7 +64,7 @@ The lab notebook of code development.
 
 * Version control is like a 'recording' of history
 
-![Three documents. The first has two paragraphs. The second has a modified paragraph. The third has an additional paragraph](img/play-changes.svg)
+![Three documents. The first has two paragraphs. The second has a modified paragraph. The third has an additional paragraph](img/play-changes.png)
 
 * Rewind and play back changes
 
@@ -75,7 +75,7 @@ The lab notebook of code development.
 * Two people work on a document
   * Each makes independent changes: two versions
   
-![Three documents. On the left is the original, and on the right are two versions of this with different, and conflicting, changes](img/versions.svg)
+![Three documents. On the left is the original, and on the right are two versions of this with different, and conflicting, changes](img/versions.png)
 
 * Changes are separate from the document
 
@@ -86,7 +86,7 @@ The lab notebook of code development.
 * Several changes can be merged onto the same base document
   * 'Merging'
 
-![Three documents. On the left are the two modified documents from the previous slide. On the right is a single that incorporates both of those changes](img/merge.svg)
+![Three documents. On the left are the two modified documents from the previous slide. On the right is a single that incorporates both of those changes](img/merge.png)
 
 ----
 
@@ -206,7 +206,7 @@ git log
 * The *staging area* holds changes we want to commit
   * (other files may also be changed, but we don't want to commit them)
   
-![On the left is a modified document. On the right is a zone representing the data stored in `.git`. In that zone are two containers: a staging area, and a repository. Using `git add` places the document into the staging area. Using `git commit` moves the document from the staging area into the repository](img/git-staging-area.svg)
+![On the left is a modified document. On the right is a zone representing the data stored in `.git`. In that zone are two containers: a staging area, and a repository. Using `git add` places the document into the staging area. Using `git commit` moves the document from the staging area into the repository](img/git-staging-area.png)
 
 ----
 
@@ -248,7 +248,7 @@ git commit
 * Create file `earth.txt` with one-line comment on Earth.
 * Commit both changes (*as a **single*** `commit`)
 
-![On the left are two documents (FILE1.txt and FILE2.txt). On the right is a zone representing the `.git` directory. Arrows show the use of `git add` to place the two documents into the staging area, followed by a `git commit` to move both files simultaneously from the staging area to the repository](img/git-committing.svg)
+![On the left are two documents (FILE1.txt and FILE2.txt). On the right is a zone representing the `.git` directory. Arrows show the use of `git add` to place the two documents into the staging area, followed by a `git commit` to move both files simultaneously from the staging area to the repository](img/git-committing.png)
 
 ----
 
@@ -291,7 +291,7 @@ git commit
 * Next-most recent: `HEAD~1`
 * Next-next-most recent: `HEAD~2`
 
-![Three documents. On the left is the original. In the middle is that document with one line changed. On the right is the middle document with an extra paragraph added. Arrows indicate that the documents are related in order of history.](img/play-changes.svg)
+![Three documents. On the left is the original. In the middle is that document with one line changed. On the right is the middle document with an extra paragraph added. Arrows indicate that the documents are related in order of history.](img/play-changes.png)
 
 ----
 
@@ -340,7 +340,7 @@ git checkout HEAD mars.txt
   * Can use any commit identifier
   * Check out the commit *before* the edit you want to replace!
 
-![On the left is a zone representing the `.git` directory, with three commits in a repository. One commit (HEAD~1, f22b25e) contains changes we want to recover. On the right are two files that are rcovered. An arrow indicates two commands for recovery: `git checkout HEAD~1` and `git checkout f22b25e`](img/git-checkout.svg)
+![On the left is a zone representing the `.git` directory, with three commits in a repository. One commit (HEAD~1, f22b25e) contains changes we want to recover. On the right are two files that are rcovered. An arrow indicates two commands for recovery: `git checkout HEAD~1` and `git checkout f22b25e`](img/git-checkout.png)
 
 ----
 
@@ -447,7 +447,7 @@ git init
 
 * There's nothing in the remote repository!
 
-![Two repositories. At the top, the local `planets` repository (belonging to Vlad), which contains files in the staging area and repository. At the bottom, an empty epository, representing the 'clean' repository just created on `GitHub`](img/git-freshly-made-github-repo.svg)
+![Two repositories. At the top, the local `planets` repository (belonging to Vlad), which contains files in the staging area and repository. At the bottom, an empty epository, representing the 'clean' repository just created on `GitHub`](img/git-freshly-made-github-repo.png)
 
 ----
 
@@ -470,7 +470,7 @@ git push origin master
 
 * We only *push* the repository, not the staging area
 
-![Two repositories. At the top, the local `planets` repository (belonging to Vlad), which contains files in the staging area and repository. At the bottom, the remote `GitHub` repository, which contains the same repostitory as the local repo - but *not* the staging area](img/github-repo-after-first-push.svg)
+![Two repositories. At the top, the local `planets` repository (belonging to Vlad), which contains files in the staging area and repository. At the bottom, the remote `GitHub` repository, which contains the same repostitory as the local repo - but *not* the staging area](img/github-repo-after-first-push.png)
 
 ----
 
@@ -616,7 +616,7 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 
 ### The conflicting changes
 
-![Three text files. At the top is the original, below this are two versions with conflicting changes. Arrows point to a question mark: how will we resolve this?](img/conflict.svg)
+![Three text files. At the top is the original, below this are two versions with conflicting changes. Arrows point to a question mark: how will we resolve this?](img/conflict.png)
 
 ----
 

@@ -37,7 +37,7 @@ Please use the EtherPad to take communal notes:
 
 * Version control is like a 'recording' of history
 
-![VC is like a recording](img/play-changes.svg)
+![VC is like a recording](img/play-changes.png)
 
 * Rewind and play back changes
 
@@ -48,7 +48,7 @@ Please use the EtherPad to take communal notes:
 * Two people work on a document
   * Each makes independent changes: two versions
   
-![Independent changes](img/versions.svg)
+![Independent changes](img/versions.png)
 
 * Changes are separate from the document itself
 
@@ -59,7 +59,7 @@ Please use the EtherPad to take communal notes:
 * Several changes can be merged onto the same base document
   * 'Merging'
 
-![Independent changes](img/merge.svg)
+![Independent changes](img/merge.png)
 
 ----
 
@@ -171,7 +171,7 @@ git log
 * The *staging area* holds changes we want to commit
   * (other files may also be changed, but we don't want to commit them)
 
-![`git` staging area](img/git-staging-area.svg)
+![`git` staging area](img/git-staging-area.png)
 
 ----
 
@@ -202,7 +202,7 @@ git commit
 * Create file called `earth.txt` containing one-line comment on Earth.
 * Commit changes to the repository (as a single `commit`)
 
-![Committing multiple files](img/git-committing.svg)
+![Committing multiple files](img/git-committing.png)
 
 ----
 
@@ -236,7 +236,7 @@ git commit
 * Next-most recent: `HEAD~1`
 * Next-next-most recent: `HEAD~2`
 
-![Linear commit history](img/play-changes.svg)
+![Linear commit history](img/play-changes.png)
 
 ----
 
@@ -285,7 +285,7 @@ git checkout HEAD mars.txt
   * Can use any commit identifier
   * Check out the commit *before* the change you want to remove!
 
-![Git checkout](img/git-checkout.svg)
+![Git checkout](img/git-checkout.png)
 
 ----
 
@@ -368,7 +368,7 @@ git add -f b.dat
 
 ### GitHub Saved My Life!
 
-![GitHub saved my life, tonight!](github_saved_my_life.png)
+![GitHub saved my life, tonight!](img/github_saved_my_life.png)
 
 ----
 
@@ -398,7 +398,7 @@ git init
 
 * There's nothing in the remote repository!
 
-![Freshly-made GitHub repo](img/git-freshly-made-github-repo.svg)
+![Freshly-made GitHub repo](img/git-freshly-made-github-repo.png)
 
 ----
 
@@ -421,7 +421,7 @@ git push origin master
 
 * We only *push* the repository, not the staging area
 
-![GitHub repo after first push](img/github-repo-after-first-push.svg)
+![GitHub repo after first push](img/github-repo-after-first-push.png)
 
 ----
 
@@ -558,7 +558,7 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 
 ### The conflicting changes
 
-![The conflicting changes](img/conflict.svg)
+![The conflicting changes](img/conflict.png)
 
 ----
 

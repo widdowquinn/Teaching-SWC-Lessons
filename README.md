@@ -13,6 +13,23 @@ All of this work derives from the original Software and Data Carpentry lessons, 
 
 ## Slide and Notes sets
 
+### Git
+
+* **2015-11-16 Manchester:**
+  * [Git lesson slides](./git/2015-11-16-manchester/slides/index.html)
+
+* **2016-01-11 Dundee:**
+  * [Git lesson slides](./git/2016-01-11-dundee/slides/index.html)
+  * [Git lesson notes](./git/2016-01-11-dundee/speaker_notes.pdf)
+
+* **2016-10-17 Edinburgh:**
+  * [Git lesson slides](./git/2016-10-17-edinburgh/slides/index.html)
+  * [Git lesson notes](./git/2016-10-17-edinburgh/speaker_notes.pdf)
+
+* **2017-01-09 Dundee:**
+  * [Git lesson slides](./git/2017-01-09-dundee/slides/index.html)
+  * [Git lesson notes](./git/2017-01-09-dundee/speaker_notes.pdf)
+
 ### Make
 
 * **2015-11-16 Manchester:**
