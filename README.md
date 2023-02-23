@@ -137,17 +137,17 @@ Delivered to postgrads, postdocs and staff at the University of Dundee
 
 ### 2017-03-23 St Andrews
 
-* [Repository](https://github.com/alex-konovalov/2017-03-23-standrews)
-* [Website](https://alex-konovalov.github.io/2017-03-23-standrews/)
-* Lead instructor: Alex Konovalov
+* [Repository](https://github.com/olexandr-konovalov/2017-03-23-standrews)
+* [Website](https://olexandr-konovalov.github.io/2017-03-23-standrews/)
+* Lead instructor: Olexandr Konovalov
 
 Delivered to postgrads, postdocs and staff at the University of St Andrews
 
 ### 2017-05-18 St Andrews
 
-* [Repository](https://github.com/alex-konovalov/2017-05-18-standrews)
-* [Website](https://alex-konovalov.github.io/2017-05-18-standrews/)
-* Lead instructor: Alex Konovalov
+* [Repository](https://github.com/olexandr-konovalov/2017-05-18-standrews)
+* [Website](https://olexandr-konovalov.github.io/2017-05-18-standrews/)
+* Lead instructor: Olexandr Konovalov
 
 Delivered to postgrads, postdocs and staff at the University of St Andrews
 
@@ -155,6 +155,6 @@ Delivered to postgrads, postdocs and staff at the University of St Andrews
 
 * [Repository](https://github.com/StAResComp/2017-12-04-standrews)
 * [Website](https://starescomp.github.io/2017-12-04-standrews/)
-* Lead instructor: Alex Konovalov
+* Lead instructor: Olexandr Konovalov
 
 Delivered to postgrads, postdocs and staff at the University of St Andrews
